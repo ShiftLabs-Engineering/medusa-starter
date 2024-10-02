@@ -1,27 +1,50 @@
-'use client';
+"use client"
 
 // External packages
-import * as React from 'react';
-import * as ReactAria from 'react-aria-components';
-import { twMerge } from 'tailwind-merge';
+import * as ReactAria from "react-aria-components"
+import { twMerge } from "tailwind-merge"
 
-export const SizePickerGroup: React.FC<
-  React.ComponentPropsWithoutRef<'div'> & ReactAria.RadioGroupProps
-> = ({ className, ...rest }) => (
-  <ReactAria.RadioGroup
-    {...rest}
-    className={twMerge('flex gap-2', className)}
-  />
-);
+interface SizePickerGroupOwnProps {
+  name: string
+  data: string[]
+}
 
+type SizePickerGroupProps = React.ComponentPropsWithoutRef<"div"> &
+  ReactAria.RadioGroupProps &
+  SizePickerGroupOwnProps
+
+export const SizePickerGroup: React.FC<SizePickerGroupProps> = ({
+  name,
+  data,
+  className,
+  ...rest
+}) => (
+  <div>
+    <p className="mb-4">
+      Size<span className="text-gray ml-4">{/* {selected} */}Name</span>
+    </p>
+    <ReactAria.RadioGroup
+      {...rest}
+      aria-label="size"
+      className={twMerge("flex gap-16", className)}
+    >
+      {data.map((size, index) => (
+        <SizePickerGroupItem key={index} value={size} />
+      ))}
+    </ReactAria.RadioGroup>
+  </div>
+)
 export const SizePickerGroupItem: React.FC<
-  React.ComponentPropsWithoutRef<'label'> & ReactAria.RadioProps
-> = ({ className, ...rest }) => (
+  React.ComponentPropsWithoutRef<"label"> & ReactAria.RadioProps
+> = ({ value, className, ...rest }) => (
   <ReactAria.Radio
     {...rest}
+    value={value}
     className={twMerge(
-      'cursor-pointer border border-gray-900 px-4 py-2 data-[selected]:bg-gray-900 data-[selected]:text-white data-[disabled]:opacity-40',
+      "cursor-pointer text-grayscale-black border-b border-transparent transition-colors data-[selected]:border-grayscale-80",
       className
     )}
-  />
-);
+  >
+    {value}
+  </ReactAria.Radio>
+)

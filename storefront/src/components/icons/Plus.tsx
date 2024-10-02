@@ -12,15 +12,15 @@ export const Plus: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   >
     <path
       fill="currentColor"
-      fill-rule="evenodd"
+      fillRule="evenodd"
       d="M11.25 19V5h1.5v14h-1.5Z"
-      clip-rule="evenodd"
+      clipRule="evenodd"
     />
     <path
       fill="currentColor"
-      fill-rule="evenodd"
+      fillRule="evenodd"
       d="M19 12.75H5v-1.5h14v1.5Z"
-      clip-rule="evenodd"
+      clipRule="evenodd"
     />
   </svg>
 )
