@@ -39,6 +39,7 @@ module.exports = {
       "3xl": ["56px", 1.2],
     },
     borderRadius: {
+      xs: "4px",
       md: "24px",
       lg: "30px",
       full: "100%",
@@ -60,7 +61,14 @@ module.exports = {
         35: "8.75rem",
         37: "9.25rem",
         47: "11.75rem",
+        93: "23.25rem",
+        120: "30rem",
         124: "31rem",
+      },
+      transitionProperty: {
+        drawerOpen: "transform 500ms, opacity .9s, visibility .9s",
+        drawerClosed:
+          "transform 300ms cubic-bezier(.5, .5, 0, 1), opacity .9s .9s, visibility .9s .9s",
       },
     },
     safelist: [
