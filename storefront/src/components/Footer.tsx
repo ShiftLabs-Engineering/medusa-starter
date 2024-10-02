@@ -1,8 +1,18 @@
+"use client"
+
+// External components
+import { z } from "zod"
+
 // Components
-import { Button, Icon, Layout, LayoutColumn, Link } from "./"
+import { Button, Layout, LayoutColumn, Link } from "./"
+import { Form } from "./Form"
 import { Input } from "./Forms"
 
 export const Footer = () => {
+  const emailSubscriptionSchema = z.object({
+    email: z.string().email().nullable(),
+  })
+
   return (
     <div className="bg-grayscale-10 py-20">
       <Layout>
@@ -58,12 +68,18 @@ export const Footer = () => {
               <p className="mb-4">
                 We will also send you our discount coupons!
               </p>
-              <Input
-                type="email"
-                placeholder="Your email"
-                className="mb-4"
-                iconName="arrow-right"
-              />
+              <Form schema={emailSubscriptionSchema}>
+                <div className="flex gap-2">
+                  <Input
+                    name="email"
+                    type="email"
+                    placeholder="Your email"
+                    wrapperClassName="flex-1"
+                    className="mb-4 rounded-xs h-9 text-xs"
+                  />
+                  <Button className="h-9 text-xs">Subscribe</Button>
+                </div>
+              </Form>
               <p className="text-xs text-gray">
                 By subscribing you agree to with our{" "}
                 <Link href="/" variant="underline">

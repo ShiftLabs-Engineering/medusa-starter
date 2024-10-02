@@ -7,7 +7,6 @@ import * as Aria from "react-aria-components"
 
 // Components
 import { Icon } from "./"
-import { IconNames } from "./Icon"
 
 export const getFormFieldClassNames = ({
   isVisuallyDisabled,
@@ -16,7 +15,7 @@ export const getFormFieldClassNames = ({
 }: InputOwnProps): string => {
   return twJoin(
     // Base
-    "block w-full rounded-lg bg-grayscale-white px-6 h-14",
+    "block w-full rounded-xs bg-grayscale-white px-6 h-14",
 
     // Disabled
     isVisuallyDisabled && "cursor-not-allowed opacity-50",
@@ -33,18 +32,18 @@ export const getFormFieldClassNames = ({
  * Label
  */
 type InputLabelOwnProps = {
-  isReqred?: boolean
+  isRequired?: boolean
 }
 
 export const InputLabel: React.FC<
   React.ComponentPropsWithRef<"label"> & InputLabelOwnProps
-> = ({ isReqred, children, className, ...rest }) => (
+> = ({ isRequired, children, className, ...rest }) => (
   <Aria.Label
     {...rest}
     className={twMerge("mb-1 block font-semibold", className)}
   >
     {children}
-    {isReqred && <span className="ml-0.5 text-orange-700">*</span>}
+    {isRequired && <span className="ml-0.5 text-orange-700">*</span>}
   </Aria.Label>
 )
 
@@ -78,7 +77,7 @@ export type InputOwnProps = {
   isVisuallyDisabled?: boolean
   isSuccess?: boolean
   hasError?: boolean
-  iconName?: IconNames
+  wrapperClassName?: string
 }
 
 export const Input = React.forwardRef<
@@ -90,13 +89,13 @@ export const Input = React.forwardRef<
       isVisuallyDisabled,
       isSuccess,
       hasError,
-      iconName = "check",
+      wrapperClassName,
       className,
       ...rest
     },
     ref
   ) => (
-    <div className={isSuccess || iconName ? "relative" : ""}>
+    <div className={twMerge(isSuccess ? "relative" : "", wrapperClassName)}>
       <Aria.Input
         {...rest}
         ref={ref}
@@ -105,9 +104,9 @@ export const Input = React.forwardRef<
           className
         )}
       />
-      {(isSuccess || Boolean(iconName)) && (
+      {isSuccess && (
         <Icon
-          name={iconName}
+          name="check"
           className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 text-green-500 w-6 h-auto"
         />
       )}

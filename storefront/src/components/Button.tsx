@@ -13,6 +13,7 @@ export type ButtonOwnProps = {
   isFullWidth?: boolean
   iconName?: IconNames
   iconPosition?: "start" | "end"
+  isVisuallyDisabled?: boolean
   isLoading?: boolean
   loadingText?: string
   size?: "sm" | "md"
@@ -25,6 +26,7 @@ export const getButtonClassNames = ({
   isFullWidth,
   iconName,
   iconPosition,
+  isVisuallyDisabled,
   isLoading,
   loadingText,
   size,
@@ -40,6 +42,9 @@ export const getButtonClassNames = ({
     // iconPosition
     // spinnerPosition
     (iconPosition === "end" || spinnerPosition === "end") && "flex-row-reverse",
+
+    // Disabled
+    (isVisuallyDisabled || isLoading) && "cursor-not-allowed",
 
     // isLoading
     // iconName
