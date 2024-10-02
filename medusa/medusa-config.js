@@ -16,12 +16,12 @@ module.exports = defineConfig({
   },
   modules: {
     [Modules.PAYMENT]: {
-      resolve: '@medusajs/payment',
+      resolve: '@medusajs/medusa/payment',
       options: {
         providers: [
           {
             id: 'stripe',
-            resolve: '@medusajs/payment-stripe',
+            resolve: '@medusajs/medusa/payment-stripe',
             options: {
               apiKey: process.env.STRIPE_API_KEY,
               webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
