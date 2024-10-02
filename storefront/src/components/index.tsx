@@ -12,7 +12,6 @@ import { Layout } from "./Layout"
 import { LayoutColumn } from "./Layout"
 import { NumberInputGroup, NumberInputButton, NumberInput } from "./NumberInput"
 import { Link } from "./Link"
-import { LinkAsButton } from "./LinkAsButton"
 import { ProductPageGallery } from "./ProductPageGallery"
 import { SizePickerGroup } from "./SizePickerGroup"
 
@@ -31,7 +30,6 @@ export {
   Layout,
   LayoutColumn,
   Link,
-  LinkAsButton,
   NumberField,
   NumberInputGroup,
   NumberInputButton,
