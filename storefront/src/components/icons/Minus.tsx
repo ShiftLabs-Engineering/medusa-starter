@@ -12,9 +12,9 @@ export const Minus: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   >
     <path
       fill="currentColor"
-      fill-rule="evenodd"
+      fillRule="evenodd"
       d="M19 12.75H5v-1.5h14v1.5Z"
-      clip-rule="evenodd"
+      clipRule="evenodd"
     />
   </svg>
 )

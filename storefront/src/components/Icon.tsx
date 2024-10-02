@@ -11,13 +11,13 @@ export type IconNames =
   | "case"
   | "check"
   | "chevron"
+  | "close"
   | "loader"
   | "minus"
   | "person"
   | "plus"
   | "search"
   | "sliders"
-  | "star"
 
 const baseClasses = "w-4 h-auto flex-shrink-0"
 
@@ -42,6 +42,9 @@ export const Icon: React.FC<
     {name === "chevron" && (
       <Icons.Chevron {...rest} className={twMerge(baseClasses, className)} />
     )}
+    {name === "close" && (
+      <Icons.Close {...rest} className={twMerge(baseClasses, className)} />
+    )}
     {name === "loader" && (
       <Icons.Loader {...rest} className={twMerge(baseClasses, className)} />
     )}
@@ -59,9 +62,6 @@ export const Icon: React.FC<
     )}
     {name === "sliders" && (
       <Icons.Sliders {...rest} className={twMerge(baseClasses, className)} />
-    )}
-    {name === "star" && (
-      <Icons.Star {...rest} className={twMerge(baseClasses, className)} />
     )}
   </>
 )
