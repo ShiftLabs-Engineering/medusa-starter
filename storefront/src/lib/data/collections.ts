@@ -11,10 +11,14 @@ export const retrieveCollection = cache(async function (id: string) {
 
 export const getCollectionsList = cache(async function (
   offset: number = 0,
-  limit: number = 100
+  limit: number = 100,
+  fields: (keyof HttpTypes.StoreCollection)[] = []
 ): Promise<{ collections: HttpTypes.StoreCollection[]; count: number }> {
   return sdk.store.collection
-    .list({ limit, offset: 0 }, { next: { tags: ["collections"] } })
+    .list(
+      { limit, offset, fields: fields.join(",") },
+      { next: { tags: ["collections"] } }
+    )
     .then(({ collections }) => ({ collections, count: collections.length }))
 })
 

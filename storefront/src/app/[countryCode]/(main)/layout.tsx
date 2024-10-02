@@ -1,8 +1,11 @@
+// External
 import { Metadata } from "next"
 
-import Footer from "@modules/layout/templates/footer"
-import Nav from "@modules/layout/templates/nav"
+// Lib
 import { getBaseURL } from "@lib/util/env"
+
+// Components
+import { Header, Footer } from "components"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -11,7 +14,7 @@ export const metadata: Metadata = {
 export default async function PageLayout(props: { children: React.ReactNode }) {
   return (
     <>
-      <Nav />
+      <Header />
       {props.children}
       <Footer />
     </>
