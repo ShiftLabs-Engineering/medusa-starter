@@ -1,6 +1,6 @@
 // External packages
 import * as React from "react"
-import { twMerge } from "tailwind-merge"
+import { twJoin, twMerge } from "tailwind-merge"
 
 // Components
 import * as Icons from "./icons"
@@ -38,9 +38,21 @@ const baseClasses = "w-4 h-auto flex-shrink-0"
 export const Icon: React.FC<
   React.ComponentPropsWithoutRef<"svg"> & {
     name: IconNames
+    status?: number
+    wrapperClassName?: string
   }
-> = ({ name, className, ...rest }) => (
-  <>
+> = ({ name, status = 0, wrapperClassName, className, ...rest }) => (
+  <div className={twMerge("relative shrink-0", wrapperClassName)}>
+    {Boolean(status) && (
+      <div
+        className={twJoin(
+          "absolute -right-1 -top-0.5 leading-none rounded-full flex items-center justify-center w-4 h-4 bg-black text-white text-[0.625rem]",
+          status > 99 && "text-[0.5rem]"
+        )}
+      >
+        <span className="relative top-px">{status > 99 ? "+99" : status}</span>
+      </div>
+    )}
     {name === "arrow-left" && (
       <Icons.ArrowLeft {...rest} className={twMerge(baseClasses, className)} />
     )}
@@ -128,5 +140,5 @@ export const Icon: React.FC<
     {name === "user" && (
       <Icons.User {...rest} className={twMerge(baseClasses, className)} />
     )}
-  </>
+  </div>
 )
