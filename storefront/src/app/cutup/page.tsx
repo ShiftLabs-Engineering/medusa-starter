@@ -18,12 +18,12 @@ export default function HomePage() {
       </div>
       <div className="pt-26 pb-36">
         <Layout className="mb-36">
-          <LayoutColumn start={1} end={8} className="col-start-1 col-end-8">
+          <LayoutColumn start={1} end={8}>
             <h3 className="text-2xl">
               Elevate Your Living Space with Unmatched Comfort & Style
             </h3>
           </LayoutColumn>
-          <LayoutColumn start={9} end={13} className="col-start-9 col-end-13">
+          <LayoutColumn start={9} end={13}>
             <div className="flex items-center h-full">
               <div className="text-md">
                 <p>Discover Your Perfect Sofa Today</p>
@@ -38,7 +38,7 @@ export default function HomePage() {
           <LayoutColumn className="col-span-full">
             <h3 className="text-2xl mb-16">Our products</h3>
           </LayoutColumn>
-          <LayoutColumn start={1} end={7} className="col-start-1 col-end-7">
+          <LayoutColumn start={1} end={7}>
             <Link href="/cutup">
               <Image
                 src="/images/content/sofa.png"
@@ -50,7 +50,7 @@ export default function HomePage() {
               <p className="text-md">Sofas</p>
             </Link>
           </LayoutColumn>
-          <LayoutColumn start={7} end={12} className="col-start-7 col-end-13">
+          <LayoutColumn start={7} end={13}>
             <Link href="/cutup">
               <Image
                 src="/images/content/arm-chair.png"
@@ -153,13 +153,13 @@ export default function HomePage() {
               className="mb-16"
             />
           </LayoutColumn>
-          <LayoutColumn className="col-start-1 col-end-7">
+          <LayoutColumn start={1} end={7}>
             <h2 className="text-3xl">
               At Sofa Society, we believe that a sofa is the heart of every
               home.
             </h2>
           </LayoutColumn>
-          <LayoutColumn className="col-start-8 col-end-13 mt-19">
+          <LayoutColumn start={8} end={13} className="mt-19">
             <div className="text-md">
               <p className="mb-9">
                 We are dedicated to delivering high-quality, thoughtfully

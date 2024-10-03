@@ -148,7 +148,7 @@ export default function ProductPage() {
           alt="Living room"
         />
       </LayoutColumn>
-      <LayoutColumn start={1} end={6} className="col-start-1 col-end-6">
+      <LayoutColumn start={1} end={6}>
         <Image
           src="/images/content/sofa3.png"
           width={492}
@@ -156,7 +156,7 @@ export default function ProductPage() {
           alt="Sofa"
         />
       </LayoutColumn>
-      <LayoutColumn start={7} end={13} className="col-start-7 col-end-13">
+      <LayoutColumn start={7} end={13}>
         <h3 className="text-3xl mb-8 mt-20">
           The Paloma Haven sofa is a masterpiece of minimalism and luxury.
         </h3>

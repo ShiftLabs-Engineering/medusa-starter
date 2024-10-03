@@ -49,13 +49,14 @@ module.exports = {
       sm: "640px",
       md: "768px",
       lg: "1024px",
-      xl: "1324px",
+      xl: "1280px",
     },
     extend: {
       spacing: {
         18: "4.5rem",
         19: "4.75rem",
         21: "5.25rem",
+        25: "6.25rem",
         26: "6.5rem",
         27: "6.75rem",
         35: "8.75rem",
@@ -71,16 +72,12 @@ module.exports = {
           "transform 300ms cubic-bezier(.5, .5, 0, 1), opacity .9s .9s, visibility .9s .9s",
       },
     },
-    safelist: [
-      {
-        pattern: /col-start-(1|2|3|4|5|6|7|8|9|10|11|12|13)/,
-        variants: ["xs", "sm", "md", "lg", "xl"],
-      },
-      {
-        pattern: /col-end-(1|2|3|4|5|6|7|8|9|10|11|12|13)/,
-        variants: ["xs", "sm", "md", "lg", "xl"],
-      },
-    ],
   },
+  safelist: [
+    {
+      pattern: /col-(start|end)-(1|2|3|4|5|6|7|8|9|10|11|12|13)/,
+      variants: ["xs", "sm", "md", "lg", "xl"],
+    },
+  ],
   plugins: [require("tailwindcss-radix")()],
 }
