@@ -78,7 +78,7 @@ export default function CollectionsPage() {
             </div>
             <Button
               variant="ghost"
-              iconName="chevron"
+              iconName="chevron-down"
               iconPosition="end"
               className="px-2 gap-1 [&>svg]:w-6"
             >

@@ -1,19 +1,19 @@
 // External packages
 import * as React from "react"
 
-export const Chevron: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
+export const Menu: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   props
 ) => (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
     fill="none"
+    viewBox="0 0 24 24"
   >
     <path
       fill="currentColor"
       fillRule="evenodd"
-      d="m5.47 9.53 1.06-1.06L12 13.94l5.47-5.47 1.06 1.06L12 16.06 5.47 9.53Z"
+      d="M2.25 5.095h19.5v1.5H2.25v-1.5Zm0 6h19.5v1.5H2.25v-1.5Zm0 6h19.5v1.5H2.25v-1.5Z"
       clipRule="evenodd"
     />
   </svg>

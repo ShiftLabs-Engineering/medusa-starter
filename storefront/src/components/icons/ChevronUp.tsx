@@ -1,7 +1,7 @@
 // External packages
 import * as React from "react"
 
-export const Plus: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
+export const ChevronUp: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   props
 ) => (
   <svg
@@ -13,13 +13,7 @@ export const Plus: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
     <path
       fill="currentColor"
       fillRule="evenodd"
-      d="M11.25 18.813v-14h1.5v14h-1.5Z"
-      clipRule="evenodd"
-    />
-    <path
-      fill="currentColor"
-      fillRule="evenodd"
-      d="M19 12.563H5v-1.5h14v1.5Z"
+      d="m18.53 14.735-1.06 1.06-5.47-5.47-5.47 5.47-1.06-1.06L12 8.205l6.53 6.53Z"
       clipRule="evenodd"
     />
   </svg>

@@ -66,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
                 colorScheme={pathNameParts.length < 2 ? "white" : colorScheme}
                 className="p-1"
               >
-                <Icon name="person" className="w-6 h-6" />
+                <Icon name="user" className="w-6 h-6" />
               </Button>
               <Button
                 variant="ghost"
