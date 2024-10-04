@@ -35,7 +35,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         <span className="text-gray ml-4">Lumea</span>
       </p>
       <button
-        className="h-8 w-8 cursor-pointer bg-grayscale-black"
+        className="h-8 w-8 cursor-pointer bg-black"
         onClick={() => setDrawerOpen(true)}
       />
       <Drawer

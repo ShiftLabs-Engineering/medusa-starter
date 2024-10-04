@@ -15,7 +15,7 @@ export const getFormFieldClassNames = ({
 }: InputOwnProps): string => {
   return twJoin(
     // Base
-    "block w-full rounded-xs bg-grayscale-white px-6 h-14",
+    "block w-full rounded-xs bg-white px-6 h-14",
 
     // Disabled
     isVisuallyDisabled && "cursor-not-allowed opacity-50",

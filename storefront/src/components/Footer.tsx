@@ -14,7 +14,7 @@ export const Footer = () => {
   })
 
   return (
-    <div className="bg-grayscale-10 py-20">
+    <div className="bg-grayscale-50 py-20">
       <Layout>
         <LayoutColumn className="col-span-13">
           <div className="flex justify-between gap-20 items-center">

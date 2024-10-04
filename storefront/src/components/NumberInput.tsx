@@ -19,7 +19,7 @@ export const NumberInputGroup = React.forwardRef<
     {...rest}
     ref={ref}
     className={twMerge(
-      "flex h-10 w-35 px-4 rounded-lg justify-between border border-grayscale-black",
+      "flex h-10 w-35 px-4 rounded-lg justify-between border border-black",
       className
     )}
   />

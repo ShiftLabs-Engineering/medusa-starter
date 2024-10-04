@@ -21,8 +21,8 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
       className={twJoin(
         "absolute top-0 left-0 w-full",
         colorScheme === "black" && pathNameParts.length > 1
-          ? "text-grayscale-black"
-          : "text-grayscale-5"
+          ? "text-black"
+          : "text-white"
       )}
     >
       <Layout>

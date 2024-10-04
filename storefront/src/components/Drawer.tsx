@@ -32,7 +32,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         {...swipeHandlers}
         {...rest}
         className={twMerge(
-          "flex-col items-center bg-grayscale-white top-0 right-0 z-50 fixed justify-self-center w-full max-h-screen h-screen max-w-93",
+          "flex-col items-center bg-white top-0 right-0 z-50 fixed justify-self-center w-full max-h-screen h-screen max-w-93",
           isOpened
             ? "opacity-100 visible translate-x-0"
             : "opacity-0 invisible translate-x-full"
@@ -51,7 +51,7 @@ export const Drawer: React.FC<DrawerProps> = ({
       <div
         onClick={onBackdropClick}
         className={twJoin(
-          "w-full h-full  fixed top-0 left-0 z-40 bg-grayscale-black duration-300",
+          "w-full h-full  fixed top-0 left-0 z-40 bg-black duration-300",
           isOpened ? "visible opacity-10" : "invisible opacity-0"
         )}
       />

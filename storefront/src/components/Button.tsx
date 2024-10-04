@@ -57,21 +57,20 @@ export const getButtonClassNames = ({
 
     // variant
     colorScheme === "black" &&
-      ((variant === "ghost" && "text-grayscale-black hover:bg-grayscale-100") ||
+      ((variant === "ghost" && "text-black hover:text-grayscale-500") ||
         (variant === "outline" &&
-          "text-grayscale-black hover:bg-grayscale-100 border border-grayscale-black") ||
-        (variant === "solid" && "bg-grayscale-black text-grayscale-white") ||
-        (variant === "link" && "text-grayscale-black hover:underline") ||
-        (variant === "unstyled" && "text-grayscale-black")),
+          "text-black hover:text-grayscale-500 hover:border-grayscale-500 border border-black") ||
+        (variant === "solid" && "bg-black hover:bg-grayscale-500 text-white") ||
+        (variant === "link" && "text-black hover:underline") ||
+        (variant === "unstyled" && "text-black")),
 
     colorScheme === "white" &&
-      ((variant === "ghost" && "text-grayscale-5 hover:text-grayscale-20") ||
+      ((variant === "ghost" && "text-white hover:text-grayscale-20") ||
         (variant === "outline" &&
-          "text-grayscale-5 hover:text-grayscale-30 hover:border-grayscale-50 border border-text-grayscale-5") ||
-        (variant === "solid" &&
-          "bg-grayscale-5 hover:bg-grayscale-30 text-grayscale-black") ||
-        (variant === "link" && "text-grayscale-5 hover:underline") ||
-        (variant === "unstyled" && "text-grayscale-5"))
+          "text-white hover:text-grayscale-20 hover:border-grayscale-20 border border-white") ||
+        (variant === "solid" && "bg-white hover:bg-grayscale-20 text-black") ||
+        (variant === "link" && "text-white hover:underline") ||
+        (variant === "unstyled" && "text-white"))
   )
 }
 

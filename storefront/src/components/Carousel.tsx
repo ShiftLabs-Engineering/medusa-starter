@@ -73,7 +73,10 @@ export const Carousel: React.FC<CarouselProps> = ({
                       )}
                     >
                       <IconCircle>
-                        <Icon name="arrow-left" className="w-6" />
+                        <Icon
+                          name="arrow-left"
+                          className="w-6 h-6 text-black"
+                        />
                       </IconCircle>
                     </button>
                     <button
@@ -86,7 +89,10 @@ export const Carousel: React.FC<CarouselProps> = ({
                       )}
                     >
                       <IconCircle>
-                        <Icon name="arrow-right" className="w-6" />
+                        <Icon
+                          name="arrow-right"
+                          className="w-6 h-6 text-black"
+                        />
                       </IconCircle>
                     </button>
                   </>
