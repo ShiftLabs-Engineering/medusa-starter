@@ -116,15 +116,7 @@ export default function ProductPage() {
                 className="mb-12"
               />
               <div className="flex gap-4 mb-6">
-                <NumberField
-                  name="quantity"
-                  fieldProps={{
-                    defaultValue: 1,
-                    minValue: 1,
-                    maxValue: 5,
-                    "aria-label": "Quantity",
-                  }}
-                />
+                <NumberField defaultValue={1} minValue={1} className="w-35" />
                 <Button className="flex-1">Add to cart</Button>
               </div>
               <p className="text-gray">Estimate delivery 2-3 days</p>

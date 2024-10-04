@@ -1,4 +1,4 @@
-import { NumberField } from "./Form/NumberField"
+import { NumberField } from "./NumberField"
 import { Button } from "./Button"
 import { Carousel } from "./Carousel"
 import { ColorPicker } from "./ColorPicker"
@@ -10,7 +10,6 @@ import { Icon } from "./Icon"
 import { IconCircle } from "./IconCircle"
 import { Layout } from "./Layout"
 import { LayoutColumn } from "./Layout"
-import { NumberInputGroup, NumberInputButton, NumberInput } from "./NumberInput"
 import { Link } from "./Link"
 import { ProductPageGallery } from "./ProductPageGallery"
 import { SizePickerGroup } from "./SizePickerGroup"
@@ -31,9 +30,6 @@ export {
   LayoutColumn,
   Link,
   NumberField,
-  NumberInputGroup,
-  NumberInputButton,
-  NumberInput,
   ProductPageGallery,
   SizePickerGroup,
 }
