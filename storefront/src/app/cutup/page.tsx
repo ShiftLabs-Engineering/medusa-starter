@@ -66,7 +66,7 @@ export default function HomePage() {
         <Carousel
           heading={<h3 className="text-2xl">Collections</h3>}
           button={
-            <Button size="sm" className="rounded-lg">
+            <Button size="md" className="h-auto flex-1">
               View All
             </Button>
           }
