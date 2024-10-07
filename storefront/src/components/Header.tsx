@@ -39,15 +39,19 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
             <div className="flex items-center gap-6">
               <Button
                 variant="ghost"
-                colorScheme={pathNameParts.length < 2 ? "white" : colorScheme}
-                className="p-1"
+                className={twJoin(
+                  "p-1",
+                  pathNameParts.length < 2 && "text-white"
+                )}
               >
                 <Icon name="search" className="w-6 h-6" />
               </Button>
               <Button
                 variant="ghost"
-                colorScheme={pathNameParts.length < 2 ? "white" : colorScheme}
-                className="p-1 uppercase flex"
+                className={twJoin(
+                  "p-1 uppercase flex",
+                  pathNameParts.length < 2 && "text-white"
+                )}
               >
                 HR
                 <svg
@@ -63,15 +67,19 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
               </Button>
               <Button
                 variant="ghost"
-                colorScheme={pathNameParts.length < 2 ? "white" : colorScheme}
-                className="p-1"
+                className={twJoin(
+                  "p-1",
+                  pathNameParts.length < 2 && "text-white"
+                )}
               >
                 <Icon name="user" className="w-6 h-6" />
               </Button>
               <Button
                 variant="ghost"
-                colorScheme={pathNameParts.length < 2 ? "white" : colorScheme}
-                className="p-1"
+                className={twJoin(
+                  "p-1",
+                  pathNameParts.length < 2 && "text-white"
+                )}
               >
                 <Icon name="case" className="w-6 h-6" />
               </Button>
