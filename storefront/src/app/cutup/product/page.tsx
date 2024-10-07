@@ -97,7 +97,7 @@ export default function ProductPage() {
           </div>
           <div className="sticky flex-1 top-0">
             <Form schema={productPageSchema}>
-              <p className="text-gray mb-4">Modern Luxe</p>
+              <p className="text-grayscale-500 mb-4">Modern Luxe</p>
               <h1 className="text-xl mb-4">Paloma Haven</h1>
               <p className="text-md mb-8">€12000</p>
               <div className="mb-12 max-w-120">
@@ -119,7 +119,7 @@ export default function ProductPage() {
                 <NumberField defaultValue={1} minValue={1} className="w-35" />
                 <Button className="flex-1">Add to cart</Button>
               </div>
-              <p className="text-gray">Estimate delivery 2-3 days</p>
+              <p className="text-grayscale-500">Estimate delivery 2-3 days</p>
             </Form>
           </div>
         </div>
@@ -172,7 +172,7 @@ export default function ProductPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Camden Retreat</p>
-                <p className="text-gray text-xs">Boho Chic</p>
+                <p className="text-grayscale-500 text-xs">Boho Chic</p>
               </div>
               <div>
                 <p className="font-semibold">1000€</p>
@@ -190,7 +190,9 @@ export default function ProductPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Oslo Drift</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
                 <p className="font-semibold">2000€</p>
@@ -208,7 +210,7 @@ export default function ProductPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Sutton Royale</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
                 <p className="font-semibold">2500€</p>

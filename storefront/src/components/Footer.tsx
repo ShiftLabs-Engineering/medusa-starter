@@ -80,7 +80,7 @@ export const Footer = () => {
                   <Button className="h-9 text-xs">Subscribe</Button>
                 </div>
               </Form>
-              <p className="text-xs text-gray">
+              <p className="text-xs text-grayscale-500">
                 By subscribing you agree to with our{" "}
                 <Link href="/" variant="underline">
                   Privacy Policy

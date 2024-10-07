@@ -55,7 +55,9 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Nordic Haven</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
                 <p className="font-semibold">1000€</p>
@@ -75,7 +77,7 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Everly Estate</p>
-                <p className="text-gray text-xs">Timeless Classics</p>
+                <p className="text-grayscale-500 text-xs">Timeless Classics</p>
               </div>
               <div>
                 <p className="font-semibold">3000€</p>
@@ -96,7 +98,7 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Paloma Haven</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
                 <p className="font-semibold">1200€</p>
@@ -116,7 +118,7 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Serena Meadow</p>
-                <p className="text-gray text-xs">Boho Chic</p>
+                <p className="text-grayscale-500 text-xs">Boho Chic</p>
               </div>
               <div>
                 <p className="font-semibold">2000€</p>
@@ -136,7 +138,9 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Astrid Curve</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
                 <p className="font-semibold">1800€</p>
@@ -156,7 +160,7 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Velora Luxe</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
                 <p className="font-semibold">1200€</p>
@@ -176,7 +180,7 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Camden Retreat</p>
-                <p className="text-gray text-xs">Boho Chic</p>
+                <p className="text-grayscale-500 text-xs">Boho Chic</p>
               </div>
               <div>
                 <p className="font-semibold">1000€</p>
@@ -196,7 +200,9 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Oslo Drift</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
                 <p className="font-semibold">2000€</p>
@@ -216,7 +222,7 @@ export default function ShopPage() {
             <div className="flex justify-between">
               <div>
                 <p className="mb-0.5">Sutton Royale</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
                 <p className="font-semibold">2500€</p>

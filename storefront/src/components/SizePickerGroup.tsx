@@ -21,7 +21,8 @@ export const SizePickerGroup: React.FC<SizePickerGroupProps> = ({
 }) => (
   <div>
     <p className="mb-4">
-      Size<span className="text-gray ml-4">{/* {selected} */}Name</span>
+      Size
+      <span className="text-grayscale-500 ml-4">{/* {selected} */}Name</span>
     </p>
     <ReactAria.RadioGroup
       {...rest}

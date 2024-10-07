@@ -32,7 +32,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
     <div className={className}>
       <p className="mb-4">
         Materials
-        <span className="text-gray ml-4">Lumea</span>
+        <span className="text-grayscale-500 ml-4">Lumea</span>
       </p>
       <button
         className="h-8 w-8 cursor-pointer bg-black"
