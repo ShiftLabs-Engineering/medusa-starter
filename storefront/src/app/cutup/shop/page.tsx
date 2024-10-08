@@ -2,7 +2,7 @@
 import Image from "next/image"
 
 // Components
-import { Button, Layout, LayoutColumn, Link } from "components"
+import { Button, Layout, LayoutColumn, Link, Select } from "components"
 
 export default function ShopPage() {
   return (
@@ -12,9 +12,6 @@ export default function ShopPage() {
           <h2 className="text-2xl mb-6">Shop</h2>
           <div className="flex justify-between gap-10">
             <div className="flex justify-between gap-6">
-              <Button variant="ghost" iconName="sliders" className="px-2 gap-1">
-                Filters
-              </Button>
               <Button variant="ghost" className="px-2">
                 Price
               </Button>
@@ -31,14 +28,19 @@ export default function ShopPage() {
                 Seats
               </Button>
             </div>
-            <Button
-              variant="ghost"
-              iconName="chevron-down"
-              iconPosition="end"
-              className="px-2 gap-1 [&>svg]:w-6"
-            >
-              Sort
-            </Button>
+            <Select
+              name="Sort by"
+              options={{
+                sortBy: "Sort by",
+                featured: "Featured",
+                bestSelling: "Best selling",
+                lowestPrice: "Lowest price",
+                highestPrice: "Highest price",
+              }}
+              value="sortBy"
+              contentProps={{ align: "end" }}
+              onValueChange={() => console.log()}
+            />
           </div>
         </LayoutColumn>
       </Layout>
