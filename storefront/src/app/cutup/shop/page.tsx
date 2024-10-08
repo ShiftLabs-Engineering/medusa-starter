@@ -1,3 +1,5 @@
+"use client"
+
 // External components
 import Image from "next/image"
 
