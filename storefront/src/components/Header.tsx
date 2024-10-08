@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
         <LayoutColumn className="col-span-full">
           <div className="flex justify-between items-center h-21">
             <h1 className="font-medium text-md">
-              <Link href="/">SofaSocietyCo.</Link>
+              <Link href="/cutup">SofaSocietyCo.</Link>
             </h1>
             <div className="flex items-center gap-8">
               <Link href="/cutup/about">About</Link>
