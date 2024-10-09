@@ -68,7 +68,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                       onClick={scrollPrev}
                       disabled={prevBtnDisabled}
                       className={twJoin(
-                        "transition-opacity",
+                        "max-md:hidden transition-opacity",
                         prevBtnDisabled && "opacity-50"
                       )}
                     >
@@ -84,7 +84,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                       onClick={scrollNext}
                       disabled={nextBtnDisabled}
                       className={twJoin(
-                        "transition-opacity",
+                        "max-md:hidden transition-opacity",
                         nextBtnDisabled && "opacity-50"
                       )}
                     >
@@ -101,10 +101,10 @@ export const Carousel: React.FC<CarouselProps> = ({
             )}
           </div>
           <div ref={emblaRef}>
-            <div className="flex touch-pan-y gap-10">
+            <div className="flex touch-pan-y gap-4 md:gap-10">
               {React.Children.map(children, (child) => {
                 return (
-                  <div className="w-full sm:w-[60%] lg:w-full max-w-124 flex-shrink-0">
+                  <div className="w-[80%] sm:w-[60%] lg:w-full max-w-124 flex-shrink-0">
                     {child}
                   </div>
                 )
