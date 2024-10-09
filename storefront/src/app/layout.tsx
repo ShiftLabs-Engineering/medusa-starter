@@ -66,7 +66,7 @@ const monaSans = localFont({
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-mode="light">
+    <html lang="en" data-mode="light" className="antialiased">
       <body className={`${monaSans.className}`}>
         <main className="relative">{props.children}</main>
       </body>

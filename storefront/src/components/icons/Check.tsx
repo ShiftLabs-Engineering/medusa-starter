@@ -1,5 +1,5 @@
 // External packages
-import * as React from "react";
+import * as React from "react"
 
 export const Check: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   props
@@ -7,15 +7,14 @@ export const Check: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   <svg
     {...props}
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
     fill="none"
+    viewBox="0 0 24 24"
   >
     <path
-      d="M16.667 5 7.5 14.167 3.333 10"
       stroke="currentColor"
-      strokeLinecap="round"
+      strokeLinecap="square"
       strokeLinejoin="round"
-      strokeWidth="2"
+      d="M9.354 16.948 20 6.302l.354.353L9.177 17.832a.25.25 0 0 1-.354 0l-5.176-5.177.353-.353 4.647 4.646a.5.5 0 0 0 .707 0Z"
     />
   </svg>
-);
+)

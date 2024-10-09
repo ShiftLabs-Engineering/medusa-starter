@@ -9,7 +9,6 @@ import * as ReactAria from "react-aria-components"
 import { Icon, IconNames } from "./Icon"
 
 export type ButtonOwnProps = {
-  colorScheme?: "black" | "white"
   isFullWidth?: boolean
   iconName?: IconNames
   iconPosition?: "start" | "end"
@@ -22,7 +21,6 @@ export type ButtonOwnProps = {
 }
 
 export const getButtonClassNames = ({
-  colorScheme,
   isFullWidth,
   iconName,
   iconPosition,
@@ -34,7 +32,7 @@ export const getButtonClassNames = ({
   variant,
 }: ButtonOwnProps): string => {
   return twJoin(
-    "inline-flex items-center focus-visible:outline-none h-10 rounded-md justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed",
+    "inline-flex items-center focus-visible:outline-none rounded-xs justify-center transition-colors",
 
     // isFullWidth
     Boolean(isFullWidth) && "w-full",
@@ -45,6 +43,13 @@ export const getButtonClassNames = ({
 
     // Disabled
     (isVisuallyDisabled || isLoading) && "cursor-not-allowed",
+    isVisuallyDisabled &&
+      (variant === "ghost" || variant === "link" || variant == "unstyled") &&
+      "text-grayscale-200",
+    isVisuallyDisabled &&
+      variant === "outline" &&
+      "border-grayscale-200 text-grayscale-200",
+    isVisuallyDisabled && variant === "solid" && "bg-grayscale-200",
 
     // isLoading
     // iconName
@@ -52,26 +57,15 @@ export const getButtonClassNames = ({
       "gap-2",
 
     // size
-    size === "sm" && "px-5 py-1",
-    size === "md" && "px-6 py-2",
+    size === "sm" && "px-4 h-8 text-xs",
+    size === "md" && "px-6 h-12",
 
     // variant
-    colorScheme === "black" &&
-      ((variant === "ghost" && "text-grayscale-black hover:bg-grayscale-100") ||
-        (variant === "outline" &&
-          "text-grayscale-black hover:bg-grayscale-100 border border-grayscale-black") ||
-        (variant === "solid" && "bg-grayscale-black text-grayscale-white") ||
-        (variant === "link" && "text-grayscale-black hover:underline") ||
-        (variant === "unstyled" && "text-grayscale-black")),
-
-    colorScheme === "white" &&
-      ((variant === "ghost" && "text-grayscale-5 hover:text-grayscale-20") ||
-        (variant === "outline" &&
-          "text-grayscale-5 hover:text-grayscale-30 hover:border-grayscale-50 border border-text-grayscale-5") ||
-        (variant === "solid" &&
-          "bg-grayscale-5 hover:bg-grayscale-30 text-grayscale-black") ||
-        (variant === "link" && "text-grayscale-5 hover:underline") ||
-        (variant === "unstyled" && "text-grayscale-5"))
+    ((variant === "ghost" || variant === "link" || variant == "unstyled") &&
+      "text-black h-auto") ||
+      (variant === "outline" &&
+        "text-black hover:text-grayscale-500 hover:border-grayscale-500 border border-black") ||
+      (variant === "solid" && "bg-black hover:bg-grayscale-500 text-white")
   )
 }
 
@@ -80,7 +74,6 @@ export type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
   ReactAria.ButtonProps
 
 export const Button: React.FC<ButtonProps> = ({
-  colorScheme = "black",
   isFullWidth,
   iconName,
   iconPosition = "start",
@@ -99,7 +92,6 @@ export const Button: React.FC<ButtonProps> = ({
     type={type}
     className={twMerge(
       getButtonClassNames({
-        colorScheme,
         isFullWidth,
         iconName,
         iconPosition,

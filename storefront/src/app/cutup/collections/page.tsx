@@ -78,7 +78,7 @@ export default function CollectionsPage() {
             </div>
             <Button
               variant="ghost"
-              iconName="chevron"
+              iconName="chevron-down"
               iconPosition="end"
               className="px-2 gap-1 [&>svg]:w-6"
             >
@@ -99,8 +99,10 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Nordic Haven</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="mb-1">Nordic Haven</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
                 <p className="font-semibold">1000€</p>
@@ -119,8 +121,8 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Everly Estate</p>
-                <p className="text-gray text-xs">Timeless Classics</p>
+                <p className="mb-1">Everly Estate</p>
+                <p className="text-grayscale-500 text-xs">Timeless Classics</p>
               </div>
               <div>
                 <p className="font-semibold">3000€</p>
@@ -139,8 +141,8 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Paloma Haven</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="mb-1">Paloma Haven</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
                 <p className="font-semibold">1200€</p>
@@ -159,8 +161,8 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Serena Meadow</p>
-                <p className="text-gray text-xs">Boho Chic</p>
+                <p className="mb-1">Serena Meadow</p>
+                <p className="text-grayscale-500 text-xs">Boho Chic</p>
               </div>
               <div>
                 <p className="font-semibold">2000€</p>
@@ -179,8 +181,10 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Astrid Curve</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="mb-1">Astrid Curve</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
                 <p className="font-semibold">1800€</p>
@@ -199,11 +203,12 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Velora Luxe</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="mb-1">Velora Luxe</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
-                <p className="font-semibold">1200€</p>
+                <p className="font-semibold text-red-900">1200€</p>
+                <p className="text-grayscale-500 line-through">3000€</p>
               </div>
             </div>
           </Link>
@@ -219,8 +224,8 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Camden Retreat</p>
-                <p className="text-gray text-xs">Boho Chic</p>
+                <p className="mb-1">Camden Retreat</p>
+                <p className="text-grayscale-500 text-xs">Boho Chic</p>
               </div>
               <div>
                 <p className="font-semibold">1000€</p>
@@ -239,11 +244,14 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Oslo Drift</p>
-                <p className="text-gray text-xs">Scandinavian Simplicity</p>
+                <p className="mb-1">Oslo Drift</p>
+                <p className="text-grayscale-500 text-xs">
+                  Scandinavian Simplicity
+                </p>
               </div>
               <div>
-                <p className="font-semibold">2000€</p>
+                <p className="font-semibold text-red-900">2000€</p>
+                <p className="text-grayscale-500 line-through">3000€</p>
               </div>
             </div>
           </Link>
@@ -259,8 +267,8 @@ export default function CollectionsPage() {
             />
             <div className="flex justify-between">
               <div>
-                <p className="mb-0.5">Sutton Royale</p>
-                <p className="text-gray text-xs">Modern Luxe</p>
+                <p className="mb-1">Sutton Royale</p>
+                <p className="text-grayscale-500 text-xs">Modern Luxe</p>
               </div>
               <div>
                 <p className="font-semibold">2500€</p>
@@ -270,9 +278,9 @@ export default function CollectionsPage() {
         </LayoutColumn>
       </Layout>
       <Layout>
-        <LayoutColumn className="col-span-full">
+        <LayoutColumn>
           <div className="text-center">
-            <Button>View All</Button>
+            <Button className="h-10">View All</Button>
           </div>
         </LayoutColumn>
       </Layout>

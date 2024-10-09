@@ -38,10 +38,7 @@ const ProductTypesSection: React.FC<{ countryCode: string }> = async ({
         <LayoutColumn
           key={productType.id}
           start={index % 2 === 0 ? 1 : 7}
-          end={index % 2 === 0 ? 7 : 12}
-          className={
-            index % 2 === 0 ? "col-start-1 col-end-7" : "col-start-7 col-end-13"
-          }
+          end={index % 2 === 0 ? 7 : 13}
         >
           <Link href={`/${countryCode}/store?type=${productType.id}`}>
             {typeof productType.metadata?.image === "object" &&
@@ -142,12 +139,12 @@ export default async function Home({
       </div>
       <div className="pt-26 pb-36">
         <Layout className="mb-36">
-          <LayoutColumn start={1} end={8} className="col-start-1 col-end-8">
+          <LayoutColumn start={1} end={8}>
             <h3 className="text-2xl">
               Elevate Your Living Space with Unmatched Comfort & Style
             </h3>
           </LayoutColumn>
-          <LayoutColumn start={9} end={13} className="col-start-9 col-end-13">
+          <LayoutColumn start={9} end={13}>
             <div className="flex items-center h-full">
               <div className="text-md">
                 <p>Discover Your Perfect Sofa Today</p>
@@ -171,13 +168,13 @@ export default async function Home({
               className="mb-16"
             />
           </LayoutColumn>
-          <LayoutColumn className="col-start-1 col-end-7">
+          <LayoutColumn start={1} end={7}>
             <h2 className="text-3xl">
               At Sofa Society, we believe that a sofa is the heart of every
               home.
             </h2>
           </LayoutColumn>
-          <LayoutColumn className="col-start-8 col-end-13 mt-19">
+          <LayoutColumn start={8} end={13} className="mt-19">
             <div className="text-md">
               <p className="mb-9">
                 We are dedicated to delivering high-quality, thoughtfully

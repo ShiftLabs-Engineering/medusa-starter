@@ -21,7 +21,8 @@ export const SizePickerGroup: React.FC<SizePickerGroupProps> = ({
 }) => (
   <div>
     <p className="mb-4">
-      Size<span className="text-gray ml-4">{/* {selected} */}Name</span>
+      Size
+      <span className="text-grayscale-500 ml-4">{/* {selected} */}Name</span>
     </p>
     <ReactAria.RadioGroup
       {...rest}
@@ -41,7 +42,7 @@ export const SizePickerGroupItem: React.FC<
     {...rest}
     value={value}
     className={twMerge(
-      "cursor-pointer text-grayscale-black border-b border-transparent transition-colors data-[selected]:border-grayscale-80",
+      "cursor-pointer text-black border-b border-transparent transition-colors data-[selected]:border-grayscale-800",
       className
     )}
   >

@@ -1,5 +1,3 @@
-// TODO: Review this component.
-
 "use client"
 
 // External packages
@@ -11,22 +9,30 @@ import useEmblaCarousel from "embla-carousel-react"
 // Components
 import { Icon, IconCircle, Layout, LayoutColumn } from "./index"
 
+// Utils
+import useWindowSize from "@lib/hooks/useWindowSize"
+
 export type CarouselProps = {
   heading?: React.ReactNode
   button?: React.ReactNode
   arrows?: boolean
+  disableOnDesktop?: boolean
 } & React.ComponentPropsWithRef<"div">
 
 export const Carousel: React.FC<CarouselProps> = ({
   heading,
   button,
   arrows = true,
+  disableOnDesktop = false,
   children,
   className,
 }) => {
+  const { width } = useWindowSize()
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     containScroll: "trimSnaps",
     skipSnaps: true,
+    active: disableOnDesktop ? (width > 768 ? false : true) : true,
   })
   const [prevBtnDisabled, setPrevBtnDisabled] = React.useState(true)
   const [nextBtnDisabled, setNextBtnDisabled] = React.useState(true)
@@ -56,9 +62,9 @@ export const Carousel: React.FC<CarouselProps> = ({
     <div className={twMerge("overflow-hidden", className)}>
       <Layout>
         <LayoutColumn className="relative">
-          <div className="mb-16 flex flex-wrap justify-between items-center gap-x-10 gap-y-2">
+          <div className="mb-8 md:mb-16 flex flex-wrap justify-between items-center gap-x-10 gap-y-2">
             {heading}
-            {(arrows || button) && (
+            {(arrows || button) && !disableOnDesktop && (
               <div className="flex gap-2">
                 {button}
                 {arrows && (
@@ -68,12 +74,15 @@ export const Carousel: React.FC<CarouselProps> = ({
                       onClick={scrollPrev}
                       disabled={prevBtnDisabled}
                       className={twJoin(
-                        "transition-opacity",
+                        "max-md:hidden transition-opacity",
                         prevBtnDisabled && "opacity-50"
                       )}
                     >
                       <IconCircle>
-                        <Icon name="arrow-left" className="w-6" />
+                        <Icon
+                          name="arrow-left"
+                          className="w-6 h-6 text-black"
+                        />
                       </IconCircle>
                     </button>
                     <button
@@ -81,12 +90,15 @@ export const Carousel: React.FC<CarouselProps> = ({
                       onClick={scrollNext}
                       disabled={nextBtnDisabled}
                       className={twJoin(
-                        "transition-opacity",
+                        "max-md:hidden transition-opacity",
                         nextBtnDisabled && "opacity-50"
                       )}
                     >
                       <IconCircle>
-                        <Icon name="arrow-right" className="w-6" />
+                        <Icon
+                          name="arrow-right"
+                          className="w-6 h-6 text-black"
+                        />
                       </IconCircle>
                     </button>
                   </>
@@ -95,10 +107,20 @@ export const Carousel: React.FC<CarouselProps> = ({
             )}
           </div>
           <div ref={emblaRef}>
-            <div className="flex touch-pan-y gap-10">
+            <div
+              className={twJoin(
+                "flex touch-pan-y gap-4 md:gap-10",
+                disableOnDesktop && "md:gap-6"
+              )}
+            >
               {React.Children.map(children, (child) => {
                 return (
-                  <div className="w-full sm:w-[60%] lg:w-full max-w-124 flex-shrink-0">
+                  <div
+                    className={twJoin(
+                      "w-[80%] sm:w-[60%] lg:w-full max-w-124 flex-shrink-0",
+                      disableOnDesktop && width > 768 && "max-w-full flex-1"
+                    )}
+                  >
                     {child}
                   </div>
                 )
