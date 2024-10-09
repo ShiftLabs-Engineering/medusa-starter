@@ -69,7 +69,7 @@ export default function ShopPage() {
             <Button
               iconName="plus"
               iconPosition="end"
-              className="bg-white border px-4 hover:bg-white border-grayscale-200 h-auto flex-1 grow-0 text-black"
+              className="bg-white md:hidden border px-4 hover:bg-white border-grayscale-200 h-auto flex-1 grow-0 text-black"
             >
               Filter
             </Button>
@@ -107,7 +107,7 @@ export default function ShopPage() {
         </LayoutColumn>
       </Layout>
       <Layout className="gap-y-10 md:gap-y-16 mb-16 md:mb-20">
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop1.png"
@@ -129,7 +129,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop2.png"
@@ -151,7 +151,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop3.png"
@@ -173,7 +173,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop4.png"
@@ -195,7 +195,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop5.png"
@@ -217,7 +217,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop6.png"
@@ -239,7 +239,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop7.png"
@@ -261,7 +261,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop8.png"
@@ -283,7 +283,7 @@ export default function ShopPage() {
             </div>
           </Link>
         </LayoutColumn>
-        <LayoutColumn className="md:col-span-4 !col-span-6">
+        <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
               src="/images/content/shop9.png"
