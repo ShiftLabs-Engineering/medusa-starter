@@ -278,7 +278,7 @@ export default function CollectionsPage() {
         </LayoutColumn>
       </Layout>
       <Layout>
-        <LayoutColumn className="col-span-full">
+        <LayoutColumn>
           <div className="text-center">
             <Button className="h-10">View All</Button>
           </div>

@@ -236,7 +236,7 @@ export default function ShopPage() {
         </LayoutColumn>
       </Layout>
       <Layout>
-        <LayoutColumn className="col-span-full">
+        <LayoutColumn>
           <div className="text-center">
             <Button>View All</Button>
           </div>
