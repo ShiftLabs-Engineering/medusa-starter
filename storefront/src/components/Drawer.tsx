@@ -1,6 +1,5 @@
 // External components
 import * as React from "react"
-import { useSwipeable } from "react-swipeable"
 
 // Components
 import { Icon } from "./"
@@ -10,7 +9,6 @@ export interface DrawerProps extends React.ComponentPropsWithoutRef<"div"> {
   isOpened?: boolean
   onCloseClick?: () => void
   onBackdropClick?: () => void
-  onSwipeRight?: () => void
 }
 
 export const Drawer: React.FC<DrawerProps> = ({
@@ -18,24 +16,17 @@ export const Drawer: React.FC<DrawerProps> = ({
   isOpened,
   onCloseClick,
   onBackdropClick,
-  onSwipeRight,
   ...rest
 }) => {
-  const swipeHandlers = useSwipeable({
-    onSwipedRight: onSwipeRight,
-    trackMouse: true,
-  })
-
   return (
     <>
       <div
-        {...swipeHandlers}
         {...rest}
         className={twMerge(
-          "flex-col items-center bg-white top-0 right-0 z-50 fixed justify-self-center w-full max-h-screen h-screen max-w-93",
+          "flex-col items-center bg-black top-0 left-0 z-50 fixed justify-self-center w-full max-h-screen h-screen max-w-75",
           isOpened
             ? "opacity-100 visible translate-x-0"
-            : "opacity-0 invisible translate-x-full"
+            : "opacity-0 invisible -translate-x-full"
         )}
         style={{
           transition: isOpened
@@ -43,15 +34,15 @@ export const Drawer: React.FC<DrawerProps> = ({
             : "transform 300ms, opacity 200ms, visibility 100ms",
         }}
       >
-        <button className="absolute top-12 right-12" onClick={onCloseClick}>
-          <Icon name="close" className="w-6" />
+        <button className="absolute top-6 right-8" onClick={onCloseClick}>
+          <Icon name="close" className="w-6 text-white" />
         </button>
-        <div className="w-full overflow-y-scroll p-12">{children}</div>
+        <div className="w-full overflow-y-scroll h-full">{children}</div>
       </div>
       <div
         onClick={onBackdropClick}
         className={twJoin(
-          "w-full h-full  fixed top-0 left-0 z-40 bg-black duration-300",
+          "w-full h-full fixed top-0 right-0 z-40 bg-black duration-300",
           isOpened ? "visible opacity-10" : "invisible opacity-0"
         )}
       />
