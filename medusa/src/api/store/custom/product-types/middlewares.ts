@@ -1,10 +1,12 @@
 import * as QueryConfig from './query-config';
-import { MiddlewareRoute } from '@medusajs/framework/http';
+import {
+  MiddlewareRoute,
+  validateAndTransformQuery,
+} from '@medusajs/framework/http';
 import {
   AdminGetProductTypeParams,
   AdminGetProductTypesParams,
 } from './validators';
-import { validateAndTransformQuery } from '@medusajs/medusa/api/utils/validate-query';
 
 export const adminProductTypeRoutesMiddlewares: MiddlewareRoute[] = [
   {
