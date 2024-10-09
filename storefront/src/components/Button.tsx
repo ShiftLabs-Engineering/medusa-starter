@@ -62,7 +62,7 @@ export const getButtonClassNames = ({
 
     // variant
     ((variant === "ghost" || variant === "link" || variant == "unstyled") &&
-      "text-black") ||
+      "text-black h-auto") ||
       (variant === "outline" &&
         "text-black hover:text-grayscale-500 hover:border-grayscale-500 border border-black") ||
       (variant === "solid" && "bg-black hover:bg-grayscale-500 text-white")
