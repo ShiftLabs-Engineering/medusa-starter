@@ -1,7 +1,10 @@
 import { refetchProductType } from '../helpers';
 import { AdminGetProductTypeParamsType } from '../validators';
 import { HttpTypes } from '@medusajs/framework/types';
-import { AuthenticatedMedusaRequest, MedusaResponse } from '@medusajs/medusa';
+import {
+  AuthenticatedMedusaRequest,
+  MedusaResponse,
+} from '@medusajs/framework';
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<AdminGetProductTypeParamsType>,
