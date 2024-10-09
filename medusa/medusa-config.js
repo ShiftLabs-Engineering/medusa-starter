@@ -30,5 +30,8 @@ module.exports = defineConfig({
         ],
       },
     },
+    fashionModuleService: {
+      resolve: './modules/fashion',
+    },
   },
 });
