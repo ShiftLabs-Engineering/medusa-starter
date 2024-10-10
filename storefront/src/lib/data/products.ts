@@ -53,8 +53,9 @@ export const getProductsList = cache(async function ({
   nextPage: number | null
   queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
 }> {
+  const page = Math.max(1, pageParam || 1)
   const limit = queryParams?.limit || 12
-  const offset = (pageParam - 1) * limit
+  const offset = (page - 1) * limit
   const region = await getRegion(countryCode)
 
   if (!region) {
@@ -75,7 +76,7 @@ export const getProductsList = cache(async function ({
       { next: { tags: ["products"] } }
     )
     .then(({ products, count }) => {
-      const nextPage = count > offset + limit ? pageParam + 1 : null
+      const nextPage = count > offset + limit ? page + 1 : null
 
       return {
         response: {
