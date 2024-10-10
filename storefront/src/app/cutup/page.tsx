@@ -77,7 +77,7 @@ export default function HomePage() {
           }
           className="mb-26 md:mb-36"
         >
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/scandinavian-simplicity.png"
               width={992}
@@ -90,7 +90,7 @@ export default function HomePage() {
               Minimalistic designs, neutral colors, and high-quality textures
             </p>
           </Link>
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/modern-luxe.png"
               width={992}
@@ -104,7 +104,7 @@ export default function HomePage() {
               luxurious comfort
             </p>
           </Link>
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/scandinavian-simplicity.png"
               width={992}
@@ -118,7 +118,7 @@ export default function HomePage() {
               vibes.
             </p>
           </Link>
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/modern-luxe.png"
               width={992}
@@ -132,7 +132,7 @@ export default function HomePage() {
               luxurious comfort
             </p>
           </Link>
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/scandinavian-simplicity.png"
               width={992}
@@ -157,7 +157,7 @@ export default function HomePage() {
               width={2496}
               height={1400}
               alt="Sofa"
-              className="mb-8 md:mb-16 aspect-[2/3] object-cover"
+              className="mb-8 md:mb-16 max-md:aspect-[3/2] object-cover"
             />
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 13, md: 7 }}>

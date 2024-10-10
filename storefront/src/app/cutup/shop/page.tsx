@@ -21,7 +21,7 @@ export default function ShopPage() {
         className="mb-26 md:mb-36"
         disableOnDesktop
       >
-        <Link href="/cutup/collections">
+        <Link href="/cutup/collection">
           <Image
             src="/images/content/scandinavian-simplicity.png"
             width={992}
@@ -31,7 +31,7 @@ export default function ShopPage() {
           />
           <h3>Scandinavian Simplicity</h3>
         </Link>
-        <Link href="/cutup/collections">
+        <Link href="/cutup/collection">
           <Image
             src="/images/content/modern-luxe.png"
             width={992}
@@ -41,7 +41,7 @@ export default function ShopPage() {
           />
           <h3>Modern Luxe</h3>
         </Link>
-        <Link href="/cutup/collections">
+        <Link href="/cutup/collection">
           <Image
             src="/images/content/scandinavian-simplicity.png"
             width={992}
@@ -51,7 +51,7 @@ export default function ShopPage() {
           />
           <h3>Boho Chic</h3>
         </Link>
-        <Link href="/cutup/collections">
+        <Link href="/cutup/collection">
           <Image
             src="/images/content/modern-luxe.png"
             width={992}
