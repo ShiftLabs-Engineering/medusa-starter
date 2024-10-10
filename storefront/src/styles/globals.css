@@ -3,6 +3,10 @@
 @import "tailwindcss/utilities";
 
 @layer base {
+  html {
+    @apply text-black;
+  }
+
   h1,
   h2,
   h3,
