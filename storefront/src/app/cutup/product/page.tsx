@@ -14,55 +14,10 @@ import {
   Link,
   NumberField,
   ProductPageGallery,
-  SizePickerGroup,
 } from "components"
 import { Form } from "components/Form/Form"
 
 export default function ProductPage() {
-  const colors = [
-    {
-      name: "Lumea",
-      colors: [
-        { name: "1", hex: "#A2A2A2" },
-        { name: "2", hex: "#353535" },
-        { name: "3", hex: "#E8E8E8" },
-      ],
-    },
-    {
-      name: "Belano",
-      colors: [
-        { name: "1", hex: "#AF1A1C" },
-        { name: "2", hex: "#AC7E4D" },
-        { name: "3", hex: "#353535" },
-      ],
-    },
-    {
-      name: "Viaro",
-      colors: [
-        { name: "1", hex: "#EEB12D" },
-        { name: "2", hex: "#BB6930" },
-        { name: "3", hex: "#7C3E07" },
-      ],
-    },
-    {
-      name: "Tessaro",
-      colors: [
-        { name: "1", hex: "#7D4E82" },
-        { name: "2", hex: "#A57746" },
-        { name: "3", hex: "#353535" },
-      ],
-    },
-    {
-      name: "Modello",
-      colors: [
-        { name: "1", hex: "#80AF83" },
-        { name: "2", hex: "#353535" },
-        { name: "3", hex: "#243C26" },
-      ],
-    },
-  ]
-  const sizes = ["One Seater", "Two Seater", "Three Seater"]
-
   const productPageSchema = z.object({
     color: z.object({
       name: z.string(),
@@ -108,13 +63,7 @@ export default function ProductPage() {
                   Scandinavian elegance to your living room.
                 </p>
               </div>
-              <ColorPicker materials={colors} name="color" className="mb-12" />
-              <SizePickerGroup
-                data={sizes}
-                defaultValue={sizes[0]}
-                name="size"
-                className="mb-12"
-              />
+              <ColorPicker name="color" className="mb-12" />
               <div className="flex gap-4 mb-6">
                 <NumberField defaultValue={1} minValue={1} className="w-35" />
                 <Button className="flex-1">Add to cart</Button>

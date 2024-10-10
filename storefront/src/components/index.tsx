@@ -13,7 +13,6 @@ import { LayoutColumn } from "./Layout"
 import { Link } from "./Link"
 import { ProductPageGallery } from "./ProductPageGallery"
 import { Select } from "./Select"
-import { SizePickerGroup } from "./SizePickerGroup"
 
 export {
   Button,
@@ -33,5 +32,4 @@ export {
   NumberField,
   ProductPageGallery,
   Select,
-  SizePickerGroup,
 }

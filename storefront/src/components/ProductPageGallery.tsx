@@ -64,12 +64,14 @@ export const ProductPageGallery: React.FC<
           type="button"
           onClick={scrollPrev}
           disabled={prevBtnDisabled}
-          className={twJoin(
-            "transition-opacity absolute left-4 z-10",
-            prevBtnDisabled && "opacity-50"
-          )}
+          className="transition-opacity absolute left-4 z-10"
         >
-          <IconCircle>
+          <IconCircle
+            className={twJoin(
+              "bg-black text-white transition-colors",
+              prevBtnDisabled && "bg-transparent text-black"
+            )}
+          >
             <Icon name="arrow-left" className="w-6" />
           </IconCircle>
         </button>
@@ -86,12 +88,14 @@ export const ProductPageGallery: React.FC<
           type="button"
           onClick={scrollNext}
           disabled={nextBtnDisabled}
-          className={twJoin(
-            "transition-opacity absolute right-4 z-10",
-            nextBtnDisabled && "opacity-50"
-          )}
+          className="transition-opacity absolute right-4 z-10"
         >
-          <IconCircle>
+          <IconCircle
+            className={twJoin(
+              "bg-black text-white transition-colors",
+              nextBtnDisabled && "bg-transparent text-black"
+            )}
+          >
             <Icon name="arrow-right" className="w-6" />
           </IconCircle>
         </button>
@@ -101,12 +105,12 @@ export const ProductPageGallery: React.FC<
           <button
             key={index}
             onClick={() => onDotButtonClick(index)}
-            className="px-2"
+            className="px-1.5"
           >
             <span
-              className={twJoin(
-                "bg-gradient-to-r from-current to-current text-current bg-[0%_100%] bg-no-repeat bg-[length:0%0.0625rem] transition-[background-size]",
-                index === selectedIndex && "bg-[length:100%0.0625rem]"
+              className={twMerge(
+                "border-b border-transparent transition-colors pb-0.5 px-0.5",
+                index === selectedIndex && "border-black"
               )}
             >
               {index + 1}
