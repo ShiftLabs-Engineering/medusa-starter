@@ -3,9 +3,12 @@
 // External components
 import * as React from "react"
 import { usePathname } from "next/navigation"
+import { twJoin } from "tailwind-merge"
+
+// Modules
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 // Components
-import { twJoin } from "tailwind-merge"
 import { Button, Drawer, Icon, Input, Layout, LayoutColumn, Link } from "./"
 
 interface HeaderProps {
@@ -68,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
                 </svg>
                 EUR
               </Button>
-              <Button
+              {/* <Button
                 variant="ghost"
                 className={twJoin(
                   "p-1",
@@ -76,27 +79,31 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
                 )}
               >
                 <Icon name="user" className="w-6 h-6" />
-              </Button>
-              <Button
-                variant="ghost"
-                className={twJoin(
-                  "p-1",
-                  pathNameParts.length < 2 && "text-white"
-                )}
-              >
-                <Icon name="case" className="w-6 h-6" />
-              </Button>
+              </Button> */}
+              <LocalizedClientLink href="/cart">
+                <Button
+                  variant="ghost"
+                  className={twJoin(
+                    "p-1",
+                    pathNameParts.length < 2 && "text-white"
+                  )}
+                >
+                  <Icon name="case" className="w-6 h-6" />
+                </Button>
+              </LocalizedClientLink>
             </div>
             <div className="flex items-center gap-7 md:hidden">
-              <Button
-                variant="ghost"
-                className={twJoin(
-                  "p-1",
-                  pathNameParts.length < 2 && "text-white"
-                )}
-              >
-                <Icon name="case" className="w-6 h-6" />
-              </Button>
+              <LocalizedClientLink href="/cart">
+                <Button
+                  variant="ghost"
+                  className={twJoin(
+                    "p-1",
+                    pathNameParts.length < 2 && "text-white"
+                  )}
+                >
+                  <Icon name="case" className="w-6 h-6" />
+                </Button>
+              </LocalizedClientLink>
               <Button
                 variant="ghost"
                 className={twJoin(
