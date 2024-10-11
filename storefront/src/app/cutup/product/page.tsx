@@ -102,7 +102,7 @@ export default function ProductPage() {
           The Paloma Haven sofa is a masterpiece of minimalism and luxury.
         </h3>
         <p className="text-md">
-          <Link href="/cutup/collection" variant="underline">
+          <Link href="/cutup/collections" variant="underline">
             See more out of &apos;Modern Luxe&apos; collection
           </Link>
         </p>
