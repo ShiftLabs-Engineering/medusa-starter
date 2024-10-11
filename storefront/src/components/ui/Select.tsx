@@ -70,7 +70,7 @@ export const UiSelectListBoxItem: React.FC<ListBoxItemProps> = ({
   <ListBoxItem
     {...props}
     className={twMerge(
-      "cursor-pointer px-4 py-3 focus-visible:outline-none data-[selected]:font-semibold",
+      "cursor-pointer px-4 py-3 focus-visible:outline-none data-[selected]:font-semibold hover:bg-grayscale-50 transition-colors",
       className as string
     )}
   />
