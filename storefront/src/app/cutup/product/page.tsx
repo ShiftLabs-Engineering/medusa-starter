@@ -63,7 +63,7 @@ export default function ProductPage() {
                   Scandinavian elegance to your living room.
                 </p>
               </div>
-              <ColorPicker name="color" className="mb-12" />
+              <ColorPicker className="mb-12" />
               <div className="flex gap-4 mb-6">
                 <NumberField defaultValue={1} minValue={1} className="w-35" />
                 <Button className="flex-1">Add to cart</Button>
