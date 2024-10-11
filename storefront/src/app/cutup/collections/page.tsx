@@ -3,11 +3,11 @@ import Image from "next/image"
 
 // Components
 import { Layout, LayoutColumn, Link } from "components"
-import { FilterPrice } from "./FilterPrice"
-import { FilterColor } from "./FilterColor"
-import { FilterMaterial } from "./FilterMaterial"
-import { FilterCollection } from "./FilterCollection"
-import { Sort } from "./Sort"
+import { FilterProductsByPrice } from "@/components/FilterProductsByPrice"
+import { FilterProductsByColor } from "@/components/FilterProductsByColor"
+import { FilterProductsByMaterial } from "@/components/FilterProductsByMaterial"
+import { FilterProductsByCollection } from "@/components/FilterProductsByCollection"
+import { SortProducts } from "@/components/SortProducts"
 
 export default function CollectionsPage() {
   return (
@@ -48,12 +48,12 @@ export default function CollectionsPage() {
             </h2>
             <div className="flex justify-between gap-10">
               <div className="flex justify-between gap-4">
-                <FilterPrice />
-                <FilterColor />
-                <FilterMaterial />
-                <FilterCollection />
+                <FilterProductsByPrice />
+                <FilterProductsByColor />
+                <FilterProductsByMaterial />
+                <FilterProductsByCollection />
               </div>
-              <Sort />
+              <SortProducts />
             </div>
           </LayoutColumn>
         </Layout>

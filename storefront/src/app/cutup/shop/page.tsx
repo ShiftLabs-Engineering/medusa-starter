@@ -4,14 +4,12 @@
 import Image from "next/image"
 
 // Components
-import {
-  Button,
-  Carousel,
-  Layout,
-  LayoutColumn,
-  Link,
-  Select,
-} from "components"
+import { Button, Carousel, Layout, LayoutColumn, Link } from "components"
+import { FilterProductsByPrice } from "@/components/FilterProductsByPrice"
+import { FilterProductsByColor } from "@/components/FilterProductsByColor"
+import { FilterProductsByMaterial } from "@/components/FilterProductsByMaterial"
+import { FilterProductsByCollection } from "@/components/FilterProductsByCollection"
+import { SortProducts } from "@/components/SortProducts"
 
 export default function ShopPage() {
   return (
@@ -73,36 +71,13 @@ export default function ShopPage() {
             >
               Filter
             </Button>
-            <div className="flex justify-between gap-6 max-md:hidden">
-              <Button variant="ghost" className="px-2">
-                Price
-              </Button>
-              <Button variant="ghost" className="px-2">
-                Color
-              </Button>
-              <Button variant="ghost" className="px-2">
-                Materials
-              </Button>
-              <Button variant="ghost" className="px-2">
-                Collection
-              </Button>
-              <Button variant="ghost" className="px-2">
-                Seats
-              </Button>
+            <div className="flex justify-between gap-4 max-md:hidden">
+              <FilterProductsByPrice />
+              <FilterProductsByColor />
+              <FilterProductsByMaterial />
+              <FilterProductsByCollection />
             </div>
-            <Select
-              name="Sort by"
-              options={{
-                sortBy: "Sort by",
-                featured: "Featured",
-                bestSelling: "Best selling",
-                lowestPrice: "Lowest price",
-                highestPrice: "Highest price",
-              }}
-              value="sortBy"
-              contentProps={{ align: "end" }}
-              onValueChange={() => console.log()}
-            />
+            <SortProducts />
           </div>
         </LayoutColumn>
       </Layout>

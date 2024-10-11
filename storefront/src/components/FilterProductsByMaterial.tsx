@@ -13,13 +13,13 @@ import {
   UiSelectButton,
   UiSelectDialog,
   UiSelectIcon,
-} from "components/ui/Select"
+} from "@/components/ui/Select"
 import {
   UiCheckbox,
   UiCheckboxBox,
   UiCheckboxIcon,
   UiCheckboxLabel,
-} from "components/ui/Checkbox"
+} from "@/components/ui/Checkbox"
 
 export const FilterProductsByMaterial: React.FC<
   Omit<DialogTriggerProps, "children">
