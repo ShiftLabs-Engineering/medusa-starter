@@ -2,7 +2,12 @@
 import Image from "next/image"
 
 // Components
-import { Button, Layout, LayoutColumn, Link } from "components"
+import { Layout, LayoutColumn, Link } from "components"
+import { FilterPrice } from "./FilterPrice"
+import { FilterColor } from "./FilterColor"
+import { FilterMaterial } from "./FilterMaterial"
+import { FilterCollection } from "./FilterCollection"
+import { Sort } from "./Sort"
 
 export default function CollectionsPage() {
   return (
@@ -42,31 +47,13 @@ export default function CollectionsPage() {
               Scandinavian Simplicity
             </h2>
             <div className="flex justify-between gap-10">
-              <div className="flex justify-between gap-6">
-                <Button variant="ghost" className="px-2">
-                  Price
-                </Button>
-                <Button variant="ghost" className="px-2">
-                  Color
-                </Button>
-                <Button variant="ghost" className="px-2">
-                  Materials
-                </Button>
-                <Button variant="ghost" className="px-2">
-                  Collection
-                </Button>
-                <Button variant="ghost" className="px-2">
-                  Seats
-                </Button>
+              <div className="flex justify-between gap-4">
+                <FilterPrice />
+                <FilterColor />
+                <FilterMaterial />
+                <FilterCollection />
               </div>
-              <Button
-                variant="ghost"
-                iconName="chevron-down"
-                iconPosition="end"
-                className="px-2 gap-1 [&>svg]:w-6"
-              >
-                Sort
-              </Button>
+              <Sort />
             </div>
           </LayoutColumn>
         </Layout>
