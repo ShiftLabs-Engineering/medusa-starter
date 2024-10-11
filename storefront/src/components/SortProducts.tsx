@@ -12,11 +12,13 @@ import {
   UiSelectValue,
 } from "components/ui/Select"
 
-export const Sort = <T extends object>({ ...props }: SelectProps<T>) => (
+export const SortProducts = <T extends object>({
+  ...props
+}: SelectProps<T>) => (
   <Select {...props} placeholder="Sort by" className="w-42">
     <UiSelectButton>
       <UiSelectValue />
-      <UiSelectIcon aria-hidden="true" />
+      <UiSelectIcon />
     </UiSelectButton>
     <Popover className="w-[--trigger-width]">
       <UiSelectListBox>

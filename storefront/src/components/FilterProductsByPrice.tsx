@@ -21,13 +21,13 @@ import {
   UiSliderTrack,
 } from "components/ui/Slider"
 
-export const FilterPrice: React.FC<Omit<DialogTriggerProps, "children">> = ({
-  ...props
-}) => (
+export const FilterProductsByPrice: React.FC<
+  Omit<DialogTriggerProps, "children">
+> = ({ ...props }) => (
   <DialogTrigger {...props}>
     <UiSelectButton className="w-25">
       <span>Price</span>
-      <UiSelectIcon aria-hidden="true" />
+      <UiSelectIcon />
     </UiSelectButton>
     <Popover className="w-60" crossOffset={70}>
       <UiSelectDialog className="pt-6 pb-4 px-6">

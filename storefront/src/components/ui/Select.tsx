@@ -36,6 +36,7 @@ export const UiSelectIcon: React.FC<
   <Icon
     {...props}
     name={name}
+    aria-hidden="true"
     className={twMerge("w-6 h-6 text-grayscale-500", className)}
   />
 )

@@ -21,13 +21,13 @@ import {
   UiCheckboxLabel,
 } from "components/ui/Checkbox"
 
-export const FilterColor: React.FC<Omit<DialogTriggerProps, "children">> = ({
-  ...props
-}) => (
+export const FilterProductsByColor: React.FC<
+  Omit<DialogTriggerProps, "children">
+> = ({ ...props }) => (
   <DialogTrigger {...props}>
     <UiSelectButton className="w-25">
       <span>Color</span>
-      <UiSelectIcon aria-hidden="true" />
+      <UiSelectIcon />
     </UiSelectButton>
     <Popover className="w-60" crossOffset={70}>
       <UiSelectDialog>

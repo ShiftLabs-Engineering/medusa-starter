@@ -21,40 +21,40 @@ import {
   UiCheckboxLabel,
 } from "components/ui/Checkbox"
 
-export const FilterCollection: React.FC<
+export const FilterProductsByMaterial: React.FC<
   Omit<DialogTriggerProps, "children">
 > = ({ ...props }) => (
   <DialogTrigger {...props}>
     <UiSelectButton className="w-35">
-      <span>Collection</span>
-      <UiSelectIcon aria-hidden="true" />
+      <span>Materials</span>
+      <UiSelectIcon />
     </UiSelectButton>
-    <Popover className="w-64" crossOffset={58}>
+    <Popover className="w-60" crossOffset={50}>
       <UiSelectDialog>
         <CheckboxGroup>
-          <UiCheckbox value="scandinavian-simplicity">
+          <UiCheckbox value="velvet">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
-            <UiCheckboxLabel>Scandinavian Simplicity</UiCheckboxLabel>
+            <UiCheckboxLabel>Velvet</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="modern-luxe">
+          <UiCheckbox value="linen">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
-            <UiCheckboxLabel>Modern Luxe</UiCheckboxLabel>
+            <UiCheckboxLabel>Linen</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="boho-chic">
+          <UiCheckbox value="boucle">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
-            <UiCheckboxLabel>Boho Chic</UiCheckboxLabel>
+            <UiCheckboxLabel>Boucle</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="timeless-classics">
+          <UiCheckbox value="leather">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
-            <UiCheckboxLabel>Timeless Classics</UiCheckboxLabel>
+            <UiCheckboxLabel>Leather</UiCheckboxLabel>
           </UiCheckbox>
         </CheckboxGroup>
       </UiSelectDialog>
