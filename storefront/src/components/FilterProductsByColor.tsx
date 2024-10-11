@@ -32,25 +32,25 @@ export const FilterProductsByColor: React.FC<
     <Popover className="w-60" crossOffset={70}>
       <UiSelectDialog>
         <CheckboxGroup>
-          <UiCheckbox value="black">
+          <UiCheckbox value="black" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Black</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="gray">
+          <UiCheckbox value="gray" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Gray</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="white">
+          <UiCheckbox value="white" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>White</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="red">
+          <UiCheckbox value="red" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>

@@ -32,25 +32,25 @@ export const FilterProductsByMaterial: React.FC<
     <Popover className="w-60" crossOffset={50}>
       <UiSelectDialog>
         <CheckboxGroup>
-          <UiCheckbox value="velvet">
+          <UiCheckbox value="velvet" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Velvet</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="linen">
+          <UiCheckbox value="linen" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Linen</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="boucle">
+          <UiCheckbox value="boucle" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Boucle</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="leather">
+          <UiCheckbox value="leather" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>

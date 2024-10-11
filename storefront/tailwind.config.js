@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     colors: {
       black: "#050505",
+      "black-10%": "rgba(5, 5, 5, 0.1)",
       white: "#FDFDFD",
       grayscale: {
         800: "#1F1F20",
@@ -79,6 +80,9 @@ module.exports = {
         93: "23.25rem",
         120: "30rem",
         124: "31rem",
+      },
+      borderWidth: {
+        6: "6px",
       },
       transitionProperty: {
         drawerOpen: "transform 500ms, opacity .9s, visibility .9s",

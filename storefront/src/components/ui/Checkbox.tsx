@@ -13,7 +13,7 @@ export const UiCheckbox: React.FC<CheckboxProps> = ({
   <Checkbox
     {...props}
     className={twMerge(
-      "flex gap-2 group cursor-pointer items-center py-3 px-4",
+      "flex gap-2 group cursor-pointer items-center",
       className as string
     )}
   />

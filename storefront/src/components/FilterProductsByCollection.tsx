@@ -32,25 +32,25 @@ export const FilterProductsByCollection: React.FC<
     <Popover className="w-64" crossOffset={58}>
       <UiSelectDialog>
         <CheckboxGroup>
-          <UiCheckbox value="scandinavian-simplicity">
+          <UiCheckbox value="scandinavian-simplicity" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Scandinavian Simplicity</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="modern-luxe">
+          <UiCheckbox value="modern-luxe" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Modern Luxe</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="boho-chic">
+          <UiCheckbox value="boho-chic" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
             <UiCheckboxLabel>Boho Chic</UiCheckboxLabel>
           </UiCheckbox>
-          <UiCheckbox value="timeless-classics">
+          <UiCheckbox value="timeless-classics" className="py-3 px-4">
             <UiCheckboxBox>
               <UiCheckboxIcon />
             </UiCheckboxBox>
