@@ -62,13 +62,13 @@ export const Carousel: React.FC<CarouselProps> = ({
     <div className={twMerge("overflow-hidden", className)}>
       <Layout>
         <LayoutColumn className="relative">
-          <div className="mb-8 md:mb-16 flex flex-wrap justify-between items-center gap-x-10 gap-y-2">
+          <div className="mb-8 md:mb-15 flex flex-wrap justify-between items-center gap-x-10 gap-y-2">
             {heading}
             {(arrows || button) && !disableOnDesktop && (
-              <div className="flex gap-2">
+              <div className="flex md:gap-6">
                 {button}
                 {arrows && (
-                  <>
+                  <div className="flex gap-2">
                     <button
                       type="button"
                       onClick={scrollPrev}
@@ -101,7 +101,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                         />
                       </IconCircle>
                     </button>
-                  </>
+                  </div>
                 )}
               </div>
             )}
@@ -117,7 +117,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                 return (
                   <div
                     className={twJoin(
-                      "w-[80%] sm:w-[60%] lg:w-full max-w-124 flex-shrink-0",
+                      "w-[70%] sm:w-[60%] lg:w-full max-w-124 flex-shrink-0",
                       disableOnDesktop && width > 768 && "max-w-full flex-1"
                     )}
                   >
