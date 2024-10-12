@@ -4,6 +4,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 import { twJoin } from "tailwind-merge"
+import { Popover, Select } from "react-aria-components"
 
 // Modules
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -11,14 +12,17 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 // Components
 import { Button, Drawer, Icon, Input, Layout, LayoutColumn, Link } from "./"
 
-interface HeaderProps {
-  colorScheme?: "black" | "white"
-}
+// Components
+import {
+  UiSelectButton,
+  UiSelectIcon,
+  UiSelectListBox,
+  UiSelectListBoxItem,
+  UiSelectValue,
+} from "@/components/ui/Select"
 
-export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
+export function Header() {
   const pathName = usePathname()
-
-  const pathNameParts = pathName.split("/").filter((part) => part !== "")
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
@@ -26,14 +30,16 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
     <div
       className={twJoin(
         "absolute top-0 left-0 w-full",
-        colorScheme === "black" && pathNameParts.length > 1
-          ? "text-black"
-          : "text-white"
+        (pathName === "/cutup" ||
+          pathName === "/cutup/about" ||
+          pathName === "/cutup/inspiration" ||
+          pathName === "/cutup/collection") &&
+          "md:text-white"
       )}
     >
       <Layout>
         <LayoutColumn>
-          <div className="flex justify-between items-center h-21">
+          <div className="flex justify-between items-center h-18 md:h-21">
             <h1 className="font-medium text-md">
               <Link href="/cutup">SofaSocietyCo.</Link>
             </h1>
@@ -43,39 +49,39 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
               <Link href="/cutup/shop">Shop</Link>
             </div>
             <div className="flex items-center gap-3 lg:gap-6 max-md:hidden">
+              <Select defaultSelectedKey="hr" className="w-16">
+                <UiSelectButton className="bg-transparent border-0 h-auto gap-0 p-1 w-full">
+                  <UiSelectValue />
+                  <UiSelectIcon className="text-current" />
+                </UiSelectButton>
+                <Popover className="max-w-61 w-full">
+                  <UiSelectListBox>
+                    <UiSelectListBoxItem id="hr">HR</UiSelectListBoxItem>
+                    <UiSelectListBoxItem>Afghanistan</UiSelectListBoxItem>
+                    <UiSelectListBoxItem>Albania</UiSelectListBoxItem>
+                    <UiSelectListBoxItem>Algeria</UiSelectListBoxItem>
+                    <UiSelectListBoxItem>Andorra</UiSelectListBoxItem>
+                  </UiSelectListBox>
+                </Popover>
+              </Select>
               <Button
                 variant="ghost"
                 className={twJoin(
                   "p-1",
-                  pathNameParts.length < 2 && "text-white"
+                  (pathName === "/cutup" ||
+                    pathName === "/cutup/about" ||
+                    pathName === "/cutup/inspiration" ||
+                    pathName === "/cutup/collection") &&
+                    "md:text-white"
                 )}
               >
-                <Icon name="search" className="w-6 h-6" />
-              </Button>
-              <Button
-                variant="ghost"
-                className={twJoin(
-                  "p-1 uppercase flex",
-                  pathNameParts.length < 2 && "text-white"
-                )}
-              >
-                HR
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="2"
-                  height="24"
-                  fill="none"
-                  className="mx-2"
-                >
-                  <path stroke="currentColor" d="M1 0v24" />
-                </svg>
-                EUR
+                <Icon name="search" className="w-5 h-5" />
               </Button>
               {/* <Button
                 variant="ghost"
                 className={twJoin(
                   "p-1",
-                  pathNameParts.length < 2 && "text-white"
+                  pathNameParts.length < 2 && "md:text-white"
                 )}
               >
                 <Icon name="user" className="w-6 h-6" />
@@ -85,7 +91,11 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
                   variant="ghost"
                   className={twJoin(
                     "p-1",
-                    pathNameParts.length < 2 && "text-white"
+                    (pathName === "/cutup" ||
+                      pathName === "/cutup/about" ||
+                      pathName === "/cutup/inspiration" ||
+                      pathName === "/cutup/collection") &&
+                      "md:text-white"
                   )}
                 >
                   <Icon name="case" className="w-6 h-6" />
@@ -98,7 +108,11 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
                   variant="ghost"
                   className={twJoin(
                     "p-1",
-                    pathNameParts.length < 2 && "text-white"
+                    (pathName === "/cutup" ||
+                      pathName === "/cutup/about" ||
+                      pathName === "/cutup/inspiration" ||
+                      pathName === "/cutup/collection") &&
+                      "md:text-white"
                   )}
                 >
                   <Icon name="case" className="w-6 h-6" />
@@ -108,7 +122,11 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
                 variant="ghost"
                 className={twJoin(
                   "p-1",
-                  pathNameParts.length < 2 && "text-white"
+                  (pathName === "/cutup" ||
+                    pathName === "/cutup/about" ||
+                    pathName === "/cutup/inspiration" ||
+                    pathName === "/cutup/collection") &&
+                    "md:text-white"
                 )}
                 onClick={() => setIsMenuOpen(true)}
               >
@@ -171,3 +189,5 @@ export const Header: React.FC<HeaderProps> = ({ colorScheme = "black" }) => {
     </div>
   )
 }
+
+export default Header
