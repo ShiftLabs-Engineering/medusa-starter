@@ -7,17 +7,17 @@ import { Button, Carousel, Layout, LayoutColumn, Link } from "components"
 export default function HomePage() {
   return (
     <>
-      <div>
+      <div className="max-md:pt-18">
         <Image
           src="/images/content/living-room.png"
           width={2880}
           height={1500}
           alt="Living room"
-          className="h-screen object-cover"
+          className="md:h-screen md:object-cover"
         />
       </div>
       <div className="pt-8 pb-26 md:pt-26 md:pb-36">
-        <Layout className="mb-26 md:mb-36">
+        <Layout className="mb-26 md:mb-34">
           <LayoutColumn start={1} end={{ base: 13, md: 8 }}>
             <h3 className="text-lg max-md:mb-6 md:text-2xl">
               Elevate Your Living Space with Unmatched Comfort & Style
@@ -34,9 +34,9 @@ export default function HomePage() {
             </div>
           </LayoutColumn>
         </Layout>
-        <Layout className="mb-26 md:mb-36">
+        <Layout className="mb-26 md:mb-36 max-md:gap-x-2">
           <LayoutColumn>
-            <h3 className="text-lg md:text-2xl mb-8 md:mb-16">Our products</h3>
+            <h3 className="text-lg md:text-2xl mb-8 md:mb-15">Our products</h3>
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 7, md: 7 }}>
             <Link href="/cutup">
@@ -85,7 +85,7 @@ export default function HomePage() {
               alt="Scandinavian simplicity"
               className="mb-4 md:mb-10"
             />
-            <h3 className="md:text-lg mb-2 md:mb-6">Scandinavian Simplicity</h3>
+            <h3 className="md:text-lg mb-2 md:mb-4">Scandinavian Simplicity</h3>
             <p className="text-xs text-grayscale-500 md:text-md">
               Minimalistic designs, neutral colors, and high-quality textures
             </p>
@@ -98,7 +98,7 @@ export default function HomePage() {
               alt="Modern luxe"
               className="mb-4 md:mb-10"
             />
-            <h3 className="md:text-lg mb-2 md:mb-6">Modern Luxe</h3>
+            <h3 className="md:text-lg mb-2 md:mb-4">Modern Luxe</h3>
             <p className="text-xs text-grayscale-500 md:text-md">
               Sophisticated and sleek, these sofas blend modern design with
               luxurious comfort
@@ -106,41 +106,13 @@ export default function HomePage() {
           </Link>
           <Link href="/cutup/collections">
             <Image
-              src="/images/content/scandinavian-simplicity.png"
+              src="/images/content/boho-chic.png"
               width={992}
               height={1322}
-              alt="Scandinavian simplicity"
+              alt="Boho chic"
               className="mb-4 md:mb-10"
             />
-            <h3 className="md:text-lg mb-2 md:mb-6">Boho Chic</h3>
-            <p className="text-xs text-grayscale-500 md:text-md">
-              Infused with playful textures and vibrant patterns with eclectic
-              vibes.
-            </p>
-          </Link>
-          <Link href="/cutup/collections">
-            <Image
-              src="/images/content/modern-luxe.png"
-              width={992}
-              height={1322}
-              alt="Modern luxe"
-              className="mb-4 md:mb-10"
-            />
-            <h3 className="md:text-lg mb-2 md:mb-6">Modern Luxe</h3>
-            <p className="text-xs text-grayscale-500 md:text-md">
-              Sophisticated and sleek, these sofas blend modern design with
-              luxurious comfort
-            </p>
-          </Link>
-          <Link href="/cutup/collections">
-            <Image
-              src="/images/content/scandinavian-simplicity.png"
-              width={992}
-              height={1322}
-              alt="Scandinavian simplicity"
-              className="mb-4 md:mb-10"
-            />
-            <h3 className="md:text-lg mb-2 md:mb-6">Boho Chic</h3>
+            <h3 className="md:text-lg mb-2 md:mb-4">Boho Chic</h3>
             <p className="text-xs text-grayscale-500 md:text-md">
               Infused with playful textures and vibrant patterns with eclectic
               vibes.
@@ -149,7 +121,7 @@ export default function HomePage() {
         </Carousel>
         <Layout>
           <LayoutColumn>
-            <h3 className="text-lg md:text-2xl mb-8 md:mb-16">
+            <h3 className="text-lg md:text-2xl mb-8 md:mb-15">
               About Sofa Society
             </h3>
             <Image
@@ -157,11 +129,11 @@ export default function HomePage() {
               width={2496}
               height={1400}
               alt="Sofa"
-              className="mb-8 md:mb-16 max-md:aspect-[3/2] object-cover"
+              className="mb-8 md:mb-16 max-md:aspect-[3/2] max-md:object-cover"
             />
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 13, md: 7 }}>
-            <h2 className="text-lg md:text-3xl">
+            <h2 className="text-lg md:text-2xl">
               At Sofa Society, we believe that a sofa is the heart of every
               home.
             </h2>
@@ -172,11 +144,11 @@ export default function HomePage() {
             className="mt-6 md:mt-19"
           >
             <div className="md:text-md">
-              <p className="mb-6 md:mb-9">
+              <p className="mb-5 md:mb-9">
                 We are dedicated to delivering high-quality, thoughtfully
                 designed sofas that merge comfort and style effortlessly.
               </p>
-              <p className="mb-6">
+              <p className="mb-5 md:mb-3">
                 Our mission is to transform your living space into a sanctuary
                 of relaxation and beauty, with products built to last.
               </p>
