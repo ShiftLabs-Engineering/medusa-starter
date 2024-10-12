@@ -13,10 +13,11 @@ import { SortProducts } from "@/components/SortProducts"
 
 export default function ShopPage() {
   return (
-    <div className="md:pt-47 py-26 md:pb-36">
+    <div className="md:pt-46 py-26 md:pb-36">
       <Carousel
         heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
-        className="mb-26 md:mb-36"
+        button={<Button size="sm">View All</Button>}
+        className="mb-26 md:mb-35"
         disableOnDesktop
       >
         <Link href="/cutup/collections">
@@ -41,33 +42,33 @@ export default function ShopPage() {
         </Link>
         <Link href="/cutup/collections">
           <Image
-            src="/images/content/scandinavian-simplicity.png"
+            src="/images/content/boho-chic.png"
             width={992}
             height={1322}
-            alt="Scandinavian simplicity"
+            alt="Boho Chic"
             className="mb-4 md:mb-6"
           />
           <h3>Boho Chic</h3>
         </Link>
         <Link href="/cutup/collections">
           <Image
-            src="/images/content/modern-luxe.png"
+            src="/images/content/timeless-classics.png"
             width={992}
             height={1322}
-            alt="Modern luxe"
+            alt="Timeless Classics"
             className="mb-4 md:mb-6"
           />
-          <h3>Modern Luxe</h3>
+          <h3>Timeless Classics</h3>
         </Link>
       </Carousel>
-      <Layout className="mb-4 md:mb-6">
+      <Layout className="mb-6 md:mb-8">
         <LayoutColumn>
-          <h2 className="text-lg md:text-2xl mb-6">Shop</h2>
+          <h2 className="text-lg md:text-2xl mb-6 md:mb-8">Shop</h2>
           <div className="flex justify-between gap-10">
             <Button
               iconName="plus"
               iconPosition="end"
-              className="bg-white md:hidden border px-4 hover:bg-white border-grayscale-200 h-auto flex-1 grow-0 text-black"
+              className="bg-white md:hidden max-md:gap-1 border max-md:text-xs px-3 md:px-4 hover:bg-white border-grayscale-200 h-auto flex-1 grow-0 text-black"
             >
               Filter
             </Button>
@@ -81,7 +82,7 @@ export default function ShopPage() {
           </div>
         </LayoutColumn>
       </Layout>
-      <Layout className="gap-y-10 md:gap-y-16 mb-16 md:mb-20">
+      <Layout className="gap-y-10 md:gap-y-16 mb-16">
         <LayoutColumn className="md:!col-span-4 !col-span-6">
           <Link href="/cutup/product">
             <Image
@@ -137,7 +138,7 @@ export default function ShopPage() {
             />
             <div className="flex justify-between max-md:flex-col">
               <div className="max-md:text-xs">
-                <p className="mb-1">Paloma Haven</p>
+                <p className="mb-1">Belime Haven</p>
                 <p className="text-grayscale-500 text-xs max-md:hidden">
                   Modern Luxe
                 </p>
@@ -159,13 +160,13 @@ export default function ShopPage() {
             />
             <div className="flex justify-between max-md:flex-col">
               <div className="max-md:text-xs">
-                <p className="mb-1">Serena Meadow</p>
+                <p className="mb-1">Camden Retreat</p>
                 <p className="text-grayscale-500 text-xs max-md:hidden">
                   Boho Chic
                 </p>
               </div>
               <div>
-                <p className="font-semibold max-md:text-xs">2000€</p>
+                <p className="font-semibold max-md:text-xs">1000€</p>
               </div>
             </div>
           </Link>
@@ -203,13 +204,13 @@ export default function ShopPage() {
             />
             <div className="flex justify-between max-md:flex-col">
               <div className="max-md:text-xs">
-                <p className="mb-1">Velora Luxe</p>
+                <p className="mb-1">Astrid Curve</p>
                 <p className="text-grayscale-500 text-xs max-md:hidden">
-                  Modern Luxe
+                  Scandinavian Simplicity
                 </p>
               </div>
               <div>
-                <p className="font-semibold max-md:text-xs">1200€</p>
+                <p className="font-semibold max-md:text-xs">1800€</p>
               </div>
             </div>
           </Link>
@@ -225,13 +226,13 @@ export default function ShopPage() {
             />
             <div className="flex justify-between max-md:flex-col">
               <div className="max-md:text-xs">
-                <p className="mb-1">Camden Retreat</p>
+                <p className="mb-1">Paloma Haven</p>
                 <p className="text-grayscale-500 text-xs max-md:hidden">
-                  Boho Chic
+                  Modern Luxe
                 </p>
               </div>
               <div>
-                <p className="font-semibold max-md:text-xs">1000€</p>
+                <p className="font-semibold max-md:text-xs">1200€</p>
               </div>
             </div>
           </Link>
@@ -247,13 +248,13 @@ export default function ShopPage() {
             />
             <div className="flex justify-between max-md:flex-col">
               <div className="max-md:text-xs">
-                <p className="mb-1">Oslo Drift</p>
+                <p className="mb-1">Paloma Haven</p>
                 <p className="text-grayscale-500 text-xs max-md:hidden">
-                  Scandinavian Simplicity
+                  Modern Luxe
                 </p>
               </div>
               <div>
-                <p className="font-semibold max-md:text-xs">2000€</p>
+                <p className="font-semibold max-md:text-xs">1200€</p>
               </div>
             </div>
           </Link>
@@ -284,7 +285,7 @@ export default function ShopPage() {
       <Layout>
         <LayoutColumn>
           <div className="text-center">
-            <Button>View All</Button>
+            <Button className="h-10">View All</Button>
           </div>
         </LayoutColumn>
       </Layout>

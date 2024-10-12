@@ -15,12 +15,12 @@ import {
 export const SortProducts = <T extends object>({
   ...props
 }: SelectProps<T>) => (
-  <Select {...props} placeholder="Sort by" className="w-42">
+  <Select {...props} placeholder="Sort by">
     <UiSelectButton>
       <UiSelectValue />
       <UiSelectIcon />
     </UiSelectButton>
-    <Popover className="w-[--trigger-width]">
+    <Popover className="w-60">
       <UiSelectListBox>
         <UiSelectListBoxItem>Featured</UiSelectListBoxItem>
         <UiSelectListBoxItem>Best selling</UiSelectListBoxItem>

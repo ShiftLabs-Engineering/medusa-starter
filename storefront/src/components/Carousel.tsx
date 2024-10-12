@@ -62,12 +62,17 @@ export const Carousel: React.FC<CarouselProps> = ({
     <div className={twMerge("overflow-hidden", className)}>
       <Layout>
         <LayoutColumn className="relative">
-          <div className="mb-8 md:mb-15 flex flex-wrap justify-between items-center gap-x-10 gap-y-2">
+          <div
+            className={twJoin(
+              "mb-8 md:mb-15 flex flex-wrap justify-between items-center gap-x-10 gap-y-2",
+              disableOnDesktop && "md:mb-8"
+            )}
+          >
             {heading}
-            {(arrows || button) && !disableOnDesktop && (
-              <div className="flex md:gap-6">
+            {(arrows || button) && (
+              <div className={twJoin(!disableOnDesktop && "flex md:gap-6")}>
                 {button}
-                {arrows && (
+                {arrows && !disableOnDesktop && (
                   <div className="flex gap-2">
                     <button
                       type="button"
