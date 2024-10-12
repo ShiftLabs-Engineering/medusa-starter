@@ -50,7 +50,7 @@ export function Header() {
             </div>
             <div className="flex items-center gap-3 lg:gap-6 max-md:hidden">
               <Select defaultSelectedKey="hr" className="w-16">
-                <UiSelectButton className="bg-transparent border-0 h-auto gap-0 p-1 w-full">
+                <UiSelectButton className="bg-transparent border-0 h-auto !gap-0 !p-1 w-full">
                   <UiSelectValue />
                   <UiSelectIcon className="text-current" />
                 </UiSelectButton>
