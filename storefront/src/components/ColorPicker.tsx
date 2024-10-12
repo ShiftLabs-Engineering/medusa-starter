@@ -21,10 +21,13 @@ export const ColorPicker: React.FC<React.ComponentPropsWithoutRef<"div">> = ({
       Materials
       <span className="text-grayscale-500 ml-6">Lumea</span>
     </p>
-    <Select placeholder="Choose material" className="w-50 mb-6">
-      <UiSelectButton>
+    <Select
+      placeholder="Choose material"
+      className="w-full md:w-60 mb-8 md:mb-6"
+    >
+      <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
         <UiSelectValue />
-        <UiSelectIcon />
+        <UiSelectIcon className="h-6 w-6" />
       </UiSelectButton>
       <Popover className="w-[--trigger-width]">
         <UiSelectListBox>
