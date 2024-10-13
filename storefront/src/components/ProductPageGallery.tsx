@@ -75,7 +75,7 @@ export const ProductPageGallery: React.FC<
             <Icon name="arrow-left" className="w-6 h-6" />
           </IconCircle>
         </button>
-        <div ref={emblaRef}>
+        <div ref={emblaRef} className="w-full">
           <div className="flex touch-pan-y gap-4">
             {React.Children.map(children, (child) => {
               return (
