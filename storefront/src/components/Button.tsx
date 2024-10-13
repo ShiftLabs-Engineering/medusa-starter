@@ -49,7 +49,7 @@ export const getButtonClassNames = ({
     isVisuallyDisabled &&
       variant === "outline" &&
       "border-grayscale-200 text-grayscale-200",
-    isVisuallyDisabled && variant === "solid" && "bg-grayscale-200",
+    isVisuallyDisabled && variant === "solid" && "!bg-grayscale-200",
 
     // isLoading
     // iconName
@@ -61,11 +61,12 @@ export const getButtonClassNames = ({
     size === "md" && "px-6 h-12",
 
     // variant
-    ((variant === "ghost" || variant === "link" || variant == "unstyled") &&
-      "text-black h-auto") ||
+    ((variant === "ghost" || variant == "unstyled") && "text-black h-auto") ||
       (variant === "outline" &&
         "text-black hover:text-grayscale-500 hover:border-grayscale-500 border border-black") ||
-      (variant === "solid" && "bg-black hover:bg-grayscale-500 text-white")
+      (variant === "solid" && "bg-black hover:bg-grayscale-500 text-white") ||
+      (variant === "link" &&
+        "text-black h-auto border-b border-current px-0 rounded-none")
   )
 }
 
@@ -75,6 +76,7 @@ export type ButtonProps = React.ComponentPropsWithoutRef<"button"> &
 
 export const Button: React.FC<ButtonProps> = ({
   isFullWidth,
+  isVisuallyDisabled,
   iconName,
   iconPosition = "start",
   isLoading,
@@ -93,6 +95,7 @@ export const Button: React.FC<ButtonProps> = ({
     className={twMerge(
       getButtonClassNames({
         isFullWidth,
+        isVisuallyDisabled,
         iconName,
         iconPosition,
         isLoading,

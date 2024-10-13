@@ -8,6 +8,7 @@ import * as Icons from "./icons"
 export type IconNames =
   | "arrow-left"
   | "arrow-right"
+  | "arrow-up-right"
   | "calendar"
   | "case"
   | "check"
@@ -64,6 +65,12 @@ export const Icon: React.FC<IconProps> = ({
     )}
     {name === "arrow-right" && (
       <Icons.ArrowRight {...rest} className={twMerge(baseClasses, className)} />
+    )}
+    {name === "arrow-up-right" && (
+      <Icons.ArrowUpRight
+        {...rest}
+        className={twMerge(baseClasses, className)}
+      />
     )}
     {name === "calendar" && (
       <Icons.Calendar {...rest} className={twMerge(baseClasses, className)} />

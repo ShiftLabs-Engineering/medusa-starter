@@ -1,20 +1,29 @@
 "use client"
 
 // External components
+import { usePathname } from "next/navigation"
 import { z } from "zod"
 
 // Components
 import { Button, Layout, LayoutColumn, Link } from "./"
 import { Form } from "./Form"
 import { Input } from "./Forms"
+import { twMerge } from "tailwind-merge"
 
 export const Footer = () => {
+  const pathName = usePathname()
+
   const emailSubscriptionSchema = z.object({
     email: z.string().email().nullable(),
   })
 
   return (
-    <div className="bg-grayscale-50 py-8 md:py-20">
+    <div
+      className={twMerge(
+        "bg-grayscale-50 py-8 md:py-20",
+        pathName === "/cutup/checkout" && "hidden"
+      )}
+    >
       <Layout>
         <LayoutColumn className="col-span-13">
           <div className="flex max-lg:flex-col justify-between md:gap-20 md:items-center">

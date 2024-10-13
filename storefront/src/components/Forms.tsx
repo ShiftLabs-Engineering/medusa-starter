@@ -9,6 +9,7 @@ import * as Aria from "react-aria-components"
 import { Icon } from "./"
 
 export const getFormFieldClassNames = ({
+  variant,
   isVisuallyDisabled,
   isSuccess,
   hasError,
@@ -16,6 +17,9 @@ export const getFormFieldClassNames = ({
   return twJoin(
     // Base
     "block w-full rounded-xs focus-within:outline-none bg-white px-6 h-14",
+
+    // Variant
+    variant === "outline" && "border border-grayscale-200 bg-transparent",
 
     // Disabled
     isVisuallyDisabled && "cursor-not-allowed opacity-50",
@@ -74,6 +78,7 @@ export const InputSubLabel: React.FC<
  * Input
  */
 export type InputOwnProps = {
+  variant?: "solid" | "outline"
   isVisuallyDisabled?: boolean
   isSuccess?: boolean
   hasError?: boolean
@@ -86,6 +91,7 @@ export const Input = React.forwardRef<
 >(
   (
     {
+      variant,
       isVisuallyDisabled,
       isSuccess,
       hasError,
@@ -100,7 +106,12 @@ export const Input = React.forwardRef<
         {...rest}
         ref={ref}
         className={twMerge(
-          getFormFieldClassNames({ isVisuallyDisabled, isSuccess, hasError }),
+          getFormFieldClassNames({
+            variant,
+            isVisuallyDisabled,
+            isSuccess,
+            hasError,
+          }),
           className
         )}
       />

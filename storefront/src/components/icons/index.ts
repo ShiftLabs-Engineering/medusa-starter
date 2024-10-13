@@ -1,5 +1,6 @@
 export * from "./ArrowLeft"
 export * from "./ArrowRight"
+export * from "./ArrowUpRight"
 export * from "./Calendar"
 export * from "./Case"
 export * from "./Check"

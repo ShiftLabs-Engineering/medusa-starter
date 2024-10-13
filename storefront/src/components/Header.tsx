@@ -34,7 +34,8 @@ export function Header() {
           pathName === "/cutup/about" ||
           pathName === "/cutup/inspiration" ||
           pathName === "/cutup/collection") &&
-          "md:text-white"
+          "md:text-white",
+        pathName === "/cutup/checkout" && "hidden"
       )}
     >
       <Layout>
