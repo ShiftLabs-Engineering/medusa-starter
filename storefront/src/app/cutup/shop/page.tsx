@@ -14,12 +14,18 @@ import {
 } from "react-aria-components"
 
 // Components
-import { Button, Carousel, Layout, LayoutColumn, Link } from "components"
-import { FilterProductsByPrice } from "@/components/FilterProductsByPrice"
-import { FilterProductsByColor } from "@/components/FilterProductsByColor"
-import { FilterProductsByMaterial } from "@/components/FilterProductsByMaterial"
-import { FilterProductsByCollection } from "@/components/FilterProductsByCollection"
-import { SortProducts } from "@/components/SortProducts"
+import {
+  Button,
+  Carousel,
+  Layout,
+  LayoutColumn,
+  Link,
+  FilterProductsByPrice,
+  FilterProductsByColor,
+  FilterProductsByMaterial,
+  FilterProductsByCollection,
+  SortProducts,
+} from "components"
 import {
   UiSliderOutput,
   UiSliderOutputValue,
