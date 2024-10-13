@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 type Params = {
   searchParams: {
     sortBy?: SortOptions
+    collection?: string | string[]
     page?: string
   }
   params: {
@@ -19,13 +20,20 @@ type Params = {
 }
 
 export default async function StorePage({ searchParams, params }: Params) {
-  const { sortBy, page } = searchParams
+  const { sortBy, page, collection } = searchParams
 
   return (
     <StoreTemplate
       sortBy={sortBy}
       page={page}
       countryCode={params.countryCode}
+      collection={
+        !collection
+          ? undefined
+          : Array.isArray(collection)
+          ? collection
+          : [collection]
+      }
     />
   )
 }

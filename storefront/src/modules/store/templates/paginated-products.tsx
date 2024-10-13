@@ -1,19 +1,12 @@
 import { getProductsListWithSort } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
+import { HttpTypes } from "@medusajs/types"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import { Layout, LayoutColumn } from "components"
 
 const PRODUCT_LIMIT = 12
-
-type PaginatedProductsParams = {
-  limit: number
-  collection_id?: string[]
-  category_id?: string[]
-  id?: string[]
-  order?: string
-}
 
 export default async function PaginatedProducts({
   sortBy,
@@ -25,17 +18,19 @@ export default async function PaginatedProducts({
 }: {
   sortBy?: SortOptions
   page: number
-  collectionId?: string
+  collectionId?: string | string[]
   categoryId?: string
   productsIds?: string[]
   countryCode: string
 }) {
-  const queryParams: PaginatedProductsParams = {
-    limit: 12,
+  const queryParams: HttpTypes.StoreProductParams = {
+    limit: PRODUCT_LIMIT,
   }
 
   if (collectionId) {
-    queryParams["collection_id"] = [collectionId]
+    queryParams["collection_id"] = Array.isArray(collectionId)
+      ? collectionId
+      : [collectionId]
   }
 
   if (categoryId) {

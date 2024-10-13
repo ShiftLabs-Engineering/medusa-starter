@@ -5,14 +5,19 @@ import { useCallback } from "react"
 
 import SortProducts, { SortOptions } from "./sort-products"
 import { Button, Layout, LayoutColumn } from "components"
+import { CollectionFilter } from "./collection-filter"
 
 type RefinementListProps = {
+  collections: Record<string, string>
+  collection?: string[]
   sortBy: SortOptions | undefined
   search?: boolean
   "data-testid"?: string
 }
 
 const RefinementList = ({
+  collections,
+  collection,
   sortBy,
   "data-testid": dataTestId,
 }: RefinementListProps) => {
@@ -21,24 +26,32 @@ const RefinementList = ({
   const searchParams = useSearchParams()
 
   const createQueryString = useCallback(
-    (name: string, value: string) => {
+    (name: string, value: string | string[]) => {
       const params = new URLSearchParams(searchParams)
-      params.set(name, value)
+
+      if (Array.isArray(value)) {
+        params.delete(name)
+        value.forEach((v) => params.append(name, v))
+      } else {
+        params.set(name, value)
+      }
 
       return params.toString()
     },
     [searchParams]
   )
 
-  const setQueryParams = (name: string, value: string) => {
+  const setQueryParams = (name: string, value: string | string[]) => {
     const query = createQueryString(name, value)
-    router.push(`${pathname}?${query}`)
+    router.push(`${pathname}?${query}`, { scroll: false })
   }
 
   return (
     <Layout className="mb-4 md:mb-6">
       <LayoutColumn>
-        <h2 className="text-lg md:text-2xl mb-6">Shop</h2>
+        <h2 className="text-lg md:text-2xl mb-6" id="products">
+          Shop
+        </h2>
         <div className="flex justify-between gap-10">
           <Button
             iconName="plus"
@@ -57,12 +70,11 @@ const RefinementList = ({
             <Button variant="ghost" className="px-2">
               Materials
             </Button>
-            <Button variant="ghost" className="px-2">
-              Collection
-            </Button>
-            <Button variant="ghost" className="px-2">
-              Seats
-            </Button>
+            <CollectionFilter
+              collections={collections}
+              collection={collection}
+              setQueryParams={setQueryParams}
+            />
           </div>
           <SortProducts
             sortBy={sortBy}
