@@ -26,7 +26,7 @@ export const Footer = () => {
                 <p className="text-xs">&copy; 2024, Sofa Society</p>
               </div>
               <div className="flex gap-10 xl:gap-18 max-md:text-xs flex-1 justify-between lg:justify-center">
-                <ul className="flex flex-col gap-6 md:gap-4">
+                <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
                     <Link href="/">FAQ</Link>
                   </li>
@@ -40,7 +40,7 @@ export const Footer = () => {
                     <Link href="/">Returns</Link>
                   </li>
                 </ul>
-                <ul className="flex flex-col gap-6 md:gap-4">
+                <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
                     <Link href="/">Instagram</Link>
                   </li>
@@ -54,7 +54,7 @@ export const Footer = () => {
                     <Link href="/">Facebook</Link>
                   </li>
                 </ul>
-                <ul className="flex flex-col gap-6 md:gap-4">
+                <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
                     <Link href="/">Privacy Policy</Link>
                   </li>
@@ -68,10 +68,10 @@ export const Footer = () => {
               </div>
             </div>
             <div className="flex-1 max-lg:w-full lg:max-w-90 xl:max-w-96 max-lg:order-1 max-md:mb-16">
-              <h2 className="text-md md:text-lg mb-2 md:mb-4">
+              <h2 className="text-md md:text-lg mb-2 md:mb-1">
                 Join our newsletter
               </h2>
-              <p className="mb-4">
+              <p className="max-md:text-xs mb-4">
                 We will also send you our discount coupons!
               </p>
               <Form schema={emailSubscriptionSchema}>
@@ -83,12 +83,14 @@ export const Footer = () => {
                     wrapperClassName="flex-1"
                     className="mb-4 rounded-xs h-9 text-xs"
                   />
-                  <Button className="h-9 text-xs">Subscribe</Button>
+                  <Button size="sm" className="h-9 text-xs">
+                    Subscribe
+                  </Button>
                 </div>
               </Form>
               <p className="text-xs text-grayscale-500">
                 By subscribing you agree to with our{" "}
-                <Link href="/" variant="underline">
+                <Link href="/" variant="underline" className="!pb-0">
                   Privacy Policy
                 </Link>{" "}
                 and provide consent to receive updates from our company.

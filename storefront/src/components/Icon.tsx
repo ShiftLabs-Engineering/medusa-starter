@@ -35,13 +35,19 @@ export type IconNames =
 
 const baseClasses = "w-4 h-auto flex-shrink-0"
 
-export const Icon: React.FC<
-  React.ComponentPropsWithoutRef<"svg"> & {
-    name: IconNames
-    status?: number
-    wrapperClassName?: string
-  }
-> = ({ name, status = 0, wrapperClassName, className, ...rest }) => (
+export type IconProps = React.ComponentPropsWithoutRef<"svg"> & {
+  name: IconNames
+  status?: number
+  wrapperClassName?: string
+}
+
+export const Icon: React.FC<IconProps> = ({
+  name,
+  status = 0,
+  wrapperClassName,
+  className,
+  ...rest
+}) => (
   <div className={twMerge("relative shrink-0", wrapperClassName)}>
     {Boolean(status) && (
       <div

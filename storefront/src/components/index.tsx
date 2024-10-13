@@ -12,7 +12,6 @@ import { Layout } from "./Layout"
 import { LayoutColumn } from "./Layout"
 import { Link } from "./Link"
 import { ProductPageGallery } from "./ProductPageGallery"
-import { Select } from "./Select"
 
 export {
   Button,
@@ -31,5 +30,4 @@ export {
   Link,
   NumberField,
   ProductPageGallery,
-  Select,
 }

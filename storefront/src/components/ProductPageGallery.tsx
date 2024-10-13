@@ -58,13 +58,13 @@ export const ProductPageGallery: React.FC<
   }, [emblaApi, onInit, onSelect])
 
   return (
-    <div className={twMerge("overflow-hidden", className)}>
-      <div className="relative flex items-center p-0 mb-6">
+    <div className={twMerge("overflow-hidden relative", className)}>
+      <div className="relative flex items-center p-0 lg:mb-6">
         <button
           type="button"
           onClick={scrollPrev}
           disabled={prevBtnDisabled}
-          className="transition-opacity absolute left-4 z-10"
+          className="transition-opacity absolute left-4 z-10 max-lg:hidden"
         >
           <IconCircle
             className={twJoin(
@@ -72,14 +72,16 @@ export const ProductPageGallery: React.FC<
               prevBtnDisabled && "bg-transparent text-black"
             )}
           >
-            <Icon name="arrow-left" className="w-6" />
+            <Icon name="arrow-left" className="w-6 h-6" />
           </IconCircle>
         </button>
         <div ref={emblaRef}>
           <div className="flex touch-pan-y gap-4">
             {React.Children.map(children, (child) => {
               return (
-                <div className="w-full max-w-[80%] flex-shrink-0">{child}</div>
+                <div className="w-full md:max-w-[80%] flex-shrink-0">
+                  {child}
+                </div>
               )
             })}
           </div>
@@ -88,7 +90,7 @@ export const ProductPageGallery: React.FC<
           type="button"
           onClick={scrollNext}
           disabled={nextBtnDisabled}
-          className="transition-opacity absolute right-4 z-10"
+          className="transition-opacity absolute right-4 z-10 max-lg:hidden"
         >
           <IconCircle
             className={twJoin(
@@ -96,11 +98,11 @@ export const ProductPageGallery: React.FC<
               nextBtnDisabled && "bg-transparent text-black"
             )}
           >
-            <Icon name="arrow-right" className="w-6" />
+            <Icon name="arrow-right" className="w-6 h-6" />
           </IconCircle>
         </button>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center max-lg:w-full max-lg:absolute max-lg:bottom-4">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}

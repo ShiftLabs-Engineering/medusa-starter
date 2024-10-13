@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     colors: {
       black: "#050505",
+      "black-10%": "rgba(5, 5, 5, 0.1)",
       white: "#FDFDFD",
       grayscale: {
         800: "#1F1F20",
@@ -58,32 +59,34 @@ module.exports = {
     },
     extend: {
       spacing: {
+        15: "3.75rem",
         18: "4.5rem",
         19: "4.75rem",
         21: "5.25rem",
         22: "5.5rem",
+        23: "5.75rem",
         25: "6.25rem",
         26: "6.5rem",
         27: "6.75rem",
         28: "7rem",
+        29: "7.25rem",
         30: "7.5rem",
+        34: "8.5rem",
         35: "8.75rem",
         37: "9.25rem",
         39: "9.75rem",
         42: "10.5rem",
+        46: "11.5rem",
         47: "11.75rem",
         50: "12.5rem",
         61: "15.25rem",
         75: "18.75rem",
         90: "22.5rem",
-        93: "23.25rem",
         120: "30rem",
         124: "31rem",
       },
-      transitionProperty: {
-        drawerOpen: "transform 500ms, opacity .9s, visibility .9s",
-        drawerClosed:
-          "transform 300ms cubic-bezier(.5, .5, 0, 1), opacity .9s .9s, visibility .9s .9s",
+      borderWidth: {
+        6: "6px",
       },
     },
   },

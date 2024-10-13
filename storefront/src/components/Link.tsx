@@ -12,9 +12,9 @@ const getLinkClassNames = ({ variant }: LinkOwnProps): string =>
     "transition-colors",
     variant === "base" && "text-blue-500",
     (variant === "underline" || variant === "hover:underline") &&
-      "bg-gradient-to-r from-current to-current text-current bg-[length:100%0.0625rem] bg-[0%_100%] bg-no-repeat",
+      "border-b border-current pb-0.5 md:pb-1",
     variant === "hover:underline" &&
-      "bg-[length:0%0.0625rem] hover:bg-[length:100%0.0625rem] transition-[background-size]"
+      "border-transparent hover:border-current transition-colors"
   )
 
 export const Link = <RouteInferType extends any>({
