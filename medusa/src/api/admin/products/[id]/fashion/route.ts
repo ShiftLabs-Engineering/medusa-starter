@@ -76,23 +76,3 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
     })),
   });
 };
-
-// const setProductColorBodySchema = z.object({
-//   color_id: z.string(),
-// });
-
-// export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
-//   const { color_id } = setProductColorBodySchema.parse(JSON.parse(req.body));
-//   const remoteLink = req.scope.resolve(ContainerRegistrationKeys.REMOTE_LINK);
-
-//   await remoteLink.create({
-//     [Modules.PRODUCT]: {
-//       product_id: req.params.id,
-//     },
-//     [FASHION_MODULE]: {
-//       color_id,
-//     },
-//   });
-
-//   GET(req, res);
-// };
