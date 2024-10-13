@@ -77,7 +77,7 @@ export default function HomePage() {
           }
           className="mb-26 md:mb-36"
         >
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/scandinavian-simplicity.png"
               width={992}
@@ -90,7 +90,7 @@ export default function HomePage() {
               Minimalistic designs, neutral colors, and high-quality textures
             </p>
           </Link>
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/modern-luxe.png"
               width={992}
@@ -104,7 +104,7 @@ export default function HomePage() {
               luxurious comfort
             </p>
           </Link>
-          <Link href="/cutup/collections">
+          <Link href="/cutup/collection">
             <Image
               src="/images/content/boho-chic.png"
               width={992}
