@@ -61,8 +61,21 @@ export default function ProductActions({
     if (product.variants?.length === 1) {
       const variantOptions = optionsAsKeymap(product.variants[0].options)
       setOptions(variantOptions ?? {})
+    } else {
+      if (product.options) {
+        // Preselect single option values
+        const singleOptionValues = product.options
+          .filter((option) => option.values)
+          .filter((option) => option.values!.length === 1)
+          .reduce((acc, option) => {
+            acc[option.id] = option.values![0].value
+            return acc
+          }, {} as Record<string, string>)
+
+        setOptions(singleOptionValues)
+      }
     }
-  }, [product.variants])
+  }, [product.options, product.variants])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
@@ -165,42 +178,47 @@ export default function ProductActions({
         <p>{product.description}</p>
       </div>
       {hasMultipleVariants && (
-        <div className="mb-10 md:mb-26">
+        <div className="flex flex-col gap-8 md:gap-6 mb-10 md:mb-26">
           {materialOption && colorOption && (
             <>
-              <p className="mb-4">
-                Materials
-                {options[materialOption.id] && (
-                  <span className="text-grayscale-500 ml-6">
-                    {options[materialOption.id]}
-                  </span>
-                )}
-              </p>
-              <Select
-                selectedKey={options[materialOption.id]}
-                onSelectionChange={(value) => {
-                  setOptionValue(materialOption.id, `${value}`)
-                }}
-                placeholder="Choose material"
-                className="w-full md:w-60 mb-8 md:mb-6"
-                isDisabled={!!disabled || isAdding}
-              >
-                <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
-                  <UiSelectValue />
-                  <UiSelectIcon className="h-6 w-6" />
-                </UiSelectButton>
-                <Popover className="w-[--trigger-width]">
-                  <UiSelectListBox>
-                    {materials.map((material) => (
-                      <UiSelectListBoxItem key={material.id} id={material.name}>
-                        {material.name}
-                      </UiSelectListBoxItem>
-                    ))}
-                  </UiSelectListBox>
-                </Popover>
-              </Select>
+              <div>
+                <p className="mb-4">
+                  Materials
+                  {options[materialOption.id] && (
+                    <span className="text-grayscale-500 ml-6">
+                      {options[materialOption.id]}
+                    </span>
+                  )}
+                </p>
+                <Select
+                  selectedKey={options[materialOption.id]}
+                  onSelectionChange={(value) => {
+                    setOptionValue(materialOption.id, `${value}`)
+                  }}
+                  placeholder="Choose material"
+                  className="w-full md:w-60"
+                  isDisabled={!!disabled || isAdding}
+                >
+                  <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
+                    <UiSelectValue />
+                    <UiSelectIcon className="h-6 w-6" />
+                  </UiSelectButton>
+                  <Popover className="w-[--trigger-width]">
+                    <UiSelectListBox>
+                      {materials.map((material) => (
+                        <UiSelectListBoxItem
+                          key={material.id}
+                          id={material.name}
+                        >
+                          {material.name}
+                        </UiSelectListBoxItem>
+                      ))}
+                    </UiSelectListBox>
+                  </Popover>
+                </Select>
+              </div>
               {selectedMaterial && (
-                <>
+                <div>
                   <p className="mb-4">
                     Colors
                     <span className="text-grayscale-500 ml-6">
@@ -226,14 +244,14 @@ export default function ProductActions({
                       />
                     ))}
                   </RadioGroup>
-                </>
+                </div>
               )}
             </>
           )}
           {showOtherOptions &&
             otherOptions.map((option) => {
               return (
-                <>
+                <div key={option.id}>
                   <p className="mb-4">
                     {option.title}
                     {options[option.id] && (
@@ -248,7 +266,7 @@ export default function ProductActions({
                       setOptionValue(option.id, `${value}`)
                     }}
                     placeholder={`Choose ${option.title.toLowerCase()}`}
-                    className="w-full md:w-60 mb-8 md:mb-6"
+                    className="w-full md:w-60"
                     isDisabled={!!disabled || isAdding}
                   >
                     <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
@@ -270,7 +288,7 @@ export default function ProductActions({
                       </UiSelectListBox>
                     </Popover>
                   </Select>
-                </>
+                </div>
               )
             })}
         </div>
