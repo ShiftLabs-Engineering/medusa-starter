@@ -4,9 +4,64 @@ import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-g
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
-import PaginatedProducts from "./paginated-products"
+// Components
+import {
+  Button,
+  Carousel,
+  Layout,
+  LayoutColumn,
+  Link,
+  Select,
+} from "components"
 
-const StoreTemplate = ({
+import PaginatedProducts from "./paginated-products"
+import { getCollectionsList } from "@lib/data/collections"
+import Image from "next/image"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
+
+const CollectionsSection: React.FC = async () => {
+  const collections = await getCollectionsList(0, 20, [
+    "id",
+    "title",
+    "handle",
+    "metadata",
+  ])
+
+  if (!collections) {
+    return null
+  }
+
+  return (
+    <Carousel
+      heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
+      className="mb-26 md:mb-36"
+      disableOnDesktop
+    >
+      {collections.collections.map((collection) => (
+        <LocalizedClientLink
+          key={collection.id}
+          href={`/collections/${collection.handle}`}
+        >
+          {typeof collection.metadata?.image === "object" &&
+            collection.metadata.image &&
+            "url" in collection.metadata.image &&
+            typeof collection.metadata.image.url === "string" && (
+              <Image
+                src={collection.metadata.image.url}
+                width={992}
+                height={1322}
+                alt={collection.title}
+                className="mb-4 md:mb-6"
+              />
+            )}
+          <h3>{collection.title}</h3>
+        </LocalizedClientLink>
+      ))}
+    </Carousel>
+  )
+}
+
+const StoreTemplate = async ({
   sortBy,
   page,
   countryCode,
@@ -16,26 +71,18 @@ const StoreTemplate = ({
   countryCode: string
 }) => {
   const pageNumber = page ? parseInt(page) : 1
-  const sort = sortBy || "created_at"
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} />
-      <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">All products</h1>
-        </div>
-        <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sort}
-            page={pageNumber}
-            countryCode={countryCode}
-          />
-        </Suspense>
-      </div>
+    <div className="md:pt-47 py-26 md:pb-36">
+      <CollectionsSection />
+      <RefinementList sortBy={sortBy} />
+      <Suspense fallback={<SkeletonProductGrid />}>
+        <PaginatedProducts
+          sortBy={sortBy}
+          page={pageNumber}
+          countryCode={countryCode}
+        />
+      </Suspense>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import { getRegion } from "@lib/data/regions"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { Layout, LayoutColumn } from "components"
 
 const PRODUCT_LIMIT = 12
 
@@ -68,18 +69,15 @@ export default async function PaginatedProducts({
 
   return (
     <>
-      <ul
-        className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
-        data-testid="products-list"
-      >
+      <Layout className="gap-y-10 md:gap-y-16 mb-16 md:mb-20">
         {products.map((p) => {
           return (
-            <li key={p.id}>
+            <LayoutColumn key={p.id} className="md:!col-span-4 !col-span-6">
               <ProductPreview product={p} region={region} />
-            </li>
+            </LayoutColumn>
           )
         })}
-      </ul>
+      </Layout>
       {totalPages > 1 && (
         <Pagination
           data-testid="product-pagination"

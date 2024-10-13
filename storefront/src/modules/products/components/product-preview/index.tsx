@@ -30,6 +30,33 @@ export default async function ProductPreview({
   })
 
   return (
+    <LocalizedClientLink href={`/products/${product.handle}`}>
+      <Thumbnail
+        thumbnail={product.thumbnail}
+        images={product.images}
+        size="full"
+        className="mb-4 md:mb-6"
+      />
+      <div className="flex justify-between max-md:flex-col">
+        <div className="max-md:text-xs">
+          <p className="mb-1">{product.title}</p>
+          {product.collection && (
+            <p className="text-grayscale-500 text-xs max-md:hidden">
+              {product.collection.title}
+            </p>
+          )}
+        </div>
+        <div>
+          {/** TODO: show discounted price */}
+          <p className="font-semibold max-md:text-xs">
+            {cheapestPrice?.calculated_price}
+          </p>
+        </div>
+      </div>
+    </LocalizedClientLink>
+  )
+
+  return (
     <LocalizedClientLink href={`/products/${product.handle}`} className="group">
       <div data-testid="product-wrapper">
         <Thumbnail
