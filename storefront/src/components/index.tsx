@@ -1,6 +1,7 @@
 import { NumberField } from "./NumberField"
 import { Button } from "./Button"
 import { Carousel } from "./Carousel"
+import { Checkbox } from "./Checkbox"
 import { ColorPicker } from "./ColorPicker"
 import { Drawer } from "./Drawer"
 import { InputLabel, InputSubLabel, Input } from "./Forms"
@@ -16,6 +17,7 @@ import { ProductPageGallery } from "./ProductPageGallery"
 export {
   Button,
   Carousel,
+  Checkbox,
   ColorPicker,
   Drawer,
   InputLabel,
