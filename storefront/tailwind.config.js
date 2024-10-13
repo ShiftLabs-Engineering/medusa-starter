@@ -59,6 +59,8 @@ module.exports = {
     },
     extend: {
       spacing: {
+        13.5: "3.375rem",
+        14.5: "3.625rem",
         15: "3.75rem",
         18: "4.5rem",
         19: "4.75rem",
@@ -71,6 +73,8 @@ module.exports = {
         28: "7rem",
         29: "7.25rem",
         30: "7.5rem",
+        31: "7.75rem",
+        33: "8.25rem",
         34: "8.5rem",
         35: "8.75rem",
         37: "9.25rem",
@@ -84,6 +88,8 @@ module.exports = {
         90: "22.5rem",
         120: "30rem",
         124: "31rem",
+        150: "37.5rem",
+        159: "39.75rem",
       },
       borderWidth: {
         6: "6px",
