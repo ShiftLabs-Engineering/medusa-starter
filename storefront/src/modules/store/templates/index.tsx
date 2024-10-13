@@ -5,14 +5,7 @@ import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
 // Components
-import {
-  Button,
-  Carousel,
-  Layout,
-  LayoutColumn,
-  Link,
-  Select,
-} from "components"
+import { Carousel } from "components"
 
 import PaginatedProducts from "./paginated-products"
 import { getCollectionsList } from "@lib/data/collections"
