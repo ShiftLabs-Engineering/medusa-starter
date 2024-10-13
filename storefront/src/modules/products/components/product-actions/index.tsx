@@ -1,21 +1,34 @@
 "use client"
 
-import { Button } from "@medusajs/ui"
 import { isEqual } from "lodash"
 import { useParams } from "next/navigation"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
-import { useIntersection } from "@lib/hooks/use-in-view"
-import Divider from "@modules/common/components/divider"
-import OptionSelect from "@modules/products/components/product-actions/option-select"
-
-import MobileActions from "./mobile-actions"
 import ProductPrice from "../product-price"
 import { addToCart } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
+import { Button } from "@/components/Button"
+import { NumberField } from "@/components/NumberField"
+import { Popover, Radio, RadioGroup, Select } from "react-aria-components"
+import {
+  UiSelectButton,
+  UiSelectIcon,
+  UiSelectListBox,
+  UiSelectListBoxItem,
+  UiSelectValue,
+} from "@/components/ui/Select"
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
+  materials: {
+    id: string
+    name: string
+    colors: {
+      id: string
+      name: string
+      hex_code: string
+    }[]
+  }[]
   region: HttpTypes.StoreRegion
   disabled?: boolean
 }
@@ -23,18 +36,23 @@ type ProductActionsProps = {
 const optionsAsKeymap = (
   variantOptions: HttpTypes.StoreProductVariant["options"]
 ) => {
-  return variantOptions?.reduce((acc: Record<string, string>, varopt: any) => {
-    acc[varopt.option_id] = varopt.value
+  return variantOptions?.reduce((acc: Record<string, string>, varopt) => {
+    if (varopt.option_id) {
+      acc[varopt.option_id] = varopt.value
+    }
     return acc
   }, {})
 }
 
+const priorityOptions = ["Material", "Color", "Size"]
+
 export default function ProductActions({
   product,
-  region,
+  materials,
   disabled,
 }: ProductActionsProps) {
   const [options, setOptions] = useState<Record<string, string | undefined>>({})
+  const [quantity, setQuantity] = useState(1)
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
 
@@ -89,10 +107,6 @@ export default function ProductActions({
     return false
   }, [selectedVariant])
 
-  const actionsRef = useRef<HTMLDivElement>(null)
-
-  const inView = useIntersection(actionsRef, "0px")
-
   // add the selected variant to the cart
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return null
@@ -101,47 +115,178 @@ export default function ProductActions({
 
     await addToCart({
       variantId: selectedVariant.id,
-      quantity: 1,
+      quantity,
       countryCode,
     })
 
     setIsAdding(false)
   }
 
+  const hasMultipleVariants = (product.variants?.length ?? 0) > 1
+  const productOptions = (product.options || []).sort((a, b) => {
+    let aPriority = priorityOptions.indexOf(a.title ?? "")
+    let bPriority = priorityOptions.indexOf(b.title ?? "")
+
+    if (aPriority === -1) {
+      aPriority = priorityOptions.length
+    }
+
+    if (bPriority === -1) {
+      bPriority = priorityOptions.length
+    }
+
+    return aPriority - bPriority
+  })
+
+  const materialOption = productOptions.find((o) => o.title === "Material")
+  const colorOption = productOptions.find((o) => o.title === "Color")
+  const otherOptions =
+    materialOption && colorOption
+      ? productOptions.filter(
+          (o) => o.id !== materialOption.id && o.id !== colorOption.id
+        )
+      : productOptions
+
+  const selectedMaterial =
+    materialOption && options[materialOption.id]
+      ? materials.find((m) => m.name === options[materialOption.id])
+      : undefined
+
+  const showOtherOptions =
+    !materialOption ||
+    !colorOption ||
+    (selectedMaterial &&
+      (selectedMaterial.colors.length < 2 || options[colorOption.id]))
+
   return (
     <>
-      <div className="flex flex-col gap-y-2" ref={actionsRef}>
-        <div>
-          {(product.variants?.length ?? 0) > 1 && (
-            <div className="flex flex-col gap-y-4">
-              {(product.options || []).map((option) => {
-                return (
-                  <div key={option.id}>
-                    <OptionSelect
-                      option={option}
-                      current={options[option.id]}
-                      updateOption={setOptionValue}
-                      title={option.title ?? ""}
-                      data-testid="product-options"
-                      disabled={!!disabled || isAdding}
-                    />
-                  </div>
-                )
-              })}
-              <Divider />
-            </div>
+      <ProductPrice product={product} variant={selectedVariant} />
+      <div className="max-md:text-xs mb-8 md:mb-16 max-w-120">
+        <p>{product.description}</p>
+      </div>
+      {hasMultipleVariants && (
+        <div className="mb-10 md:mb-26">
+          {materialOption && colorOption && (
+            <>
+              <p className="mb-4">
+                Materials
+                {options[materialOption.id] && (
+                  <span className="text-grayscale-500 ml-6">
+                    {options[materialOption.id]}
+                  </span>
+                )}
+              </p>
+              <Select
+                selectedKey={options[materialOption.id]}
+                onSelectionChange={(value) => {
+                  setOptionValue(materialOption.id, `${value}`)
+                }}
+                placeholder="Choose material"
+                className="w-full md:w-60 mb-8 md:mb-6"
+                isDisabled={!!disabled || isAdding}
+              >
+                <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
+                  <UiSelectValue />
+                  <UiSelectIcon className="h-6 w-6" />
+                </UiSelectButton>
+                <Popover className="w-[--trigger-width]">
+                  <UiSelectListBox>
+                    {materials.map((material) => (
+                      <UiSelectListBoxItem key={material.id} id={material.name}>
+                        {material.name}
+                      </UiSelectListBoxItem>
+                    ))}
+                  </UiSelectListBox>
+                </Popover>
+              </Select>
+              {selectedMaterial && (
+                <>
+                  <p className="mb-4">
+                    Colors
+                    <span className="text-grayscale-500 ml-6">
+                      {options[colorOption.id]}
+                    </span>
+                  </p>
+                  <RadioGroup
+                    value={options[colorOption.id]}
+                    onChange={(value) => {
+                      setOptionValue(colorOption.id, value)
+                    }}
+                    aria-label="Color"
+                    className="flex gap-6"
+                    isDisabled={!!disabled || isAdding}
+                  >
+                    {selectedMaterial.colors.map((color) => (
+                      <Radio
+                        key={color.id}
+                        value={color.name}
+                        aria-label={color.name}
+                        className="h-8 w-8 cursor-pointer relative before:transition-colors before:absolute before:content-[''] before:-bottom-2 before:left-0 before:w-full before:h-px data-[selected]:before:bg-black shadow-sm hover:shadow"
+                        style={{ background: color.hex_code }}
+                      />
+                    ))}
+                  </RadioGroup>
+                </>
+              )}
+            </>
           )}
+          {showOtherOptions &&
+            otherOptions.map((option) => {
+              return (
+                <>
+                  <p className="mb-4">
+                    {option.title}
+                    {options[option.id] && (
+                      <span className="text-grayscale-500 ml-6">
+                        {options[option.id]}
+                      </span>
+                    )}
+                  </p>
+                  <Select
+                    selectedKey={options[option.id]}
+                    onSelectionChange={(value) => {
+                      setOptionValue(option.id, `${value}`)
+                    }}
+                    placeholder={`Choose ${option.title.toLowerCase()}`}
+                    className="w-full md:w-60 mb-8 md:mb-6"
+                    isDisabled={!!disabled || isAdding}
+                  >
+                    <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
+                      <UiSelectValue />
+                      <UiSelectIcon className="h-6 w-6" />
+                    </UiSelectButton>
+                    <Popover className="w-[--trigger-width]">
+                      <UiSelectListBox>
+                        {(option.values ?? [])
+                          .filter((value) => Boolean(value.value))
+                          .map((value) => (
+                            <UiSelectListBoxItem
+                              key={value.id}
+                              id={value.value}
+                            >
+                              {value.value}
+                            </UiSelectListBoxItem>
+                          ))}
+                      </UiSelectListBox>
+                    </Popover>
+                  </Select>
+                </>
+              )
+            })}
         </div>
-
-        <ProductPrice product={product} variant={selectedVariant} />
-
+      )}
+      <div className="flex max-sm:flex-col gap-4 mb-4">
+        <NumberField
+          value={quantity}
+          onChange={setQuantity}
+          minValue={1}
+          className="w-full sm:w-35 max-md:justify-center max-md:gap-2"
+        />
         <Button
           onClick={handleAddToCart}
           disabled={!inStock || !selectedVariant || !!disabled || isAdding}
-          variant="primary"
-          className="w-full h-10"
           isLoading={isAdding}
-          data-testid="add-product-button"
+          className="sm:flex-1"
         >
           {!selectedVariant
             ? "Select variant"
@@ -149,17 +294,6 @@ export default function ProductActions({
             ? "Out of stock"
             : "Add to cart"}
         </Button>
-        <MobileActions
-          product={product}
-          variant={selectedVariant}
-          options={options}
-          updateOptions={setOptionValue}
-          inStock={inStock}
-          handleAddToCart={handleAddToCart}
-          isAdding={isAdding}
-          show={!inView}
-          optionsDisabled={!!disabled || isAdding}
-        />
       </div>
     </>
   )

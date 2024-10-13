@@ -40,6 +40,25 @@ export const getProductByHandle = cache(async function (
     .then(({ products }) => products[0])
 })
 
+export const getProductFashionDataByHandle = cache(async function (
+  handle: string
+) {
+  return sdk.client.fetch<{
+    materials: {
+      id: string
+      name: string
+      colors: {
+        id: string
+        name: string
+        hex_code: string
+      }[]
+    }[]
+  }>(`/store/custom/fashion/${handle}`, {
+    method: "GET",
+    headers: { next: { tags: ["products"] } },
+  })
+})
+
 export const getProductsList = cache(async function ({
   pageParam = 1,
   queryParams,

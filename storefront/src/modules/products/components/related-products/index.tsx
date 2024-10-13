@@ -2,6 +2,7 @@ import Product from "../product-preview"
 import { getRegion } from "@lib/data/regions"
 import { getProductsList } from "@lib/data/products"
 import { HttpTypes } from "@medusajs/types"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 type RelatedProductsProps = {
   product: HttpTypes.StoreProduct
@@ -19,7 +20,9 @@ export default async function RelatedProducts({
   }
 
   // edit this function to define your related products logic
-  const queryParams: HttpTypes.StoreProductParams = {}
+  const queryParams: HttpTypes.StoreProductParams = {
+    limit: 3,
+  }
   if (region?.id) {
     queryParams.region_id = region.id
   }
@@ -45,23 +48,16 @@ export default async function RelatedProducts({
   }
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
-      </div>
+    <Layout>
+      <LayoutColumn className="mt-26 md:mt-36">
+        <h4 className="text-lg md:text-2xl mb-8 md:mb-16">Related products</h4>
+      </LayoutColumn>
 
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
-        {products.map((product) => (
-          <li key={product.id}>
-            <Product region={region} product={product} />
-          </li>
-        ))}
-      </ul>
-    </div>
+      {products.map((product) => (
+        <LayoutColumn key={product.id} className="!col-span-6 md:!col-span-4">
+          <Product region={region} product={product} />
+        </LayoutColumn>
+      ))}
+    </Layout>
   )
 }
