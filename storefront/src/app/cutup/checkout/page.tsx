@@ -99,7 +99,7 @@ const Summary: React.FC<{ className?: string }> = ({ className }) => {
   )
 }
 
-export default function Checkout() {
+export default function CheckoutPage() {
   const [step, setStep] = React.useState(1)
   const [summaryOpen, setSummaryOpen] = React.useState(false)
 
