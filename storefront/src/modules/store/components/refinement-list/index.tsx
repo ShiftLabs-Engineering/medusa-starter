@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
 
 import SortProducts, { SortOptions } from "./sort-products"
-import { Button, Layout, LayoutColumn, Select } from "components"
+import { Button, Layout, LayoutColumn } from "components"
 
 type RefinementListProps = {
   sortBy: SortOptions | undefined

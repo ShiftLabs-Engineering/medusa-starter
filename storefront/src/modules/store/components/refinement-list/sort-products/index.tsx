@@ -1,7 +1,16 @@
 "use client"
 
-import FilterRadioGroup from "@modules/common/components/filter-radio-group"
-import { Select } from "components"
+// External packages
+import { Popover, Select } from "react-aria-components"
+
+// Components
+import {
+  UiSelectButton,
+  UiSelectIcon,
+  UiSelectListBox,
+  UiSelectListBoxItem,
+  UiSelectValue,
+} from "components/ui/Select"
 
 export type SortOptions = "price_asc" | "price_desc" | "created_at"
 
@@ -17,17 +26,28 @@ const SortProducts = ({ sortBy, setQueryParams }: SortProductsProps) => {
 
   return (
     <Select
-      name="Sort by"
-      options={{
-        sortBy: "Sort by",
-        created_at: "Latest Arrivals",
-        price_asc: "Lowest price",
-        price_desc: "Highest price",
+      placeholder="Sort by"
+      selectedKey={sortBy || "sortBy"}
+      onSelectionChange={(key) => {
+        handleChange(key as SortOptions)
       }}
-      value={sortBy || "sortBy"}
-      contentProps={{ align: "end" }}
-      onValueChange={handleChange}
-    />
+    >
+      <UiSelectButton>
+        <UiSelectValue />
+        <UiSelectIcon />
+      </UiSelectButton>
+      <Popover className="w-60">
+        <UiSelectListBox>
+          <UiSelectListBoxItem id="created_at">
+            Latest Arrivals
+          </UiSelectListBoxItem>
+          <UiSelectListBoxItem id="price_asc">Lowest price</UiSelectListBoxItem>
+          <UiSelectListBoxItem id="price_desc">
+            Highest price
+          </UiSelectListBoxItem>
+        </UiSelectListBox>
+      </Popover>
+    </Select>
   )
 }
 
