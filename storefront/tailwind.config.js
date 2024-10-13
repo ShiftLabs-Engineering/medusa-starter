@@ -94,6 +94,9 @@ module.exports = {
       borderWidth: {
         6: "6px",
       },
+      transitionProperty: {
+        fontWeight: "font-weight",
+      },
     },
   },
   safelist: [

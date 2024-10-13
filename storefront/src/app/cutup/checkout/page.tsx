@@ -5,16 +5,7 @@ import * as React from "react"
 import Image from "next/image"
 
 // Components
-import {
-  Button,
-  Icon,
-  Input,
-  Layout,
-  LayoutColumn,
-  Link,
-  NumberField,
-  Checkbox,
-} from "components"
+import { Button, Input, Link, Checkbox } from "components"
 import {
   UiSelectButton,
   UiSelectIcon,
@@ -22,8 +13,9 @@ import {
   UiSelectListBoxItem,
   UiSelectValue,
 } from "@/components/ui/Select"
-import { Label, Popover, RadioGroup, Select } from "react-aria-components"
+import { Popover, RadioGroup, Select } from "react-aria-components"
 import { UiRadio, UiRadioBox, UiRadioLabel } from "@/components/ui/Radio"
+import { twJoin } from "tailwind-merge"
 
 export default function Checkout() {
   const [step, setStep] = React.useState(1)
@@ -36,7 +28,14 @@ export default function Checkout() {
         </Link>
         <div className="flex justify-between mb-8">
           <div>
-            <p className="font-semibold">1. Email</p>
+            <p
+              className={twJoin(
+                "transition-fontWeight duration-75",
+                step === 1 && "font-semibold"
+              )}
+            >
+              1. Email
+            </p>
           </div>
           {step !== 1 && (
             <Button variant="link" onClick={() => setStep(1)}>
@@ -53,7 +52,6 @@ export default function Checkout() {
               className="mb-4"
             />
             <Checkbox
-              isSelected
               label="What to get news and offers? Ok, yes and some discounts. But only if you subscribe."
               className="mb-8"
             />
@@ -67,7 +65,14 @@ export default function Checkout() {
         )}
         <div className="flex justify-between mb-8 border-t border-grayscale-200 pt-8 mt-8">
           <div>
-            <p className="font-semibold">2. Delivery details</p>
+            <p
+              className={twJoin(
+                "transition-fontWeight duration-75",
+                step === 2 && "font-semibold"
+              )}
+            >
+              2. Delivery details
+            </p>
           </div>
           {step !== 2 && step > 2 && (
             <Button variant="link" onClick={() => setStep(2)}>
@@ -137,7 +142,14 @@ export default function Checkout() {
         )}
         <div className="flex justify-between mb-8 border-t border-grayscale-200 pt-8 mt-8">
           <div>
-            <p className="font-semibold">3. Shipping</p>
+            <p
+              className={twJoin(
+                "transition-fontWeight duration-75",
+                step === 3 && "font-semibold"
+              )}
+            >
+              3. Shipping
+            </p>
           </div>
           {step !== 3 && step > 3 && (
             <Button variant="link" onClick={() => setStep(3)}>
@@ -150,13 +162,21 @@ export default function Checkout() {
             <RadioGroup className="flex flex-col gap-2 mb-8">
               <UiRadio variant="outline" value="standard" className="gap-4">
                 <UiRadioBox />
-                <UiRadioLabel>Standard delivery (3 — 5 days)</UiRadioLabel>
-                <UiRadioLabel className="ml-auto">€50</UiRadioLabel>
+                <UiRadioLabel className="group-data-[selected=true]:font-normal">
+                  Standard delivery (3 — 5 days)
+                </UiRadioLabel>
+                <UiRadioLabel className="ml-auto group-data-[selected=true]:font-normal">
+                  €50
+                </UiRadioLabel>
               </UiRadio>
               <UiRadio variant="outline" value="fast" className="gap-4">
                 <UiRadioBox />
-                <UiRadioLabel>Fast delivery (1 — 2 days)</UiRadioLabel>
-                <UiRadioLabel className="ml-auto">€100</UiRadioLabel>
+                <UiRadioLabel className="group-data-[selected=true]:font-normal">
+                  Fast delivery (1 — 2 days)
+                </UiRadioLabel>
+                <UiRadioLabel className="ml-auto group-data-[selected=true]:font-normal">
+                  €100
+                </UiRadioLabel>
               </UiRadio>
             </RadioGroup>
             <Button onClick={() => setStep(4)}>Next</Button>
@@ -169,17 +189,23 @@ export default function Checkout() {
             </p>
           )
         )}
-        {/*  */}
         <div className="flex justify-between mb-8 border-t border-grayscale-200 pt-8 mt-8">
           <div>
-            <p className="font-semibold">4. Payment</p>
+            <p
+              className={twJoin(
+                "transition-fontWeight duration-75",
+                step === 4 && "font-semibold"
+              )}
+            >
+              4. Payment
+            </p>
           </div>
         </div>
         <Button
           isFullWidth
           iconName="arrow-up-right"
           iconPosition="end"
-          isVisuallyDisabled
+          isVisuallyDisabled={step !== 4}
         >
           Pay with Stripe
         </Button>
