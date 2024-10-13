@@ -39,27 +39,27 @@ import {
 } from "@/components/ui/Checkbox"
 import { UiRadio, UiRadioBox, UiRadioLabel } from "@/components/ui/Radio"
 
-export default function CollectionsPage() {
+export default function CollectionPage() {
   return (
     <>
-      <div>
+      <div className="max-md:pt-18">
         <Image
-          src="/images/content/living-room3.png"
+          src="/images/content/living-room4.png"
           width={2880}
           height={1500}
           alt="Living room"
-          className="h-screen object-cover"
+          className="md:h-screen md:object-cover"
         />
       </div>
       <div className="pt-8 md:pt-16 pb-26 md:pb-36">
         <Layout className="mb-6">
-          <LayoutColumn start={1} end={{ base: 13, md: 7 }}>
+          <LayoutColumn start={1} end={{ base: 13, lg: 7 }}>
             <h3 className="text-lg max-md:mb-6 md:text-2xl">
               Scandinavian Simplicity:
               <br /> Effortless elegance, timeless comfort
             </h3>
           </LayoutColumn>
-          <LayoutColumn start={{ base: 1, md: 8 }} end={13}>
+          <LayoutColumn start={{ base: 1, lg: 8 }} end={13}>
             <div className="md:text-md md:mt-18">
               <p className="mb-6 md:mb-8">
                 Minimalistic designs, neutral colors, and high-quality textures.
@@ -357,28 +357,6 @@ export default function CollectionsPage() {
           <LayoutColumn className="md:!col-span-4 !col-span-6">
             <Link href="/cutup/product">
               <Image
-                src="/images/content/shop2.png"
-                width={768}
-                height={572}
-                alt="Sofa"
-                className="mb-6"
-              />
-              <div className="flex justify-between">
-                <div>
-                  <p className="mb-1">Everly Estate</p>
-                  <p className="text-grayscale-500 text-xs">
-                    Timeless Classics
-                  </p>
-                </div>
-                <div>
-                  <p className="font-semibold">3000€</p>
-                </div>
-              </div>
-            </Link>
-          </LayoutColumn>
-          <LayoutColumn className="md:!col-span-4 !col-span-6">
-            <Link href="/cutup/product">
-              <Image
                 src="/images/content/shop3.png"
                 width={768}
                 height={572}
@@ -387,8 +365,10 @@ export default function CollectionsPage() {
               />
               <div className="flex justify-between">
                 <div>
-                  <p className="mb-1">Paloma Haven</p>
-                  <p className="text-grayscale-500 text-xs">Modern Luxe</p>
+                  <p className="mb-1">Belime Haven</p>
+                  <p className="text-grayscale-500 text-xs">
+                    Scandinavian Simplicity
+                  </p>
                 </div>
                 <div>
                   <p className="font-semibold">1200€</p>
@@ -399,7 +379,29 @@ export default function CollectionsPage() {
           <LayoutColumn className="md:!col-span-4 !col-span-6">
             <Link href="/cutup/product">
               <Image
-                src="/images/content/shop4.png"
+                src="/images/content/shop7.png"
+                width={768}
+                height={572}
+                alt="Sofa"
+                className="mb-6"
+              />
+              <div className="flex justify-between">
+                <div>
+                  <p className="mb-1">Paloma Haven</p>
+                  <p className="text-grayscale-500 text-xs">
+                    Scandinavian Simplicity
+                  </p>
+                </div>
+                <div>
+                  <p className="font-semibold">1200€</p>
+                </div>
+              </div>
+            </Link>
+          </LayoutColumn>
+          <LayoutColumn className="md:!col-span-4 !col-span-6">
+            <Link href="/cutup/product">
+              <Image
+                src="/images/content/shop10.png"
                 width={768}
                 height={572}
                 alt="Sofa"
@@ -408,7 +410,9 @@ export default function CollectionsPage() {
               <div className="flex justify-between">
                 <div>
                   <p className="mb-1">Serena Meadow</p>
-                  <p className="text-grayscale-500 text-xs">Boho Chic</p>
+                  <p className="text-grayscale-500 text-xs">
+                    Scandinavian Simplicity
+                  </p>
                 </div>
                 <div>
                   <p className="font-semibold">2000€</p>
@@ -419,7 +423,7 @@ export default function CollectionsPage() {
           <LayoutColumn className="md:!col-span-4 !col-span-6">
             <Link href="/cutup/product">
               <Image
-                src="/images/content/shop5.png"
+                src="/images/content/shop6.png"
                 width={768}
                 height={572}
                 alt="Sofa"
@@ -441,7 +445,7 @@ export default function CollectionsPage() {
           <LayoutColumn className="md:!col-span-4 !col-span-6">
             <Link href="/cutup/product">
               <Image
-                src="/images/content/shop6.png"
+                src="/images/content/shop11.png"
                 width={768}
                 height={572}
                 alt="Sofa"
@@ -450,7 +454,9 @@ export default function CollectionsPage() {
               <div className="flex justify-between">
                 <div>
                   <p className="mb-1">Velora Luxe</p>
-                  <p className="text-grayscale-500 text-xs">Modern Luxe</p>
+                  <p className="text-grayscale-500 text-xs">
+                    Scandinavian Simplicity
+                  </p>
                 </div>
                 <div>
                   <p className="font-semibold text-red-900">1200€</p>
