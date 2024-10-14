@@ -23,10 +23,14 @@ export const getCollectionsList = cache(async function (
 })
 
 export const getCollectionByHandle = cache(async function (
-  handle: string
+  handle: string,
+  fields: (keyof HttpTypes.StoreCollection)[] = []
 ): Promise<HttpTypes.StoreCollection> {
   return sdk.store.collection
-    .list({ handle }, { next: { tags: ["collections"] } })
+    .list(
+      { handle, fields: fields.join(","), limit: 1 },
+      { next: { tags: ["collections"] } }
+    )
     .then(({ collections }) => collections[0])
 })
 

@@ -8,7 +8,8 @@ import { Button, Layout, LayoutColumn } from "components"
 import { CollectionFilter } from "./collection-filter"
 
 type RefinementListProps = {
-  collections: Record<string, string>
+  title?: string
+  collections?: Record<string, string>
   collection?: string[]
   sortBy: SortOptions | undefined
   search?: boolean
@@ -16,6 +17,7 @@ type RefinementListProps = {
 }
 
 const RefinementList = ({
+  title = "Shop",
   collections,
   collection,
   sortBy,
@@ -50,7 +52,7 @@ const RefinementList = ({
     <Layout className="mb-4 md:mb-6">
       <LayoutColumn>
         <h2 className="text-lg md:text-2xl mb-6" id="products">
-          Shop
+          {title}
         </h2>
         <div className="flex justify-between gap-10">
           <Button
@@ -70,11 +72,13 @@ const RefinementList = ({
             <Button variant="ghost" className="px-2">
               Materials
             </Button>
-            <CollectionFilter
-              collections={collections}
-              collection={collection}
-              setQueryParams={setQueryParams}
-            />
+            {typeof collections !== "undefined" && (
+              <CollectionFilter
+                collections={collections}
+                collection={collection}
+                setQueryParams={setQueryParams}
+              />
+            )}
           </div>
           <SortProducts
             sortBy={sortBy}

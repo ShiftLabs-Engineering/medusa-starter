@@ -80,7 +80,7 @@ const CollectionsSection: React.FC<{ countryCode: string }> = async ({
     <Carousel
       heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
       button={
-        <LocalizedClientLink href="/collections" className="md:h-auto">
+        <LocalizedClientLink href="/store" className="md:h-auto">
           <Button size="md" className="h-full flex-1 max-md:hidden">
             View All
           </Button>

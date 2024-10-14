@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 import Image from "next/image"
 
+import { collectionMetadataCustomFieldsSchema } from "@lib/util/collections"
 import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
 import RelatedProducts from "@modules/products/components/related-products"
@@ -28,45 +29,6 @@ type ProductTemplateProps = {
   countryCode: string
 }
 
-const collectionFieldsMetadataSchema = z.object({
-  image: z
-    .object({
-      id: z.string(),
-      url: z.string().url(),
-    })
-    .optional(),
-  description: z.string().optional(),
-  collection_page_image: z
-    .object({
-      id: z.string(),
-      url: z.string().url(),
-    })
-    .optional(),
-  collection_page_heading: z.string().optional(),
-  collection_page_content: z.string().optional(),
-  product_page_heading: z.string().optional(),
-  product_page_image: z
-    .object({
-      id: z.string(),
-      url: z.string().url(),
-    })
-    .optional(),
-  product_page_wide_image: z
-    .object({
-      id: z.string(),
-      url: z.string().url(),
-    })
-    .optional(),
-  product_page_cta_image: z
-    .object({
-      id: z.string(),
-      url: z.string().url(),
-    })
-    .optional(),
-  product_page_cta_heading: z.string().optional(),
-  product_page_cta_link: z.string().optional(),
-})
-
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
   materials,
@@ -83,7 +45,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
       product.images.filter((image) => Boolean(image.url)).length > 0
   )
 
-  const collectionDetails = collectionFieldsMetadataSchema.safeParse(
+  const collectionDetails = collectionMetadataCustomFieldsSchema.safeParse(
     product.collection?.metadata ?? {}
   )
 

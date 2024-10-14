@@ -29,7 +29,7 @@ export function Header() {
   return (
     <div
       className={twJoin(
-        "top-0 left-0 w-full max-md:bg-grayscale-50 fixed max-md:px-8",
+        "top-0 left-0 w-full max-md:bg-grayscale-50 fixed max-md:px-8 z-40",
         (pathName === "/cutup" ||
           pathName === "/cutup/about" ||
           pathName === "/cutup/inspiration" ||
