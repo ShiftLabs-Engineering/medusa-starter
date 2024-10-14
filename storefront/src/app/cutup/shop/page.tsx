@@ -57,7 +57,10 @@ export default function ShopPage() {
             alt="Scandinavian simplicity"
             className="mb-4 md:mb-6"
           />
-          <h3>Scandinavian Simplicity</h3>
+          <h3 className="mb-2">Scandinavian Simplicity</h3>
+          <p className="text-xs text-grayscale-500">
+            Minimalistic designs, neutral colors, and high-quality textures
+          </p>
         </Link>
         <Link href="/cutup/collection">
           <Image
@@ -67,7 +70,11 @@ export default function ShopPage() {
             alt="Modern luxe"
             className="mb-4 md:mb-6"
           />
-          <h3>Modern Luxe</h3>
+          <h3 className="mb-2">Modern Luxe</h3>
+          <p className="text-xs text-grayscale-500">
+            Sophisticated and sleek, these sofas blend modern design with
+            luxurious comfort
+          </p>
         </Link>
         <Link href="/cutup/collection">
           <Image
@@ -77,7 +84,11 @@ export default function ShopPage() {
             alt="Boho Chic"
             className="mb-4 md:mb-6"
           />
-          <h3>Boho Chic</h3>
+          <h3 className="mb-2">Boho Chic</h3>
+          <p className="text-xs text-grayscale-500">
+            Infused with playful textures and vibrant patterns with eclectic
+            vibes.
+          </p>
         </Link>
         <Link href="/cutup/collection">
           <Image
@@ -87,7 +98,11 @@ export default function ShopPage() {
             alt="Timeless Classics"
             className="mb-4 md:mb-6"
           />
-          <h3>Timeless Classics</h3>
+          <h3 className="mb-2">Timeless Classics</h3>
+          <p className="text-xs text-grayscale-500">
+            Elegant shapes, rich textures, traditional craftsmanship with modern
+            comfort
+          </p>
         </Link>
       </Carousel>
       <Layout className="mb-6 md:mb-8">

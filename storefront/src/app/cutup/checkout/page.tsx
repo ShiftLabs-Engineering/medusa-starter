@@ -35,17 +35,21 @@ const Summary: React.FC<{ className?: string }> = ({ className }) => {
         <Button variant="link">Edit cart</Button>
       </div>
       <div className="flex gap-4 lg:gap-6 mb-8">
-        <Image
-          src="/images/content/sofa4.png"
-          width={264}
-          height={320}
-          alt="Sofa"
-          className="max-w-25 lg:max-w-33 w-full"
-        />
+        <Link href="/cutup/product">
+          <Image
+            src="/images/content/sofa4.png"
+            width={264}
+            height={320}
+            alt="Sofa"
+            className="max-w-25 lg:max-w-33 w-full"
+          />
+        </Link>
         <div className="flex flex-col flex-1 justify-between">
           <div className="flex flex-wrap gap-x-4 gap-y-1 justify-between">
             <div>
-              <p className="font-semibold">Paloma Haven</p>
+              <Link href="/cutup/product" className="font-semibold">
+                Paloma Haven
+              </Link>
             </div>
             <div>
               <p>€1200</p>
