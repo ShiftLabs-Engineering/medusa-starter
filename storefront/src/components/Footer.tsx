@@ -26,7 +26,7 @@ export const Footer = () => {
     >
       <Layout>
         <LayoutColumn className="col-span-13">
-          <div className="flex max-lg:flex-col justify-between md:gap-20 md:items-center">
+          <div className="flex max-lg:flex-col justify-between md:gap-20 md:items-center max-md:px-4">
             <div className="flex flex-1 max-lg:w-full max-lg:order-2 max-sm:flex-col justify-between sm:gap-30 lg:gap-20 md:items-center">
               <div className="max-w-35 md:flex-1 max-md:mb-9">
                 <h1 className="text-lg md:text-xl mb-2 md:mb-6 !leading-[0.9]">
