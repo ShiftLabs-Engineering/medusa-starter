@@ -167,24 +167,21 @@ export function Header() {
               Shop
             </Link>
           </div>
-          <div className="flex justify-between w-full mt-auto items-center px-8 pb-8">
-            <Link href="/cutup/about" onClick={() => setIsMenuOpen(false)}>
-              My account
-            </Link>
-            <Button variant="ghost" className="text-white">
-              HR
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2"
-                height="24"
-                fill="none"
-                className="mx-2"
-              >
-                <path stroke="currentColor" d="M1 0v24" />
-              </svg>
-              EUR
-            </Button>
-          </div>
+          <Select defaultSelectedKey="hr" className="mt-auto ml-8 mb-8">
+            <UiSelectButton className="bg-transparent border-0 max-md:text-base gap-2 p-1 w-auto">
+              <UiSelectValue />
+              <UiSelectIcon className="text-current w-6 h-6" />
+            </UiSelectButton>
+            <Popover className="max-w-61 w-full">
+              <UiSelectListBox>
+                <UiSelectListBoxItem id="hr">HR</UiSelectListBoxItem>
+                <UiSelectListBoxItem>Afghanistan</UiSelectListBoxItem>
+                <UiSelectListBoxItem>Albania</UiSelectListBoxItem>
+                <UiSelectListBoxItem>Algeria</UiSelectListBoxItem>
+                <UiSelectListBoxItem>Andorra</UiSelectListBoxItem>
+              </UiSelectListBox>
+            </Popover>
+          </Select>
         </div>
       </Drawer>
     </div>
