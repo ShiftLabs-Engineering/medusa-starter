@@ -82,6 +82,7 @@ export default async function ProductPage({ params }: Props) {
     getProductByHandle(params.handle, region.id),
     getProductFashionDataByHandle(params.handle),
   ])
+
   if (!pricedProduct) {
     notFound()
   }

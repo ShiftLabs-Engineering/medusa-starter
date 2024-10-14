@@ -7,10 +7,20 @@ import { z } from 'zod';
 import { ImageField, imageFieldSchema } from '../components/Form/ImageField';
 import { Form } from '../components/Form/Form';
 import { TextareaField } from '../components/Form/TextareaField';
+import { InputField } from '../components/Form/InputField';
 
 const detailsFormSchema = z.object({
   image: imageFieldSchema().optional(),
   description: z.string().optional(),
+  collection_page_image: imageFieldSchema().optional(),
+  collection_page_heading: z.string().optional(),
+  collection_page_content: z.string().optional(),
+  product_page_heading: z.string().optional(),
+  product_page_image: imageFieldSchema().optional(),
+  product_page_wide_image: imageFieldSchema().optional(),
+  product_page_cta_image: imageFieldSchema().optional(),
+  product_page_cta_heading: z.string().optional(),
+  product_page_cta_link: z.string().optional(),
 });
 
 const UpdateDetailsDrawer: React.FC<{
@@ -25,11 +35,11 @@ const UpdateDetailsDrawer: React.FC<{
   return (
     <Drawer open={isOpen} onOpenChange={onOpenChange}>
       <Drawer.Trigger asChild>{children}</Drawer.Trigger>
-      <Drawer.Content>
+      <Drawer.Content className="max-h-full">
         <Drawer.Header>
           <Drawer.Title>{title}</Drawer.Title>
         </Drawer.Header>
-        <Drawer.Body className="p-4">
+        <Drawer.Body className="p-4 overflow-auto">
           <Form
             schema={detailsFormSchema}
             onSubmit={async (values) => {
@@ -53,6 +63,46 @@ const UpdateDetailsDrawer: React.FC<{
                 dropzoneRootClassName="h-60"
               />
               <TextareaField name="description" label="Description" />
+              <ImageField
+                name="collection_page_image"
+                label="Collection page image"
+                dropzoneRootClassName="h-60"
+              />
+              <InputField
+                name="collection_page_heading"
+                label="Collection page heading"
+              />
+              <TextareaField
+                name="collection_page_content"
+                label="Collection page content"
+              />
+              <InputField
+                name="product_page_heading"
+                label="Product page heading"
+              />
+              <ImageField
+                name="product_page_image"
+                label="Product page image"
+                dropzoneRootClassName="h-60"
+              />
+              <ImageField
+                name="product_page_wide_image"
+                label="Product page wide image"
+                dropzoneRootClassName="h-60"
+              />
+              <ImageField
+                name="product_page_cta_image"
+                label="Product page CTA image"
+                dropzoneRootClassName="h-60"
+              />
+              <InputField
+                name="product_page_cta_heading"
+                label="Product page CTA heading"
+              />
+              <InputField
+                name="product_page_cta_link"
+                label="Product page CTA link label"
+              />
             </div>
           </Form>
         </Drawer.Body>
@@ -98,7 +148,7 @@ const CollectionDetailsWidget = ({
           <UpdateDetailsDrawer
             isOpen={isEditModalOpen}
             onOpenChange={setIsModalOpen}
-            title="Update description"
+            title="Update collection details"
             id={data.id}
             initialValue={details}
             onSave={(value) => {
@@ -133,13 +183,86 @@ const CollectionDetailsWidget = ({
                 />
               </div>
             )}
-            {details.description?.length > 0 && (
+            {(details.description?.length ?? 0) > 0 && (
               <Text>{details.description}</Text>
             )}
 
             {typeof details.image?.url !== 'string' && !details.description && (
               <Text>No details available</Text>
             )}
+
+            <Heading>Collection Page</Heading>
+
+            {typeof details.collection_page_image?.url === 'string' && (
+              <div>
+                <img
+                  src={details.collection_page_image.url}
+                  className="max-h-60 max-w-none w-auto"
+                />
+              </div>
+            )}
+            {(details.collection_page_heading?.length ?? 0) > 0 && (
+              <Text>{details.collection_page_heading}</Text>
+            )}
+            {(details.collection_page_content?.length ?? 0) > 0 && (
+              <Text>{details.collection_page_content}</Text>
+            )}
+
+            {typeof details.collection_page_image?.url !== 'string' &&
+              !details.collection_page_heading &&
+              !details.collection_page_content && (
+                <Text>Collection page details not entered</Text>
+              )}
+
+            <Heading>Product Page</Heading>
+
+            {typeof details.product_page_heading?.length === 'string' && (
+              <Text>{details.product_page_heading}</Text>
+            )}
+
+            {typeof details.product_page_image?.url === 'string' && (
+              <div>
+                <img
+                  src={details.product_page_image.url}
+                  className="max-h-60 max-w-none w-auto"
+                />
+              </div>
+            )}
+
+            {typeof details.product_page_wide_image?.url === 'string' && (
+              <div>
+                <img
+                  src={details.product_page_wide_image.url}
+                  className="max-h-60 max-w-none w-auto"
+                />
+              </div>
+            )}
+
+            {typeof details.product_page_cta_image?.url === 'string' && (
+              <div>
+                <img
+                  src={details.product_page_cta_image.url}
+                  className="max-h-60 max-w-none w-auto"
+                />
+              </div>
+            )}
+
+            {(details.product_page_cta_heading?.length ?? 0) > 0 && (
+              <Text>{details.product_page_cta_heading}</Text>
+            )}
+
+            {(details.product_page_cta_link?.length ?? 0) > 0 && (
+              <Text>{details.product_page_cta_link}</Text>
+            )}
+
+            {typeof details.product_page_heading?.length !== 'string' &&
+              typeof details.product_page_image?.url !== 'string' &&
+              typeof details.product_page_wide_image?.url !== 'string' &&
+              typeof details.product_page_cta_image?.url !== 'string' &&
+              !details.product_page_cta_heading &&
+              !details.product_page_cta_link && (
+                <Text>Product page details not entered</Text>
+              )}
           </div>
         )}
       </div>

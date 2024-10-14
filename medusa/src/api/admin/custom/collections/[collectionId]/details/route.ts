@@ -10,6 +10,35 @@ const collectionFieldsMetadataSchema = z.object({
     })
     .optional(),
   description: z.string().optional(),
+  collection_page_image: z
+    .object({
+      id: z.string(),
+      url: z.string().url(),
+    })
+    .optional(),
+  collection_page_heading: z.string().optional(),
+  collection_page_content: z.string().optional(),
+  product_page_heading: z.string().optional(),
+  product_page_image: z
+    .object({
+      id: z.string(),
+      url: z.string().url(),
+    })
+    .optional(),
+  product_page_wide_image: z
+    .object({
+      id: z.string(),
+      url: z.string().url(),
+    })
+    .optional(),
+  product_page_cta_image: z
+    .object({
+      id: z.string(),
+      url: z.string().url(),
+    })
+    .optional(),
+  product_page_cta_heading: z.string().optional(),
+  product_page_cta_link: z.string().optional(),
 });
 
 export async function GET(
@@ -30,6 +59,42 @@ export async function GET(
     image: parsed.success && parsed.data.image ? parsed.data.image : null,
     description:
       parsed.success && parsed.data.description ? parsed.data.description : '',
+    collection_page_image:
+      parsed.success && parsed.data.collection_page_image
+        ? parsed.data.collection_page_image
+        : null,
+    collection_page_heading:
+      parsed.success && parsed.data.collection_page_heading
+        ? parsed.data.collection_page_heading
+        : '',
+    collection_page_content:
+      parsed.success && parsed.data.collection_page_content
+        ? parsed.data.collection_page_content
+        : '',
+    product_page_heading:
+      parsed.success && parsed.data.product_page_heading
+        ? parsed.data.product_page_heading
+        : '',
+    product_page_image:
+      parsed.success && parsed.data.product_page_image
+        ? parsed.data.product_page_image
+        : null,
+    product_page_wide_image:
+      parsed.success && parsed.data.product_page_wide_image
+        ? parsed.data.product_page_wide_image
+        : null,
+    product_page_cta_image:
+      parsed.success && parsed.data.product_page_cta_image
+        ? parsed.data.product_page_cta_image
+        : null,
+    product_page_cta_heading:
+      parsed.success && parsed.data.product_page_cta_heading
+        ? parsed.data.product_page_cta_heading
+        : '',
+    product_page_cta_link:
+      parsed.success && parsed.data.product_page_cta_link
+        ? parsed.data.product_page_cta_link
+        : '',
   });
 }
 
