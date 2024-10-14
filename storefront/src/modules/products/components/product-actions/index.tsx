@@ -46,36 +46,46 @@ const optionsAsKeymap = (
 
 const priorityOptions = ["Material", "Color", "Size"]
 
+const getInitialOptions = (product: ProductActionsProps["product"]) => {
+  if (product.variants?.length === 1) {
+    const variantOptions = optionsAsKeymap(product.variants[0].options)
+    return variantOptions ?? {}
+  }
+
+  if (product.options) {
+    const singleOptionValues = product.options
+      .filter((option) => option.values)
+      .filter((option) => option.values!.length === 1)
+      .reduce((acc, option) => {
+        acc[option.id] = option.values![0].value
+        return acc
+      }, {} as Record<string, string>)
+
+    return singleOptionValues
+  }
+
+  return null
+}
+
 export default function ProductActions({
   product,
   materials,
   disabled,
 }: ProductActionsProps) {
-  const [options, setOptions] = useState<Record<string, string | undefined>>({})
+  const [options, setOptions] = useState<Record<string, string | undefined>>(
+    getInitialOptions(product) ?? {}
+  )
   const [quantity, setQuantity] = useState(1)
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
 
   // If there is only 1 variant, preselect the options
   useEffect(() => {
-    if (product.variants?.length === 1) {
-      const variantOptions = optionsAsKeymap(product.variants[0].options)
-      setOptions(variantOptions ?? {})
-    } else {
-      if (product.options) {
-        // Preselect single option values
-        const singleOptionValues = product.options
-          .filter((option) => option.values)
-          .filter((option) => option.values!.length === 1)
-          .reduce((acc, option) => {
-            acc[option.id] = option.values![0].value
-            return acc
-          }, {} as Record<string, string>)
-
-        setOptions(singleOptionValues)
-      }
+    const initialOptions = getInitialOptions(product)
+    if (initialOptions) {
+      setOptions(initialOptions)
     }
-  }, [product.options, product.variants])
+  }, [product])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
