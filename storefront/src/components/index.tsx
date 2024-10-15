@@ -8,7 +8,6 @@ import { FilterProductsByCollection } from "./FilterProductsByCollection"
 import { FilterProductsByColor } from "./FilterProductsByColor"
 import { FilterProductsByMaterial } from "./FilterProductsByMaterial"
 import { FilterProductsByPrice } from "./FilterProductsByPrice"
-import { Footer } from "./Footer"
 import { InputLabel, InputSubLabel, Input } from "./Forms"
 import { Header } from "./Header"
 import { Icon } from "./Icon"
@@ -30,7 +29,6 @@ export {
   FilterProductsByColor,
   FilterProductsByMaterial,
   FilterProductsByPrice,
-  Footer,
   InputLabel,
   InputSubLabel,
   Input,

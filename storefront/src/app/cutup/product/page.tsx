@@ -15,7 +15,6 @@ import {
   NumberField,
   ProductPageGallery,
 } from "components"
-import { Form } from "components/Form/Form"
 
 export default function ProductPage() {
   const productPageSchema = z.object({
@@ -66,7 +65,7 @@ export default function ProductPage() {
               </ProductPageGallery>
             </div>
             <div className="sticky flex-1 top-0">
-              <Form schema={productPageSchema}>
+              <form>
                 <p className="text-grayscale-500 mb-2">Modern Luxe</p>
                 <h1 className="text-md md:text-xl mb-2">Paloma Haven</h1>
                 <p className="text-md mb-8">€12000</p>
@@ -90,7 +89,7 @@ export default function ProductPage() {
                 <p className="text-grayscale-500 max-md:text-xs">
                   Estimate delivery 2-3 days
                 </p>
-              </Form>
+              </form>
             </div>
           </div>
         </LayoutColumn>

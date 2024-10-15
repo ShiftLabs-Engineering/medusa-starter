@@ -12,5 +12,3 @@ export async function Header() {
 
   return <InnerHeader regions={regions} />
 }
-
-export default Header

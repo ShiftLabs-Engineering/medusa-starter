@@ -5,7 +5,8 @@ import { Metadata } from "next"
 import { getBaseURL } from "@lib/util/env"
 
 // Components
-import { Header, Footer } from "components"
+import { Header } from "@/components/Header"
+import { Footer } from "@/components/Footer"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
