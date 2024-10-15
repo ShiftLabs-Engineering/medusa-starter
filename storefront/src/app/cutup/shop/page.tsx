@@ -45,7 +45,11 @@ export default function ShopPage() {
     <div className="md:pt-46 py-26 md:pb-36">
       <Carousel
         heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
-        button={<Button size="sm">View All</Button>}
+        button={
+          <Button size="sm" className="md:hidden">
+            View All
+          </Button>
+        }
         className="mb-26 md:mb-35"
         disableOnDesktop
       >
