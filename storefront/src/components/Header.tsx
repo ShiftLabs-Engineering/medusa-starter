@@ -59,7 +59,7 @@ export function Header() {
   return (
     <div
       className={twJoin(
-        "top-0 left-0 w-full max-md:bg-grayscale-50 data-[changecolor=true]:md:bg-white data-[changecolor=true]:md:text-black transition-colors fixed max-md:px-8 z-40 js-bg-change",
+        "top-0 left-0 w-full max-md:bg-grayscale-50 data-[changecolor=true]:md:bg-white data-[changecolor=true]:md:text-black transition-colors fixed max-md:px-6 z-40 js-bg-change",
         (pathName === "/cutup" ||
           pathName === "/cutup/about" ||
           pathName === "/cutup/inspiration" ||
@@ -136,7 +136,7 @@ export function Header() {
                 </Button>
               </LocalizedClientLink>
             </div>
-            <div className="flex items-center gap-7 md:hidden">
+            <div className="flex items-center gap-6 md:hidden">
               <LocalizedClientLink href="/cart">
                 <Button
                   variant="ghost"
