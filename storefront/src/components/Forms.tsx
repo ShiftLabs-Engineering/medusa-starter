@@ -16,19 +16,21 @@ export const getFormFieldClassNames = ({
 }: InputOwnProps): string => {
   return twJoin(
     // Base
-    "block w-full rounded-xs focus-within:outline-none bg-white px-6 h-14",
+    "block w-full rounded-xs transition-colors focus-within:outline-none bg-white px-6 h-14",
 
     // Variant
-    variant === "outline" && "border border-grayscale-200 bg-transparent",
+    variant === "outline" &&
+      "border border-grayscale-200 hover:border-grayscale-500 focus:border-grayscale-500 bg-transparent",
 
     // Disabled
-    isVisuallyDisabled && "cursor-not-allowed opacity-50",
+    isVisuallyDisabled &&
+      "cursor-not-allowed bg-grayscale-50 text-grayscale-400",
 
     // Success
     isSuccess && "border-green-500 pr-7",
 
     // Error
-    hasError && "border-orange-800 text-orange-800"
+    hasError && "border-red-primary focus:border-red-900 hover:border-red-900"
   )
 }
 
@@ -64,9 +66,9 @@ export const InputSubLabel: React.FC<
   <Aria.Text
     {...rest}
     className={twMerge(
-      "mt-1.5 text-2xs",
+      "mt-2 text-xs",
       type === "success" && "text-green-700",
-      type === "error" && "text-orange-800",
+      type === "error" && "text-red-primary",
       className
     )}
   >
@@ -82,6 +84,7 @@ export type InputOwnProps = {
   isVisuallyDisabled?: boolean
   isSuccess?: boolean
   hasError?: boolean
+  errorMessage?: string
   wrapperClassName?: string
 }
 
@@ -95,6 +98,7 @@ export const Input = React.forwardRef<
       isVisuallyDisabled,
       isSuccess,
       hasError,
+      errorMessage,
       wrapperClassName,
       className,
       ...rest
@@ -120,6 +124,9 @@ export const Input = React.forwardRef<
           name="check"
           className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 text-green-500 w-6 h-auto"
         />
+      )}
+      {hasError && errorMessage && (
+        <InputSubLabel type="error">{errorMessage}</InputSubLabel>
       )}
     </div>
   )
