@@ -1,3 +1,4 @@
+// TODO: delete this file and replace all imports with the actual components
 import { Button } from "./Button"
 import { Carousel } from "./Carousel"
 import { Checkbox } from "./Checkbox"
