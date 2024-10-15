@@ -46,7 +46,7 @@ export default function CollectionPage() {
         <Image
           src="/images/content/living-room4.png"
           width={2880}
-          height={1500}
+          height={1618}
           alt="Living room"
           className="md:h-screen md:object-cover"
         />
