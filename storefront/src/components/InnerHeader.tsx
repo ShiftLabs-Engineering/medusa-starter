@@ -11,9 +11,6 @@ import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 // Components
-import { Button, Drawer, Icon, Input, Layout, LayoutColumn } from "./"
-
-// Components
 import {
   UiSelectButton,
   UiSelectIcon,
@@ -22,6 +19,10 @@ import {
   UiSelectValue,
 } from "@/components/ui/Select"
 import { updateRegion } from "@lib/data/cart"
+import { Button } from "@/components/Button"
+import { Icon } from "@/components/Icon"
+import { Layout, LayoutColumn } from "@/components/Layout"
+import { Drawer } from "@/components/Drawer"
 
 export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
   const pathName = usePathname()
@@ -135,7 +136,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                   </UiSelectListBox>
                 </Popover>
               </Select>
-              <Button
+              {/* <Button
                 variant="ghost"
                 className={twJoin(
                   "p-1 data-[changecolor=true]:md:text-black js-bg-change",
@@ -144,7 +145,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                 data-changecolor={false}
               >
                 <Icon name="search" className="w-5 h-5" />
-              </Button>
+              </Button> */}
               {/* <Button
                 variant="ghost"
                 className={twJoin(
@@ -200,14 +201,15 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
       >
         <div className="flex flex-col text-white h-full">
           <div className="flex items-center pb-6 mb-8 pt-5 w-full border-b border-white px-8">
-            <Button
+            <div className="h-8" />
+            {/* <Button
               variant="ghost"
               className="text-white p-1"
               onClick={() => setIsMenuOpen(true)}
             >
               <Icon name="search" className="w-6 h-6" />
             </Button>
-            <Input placeholder="Search" className="h-auto bg-black px-1" />
+            <Input placeholder="Search" className="h-auto bg-black px-1" /> */}
           </div>
           <div className="text-lg flex flex-col gap-8 font-medium px-8">
             <LocalizedClientLink
