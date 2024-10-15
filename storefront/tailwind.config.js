@@ -101,6 +101,9 @@ module.exports = {
       transitionProperty: {
         fontWeight: "font-weight",
       },
+      zIndex: {
+        header: "9999",
+      },
     },
   },
   safelist: [

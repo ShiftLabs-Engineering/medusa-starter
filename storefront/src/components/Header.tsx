@@ -26,10 +26,40 @@ export function Header() {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
+  const handleScroll = (elementsToChangeColor: NodeListOf<Element>) => {
+    const position = window.scrollY
+
+    position > 200
+      ? elementsToChangeColor.forEach((element) => {
+          element.setAttribute("data-changecolor", "true")
+        })
+      : elementsToChangeColor.forEach((element) => {
+          element.setAttribute("data-changecolor", "false")
+        })
+  }
+
+  React.useEffect(() => {
+    const elementsToChangeColor = document.querySelectorAll(".js-bg-change")
+
+    window.addEventListener(
+      "scroll",
+      () => handleScroll(elementsToChangeColor),
+      {
+        passive: true,
+      }
+    )
+
+    return () => {
+      window.removeEventListener("scroll", () =>
+        handleScroll(elementsToChangeColor)
+      )
+    }
+  }, [])
+
   return (
     <div
       className={twJoin(
-        "top-0 left-0 w-full max-md:bg-grayscale-50 fixed max-md:px-8 z-40",
+        "top-0 left-0 w-full max-md:bg-grayscale-50 data-[changecolor=true]:md:bg-white data-[changecolor=true]:md:text-black transition-colors fixed max-md:px-8 z-40 js-bg-change",
         (pathName === "/cutup" ||
           pathName === "/cutup/about" ||
           pathName === "/cutup/inspiration" ||
@@ -37,6 +67,7 @@ export function Header() {
           "md:text-white",
         pathName === "/cutup/checkout" && "hidden"
       )}
+      data-changecolor={false}
     >
       <Layout>
         <LayoutColumn>
@@ -68,13 +99,14 @@ export function Header() {
               <Button
                 variant="ghost"
                 className={twJoin(
-                  "p-1",
+                  "p-1 data-[changecolor=true]:md:text-black js-bg-change",
                   (pathName === "/cutup" ||
                     pathName === "/cutup/about" ||
                     pathName === "/cutup/inspiration" ||
                     pathName === "/cutup/collection") &&
                     "md:text-white"
                 )}
+                data-changecolor={false}
               >
                 <Icon name="search" className="w-5 h-5" />
               </Button>
@@ -91,13 +123,14 @@ export function Header() {
                 <Button
                   variant="ghost"
                   className={twJoin(
-                    "p-1",
+                    "p-1 data-[changecolor=true]:md:text-black js-bg-change",
                     (pathName === "/cutup" ||
                       pathName === "/cutup/about" ||
                       pathName === "/cutup/inspiration" ||
                       pathName === "/cutup/collection") &&
                       "md:text-white"
                   )}
+                  data-changecolor={false}
                 >
                   <Icon name="case" className="w-6 h-6" />
                 </Button>
