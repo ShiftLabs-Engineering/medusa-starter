@@ -1,10 +1,10 @@
 import { HttpTypes } from "@medusajs/types"
-import { Container } from "@medusajs/ui"
-import Checkbox from "@modules/common/components/checkbox"
-import Input from "@modules/common/components/input"
-import { mapKeys } from "lodash"
+// import { mapKeys } from "lodash"
 import React, { useEffect, useMemo, useState } from "react"
-import AddressSelect from "../address-select"
+
+import { Input } from "@/components/Forms"
+import { Checkbox } from "@/components/Checkbox"
+// import AddressSelect from "../address-select"
 import CountrySelect from "../country-select"
 
 const ShippingAddress = ({
@@ -34,10 +34,7 @@ const ShippingAddress = ({
     [customer?.addresses, countriesInRegion]
   )
 
-  const setFormAddress = (
-    address?: HttpTypes.StoreCartAddress,
-    email?: string
-  ) => {
+  const setFormAddress = (address?: HttpTypes.StoreCartAddress) => {
     address &&
       setFormData((prevState: Record<string, any>) => ({
         ...prevState,
@@ -51,29 +48,21 @@ const ShippingAddress = ({
         "shipping_address.province": address?.province || "",
         "shipping_address.phone": address?.phone || "",
       }))
-
-    email &&
-      setFormData((prevState: Record<string, any>) => ({
-        ...prevState,
-        email: email,
-      }))
   }
 
   useEffect(() => {
     // Ensure cart is not null and has a shipping_address before setting form data
     if (cart && cart.shipping_address) {
-      setFormAddress(cart?.shipping_address, cart?.email)
+      setFormAddress(cart?.shipping_address)
     }
-
-    if (cart && !cart.email && customer?.email) {
-      setFormAddress(undefined, customer.email)
-    }
-  }, [cart]) // Add cart as a dependency
+  }, [cart])
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLInputElement | HTMLSelectElement
-    >
+    e:
+      | React.ChangeEvent<
+          HTMLInputElement | HTMLInputElement | HTMLSelectElement
+        >
+      | { target: { name: string; value: string } }
   ) => {
     setFormData({
       ...formData,
@@ -83,7 +72,8 @@ const ShippingAddress = ({
 
   return (
     <>
-      {customer && (addressesInRegion?.length || 0) > 0 && (
+      {/* TODO: allow user to select existing address when logged in */}
+      {/* {customer && (addressesInRegion?.length || 0) > 0 && (
         <Container className="mb-6 flex flex-col gap-y-4 p-5">
           <p className="text-small-regular">
             {`Hi ${customer.first_name}, do you want to use one of your saved addresses?`}
@@ -98,108 +88,110 @@ const ShippingAddress = ({
             onSelect={setFormAddress}
           />
         </Container>
-      )}
-      <div className="grid grid-cols-2 gap-4">
+      )} */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
         <Input
-          label="First name"
+          placeholder="First name"
           name="shipping_address.first_name"
           autoComplete="given-name"
           value={formData["shipping_address.first_name"]}
           onChange={handleChange}
           required
           data-testid="shipping-first-name-input"
+          variant="outline"
         />
         <Input
-          label="Last name"
+          placeholder="Last name"
           name="shipping_address.last_name"
           autoComplete="family-name"
           value={formData["shipping_address.last_name"]}
           onChange={handleChange}
           required
           data-testid="shipping-last-name-input"
+          variant="outline"
         />
         <Input
-          label="Address"
+          placeholder="Address"
           name="shipping_address.address_1"
           autoComplete="address-line1"
           value={formData["shipping_address.address_1"]}
           onChange={handleChange}
           required
           data-testid="shipping-address-input"
+          variant="outline"
         />
         <Input
-          label="Company"
+          placeholder="Company"
           name="shipping_address.company"
           value={formData["shipping_address.company"]}
           onChange={handleChange}
           autoComplete="organization"
           data-testid="shipping-company-input"
+          variant="outline"
         />
         <Input
-          label="Postal code"
+          placeholder="Postal code"
           name="shipping_address.postal_code"
           autoComplete="postal-code"
           value={formData["shipping_address.postal_code"]}
           onChange={handleChange}
           required
           data-testid="shipping-postal-code-input"
+          variant="outline"
         />
         <Input
-          label="City"
+          placeholder="City"
           name="shipping_address.city"
           autoComplete="address-level2"
           value={formData["shipping_address.city"]}
           onChange={handleChange}
           required
           data-testid="shipping-city-input"
+          variant="outline"
         />
         <CountrySelect
           name="shipping_address.country_code"
           autoComplete="country"
           region={cart?.region}
-          value={formData["shipping_address.country_code"]}
-          onChange={handleChange}
-          required
+          selectedKey={formData["shipping_address.country_code"]}
+          onSelectionChange={(value) => {
+            handleChange({
+              target: {
+                name: "shipping_address.country_code",
+                value: `${value}`,
+              },
+            })
+          }}
+          isRequired
           data-testid="shipping-country-select"
         />
         <Input
-          label="State / Province"
+          placeholder="State / Province"
           name="shipping_address.province"
           autoComplete="address-level1"
           value={formData["shipping_address.province"]}
           onChange={handleChange}
           required
           data-testid="shipping-province-input"
-        />
-      </div>
-      <div className="my-8">
-        <Checkbox
-          label="Billing address same as shipping address"
-          name="same_as_billing"
-          checked={checked}
-          onChange={onChange}
-          data-testid="billing-address-checkbox"
-        />
-      </div>
-      <div className="grid grid-cols-2 gap-4 mb-4">
-        <Input
-          label="Email"
-          name="email"
-          type="email"
-          title="Enter a valid email address."
-          autoComplete="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          data-testid="shipping-email-input"
+          variant="outline"
         />
         <Input
-          label="Phone"
+          placeholder="Phone"
           name="shipping_address.phone"
           autoComplete="tel"
           value={formData["shipping_address.phone"]}
           onChange={handleChange}
           data-testid="shipping-phone-input"
+          variant="outline"
+        />
+      </div>
+      <div className="my-4">
+        <Checkbox
+          label="Billing address same as shipping address"
+          name="same_as_billing"
+          isSelected={checked}
+          onChange={onChange}
+          data-testid="billing-address-checkbox"
         />
       </div>
     </>

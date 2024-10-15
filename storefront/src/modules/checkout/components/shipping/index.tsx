@@ -1,17 +1,16 @@
 "use client"
 
-import { RadioGroup } from "@headlessui/react"
-import { CheckCircleSolid } from "@medusajs/icons"
-import { Button, Heading, Text, clx } from "@medusajs/ui"
-
-import Divider from "@modules/common/components/divider"
-import Radio from "@modules/common/components/radio"
-import ErrorMessage from "@modules/checkout/components/error-message"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { HttpTypes } from "@medusajs/types"
+import { twJoin } from "tailwind-merge"
+import { RadioGroup } from "react-aria-components"
+
 import { setShippingMethod } from "@lib/data/cart"
 import { convertToLocale } from "@lib/util/money"
-import { HttpTypes } from "@medusajs/types"
+import ErrorMessage from "@modules/checkout/components/error-message"
+import { Button } from "@/components/Button"
+import { UiRadio, UiRadioBox, UiRadioLabel } from "@/components/ui/Radio"
 
 type ShippingProps = {
   cart: HttpTypes.StoreCart
@@ -29,16 +28,12 @@ const Shipping: React.FC<ShippingProps> = ({
   const router = useRouter()
   const pathname = usePathname()
 
-  const isOpen = searchParams.get("step") === "delivery"
+  const isOpen = searchParams.get("step") === "shipping"
 
   const selectedShippingMethod = availableShippingMethods?.find(
-    // To do: remove the previously selected shipping method instead of using the last one
+    // TODO: remove the previously selected shipping method instead of using the last one
     (method) => method.id === cart.shipping_methods?.at(-1)?.shipping_option_id
   )
-
-  const handleEdit = () => {
-    router.push(pathname + "?step=delivery", { scroll: false })
-  }
 
   const handleSubmit = () => {
     router.push(pathname + "?step=payment", { scroll: false })
@@ -60,112 +55,88 @@ const Shipping: React.FC<ShippingProps> = ({
   }, [isOpen])
 
   return (
-    <div className="bg-white">
-      <div className="flex flex-row items-center justify-between mb-6">
-        <Heading
-          level="h2"
-          className={clx(
-            "flex flex-row text-3xl-regular gap-x-2 items-baseline",
-            {
-              "opacity-50 pointer-events-none select-none":
-                !isOpen && cart.shipping_methods?.length === 0,
-            }
-          )}
-        >
-          Delivery
-          {!isOpen && (cart.shipping_methods?.length ?? 0) > 0 && (
-            <CheckCircleSolid />
-          )}
-        </Heading>
+    <>
+      <div className="flex justify-between mb-8 border-t border-grayscale-200 pt-8 mt-8">
+        <div>
+          <p
+            className={twJoin(
+              "transition-fontWeight duration-75",
+              isOpen && "font-semibold"
+            )}
+          >
+            3. Shipping
+          </p>
+        </div>
         {!isOpen &&
           cart?.shipping_address &&
           cart?.billing_address &&
           cart?.email && (
-            <Text>
-              <button
-                onClick={handleEdit}
-                className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
-                data-testid="edit-delivery-button"
-              >
-                Edit
-              </button>
-            </Text>
+            <Button
+              variant="link"
+              onClick={() => {
+                router.push(pathname + "?step=shipping", { scroll: false })
+              }}
+            >
+              Change
+            </Button>
           )}
       </div>
       {isOpen ? (
-        <div data-testid="delivery-options-container">
-          <div className="pb-8">
-            <RadioGroup value={selectedShippingMethod?.id} onChange={set}>
-              {availableShippingMethods?.map((option) => {
-                return (
-                  <RadioGroup.Option
-                    key={option.id}
-                    value={option.id}
-                    data-testid="delivery-option-radio"
-                    className={clx(
-                      "flex items-center justify-between text-small-regular cursor-pointer py-4 border rounded-rounded px-8 mb-2 hover:shadow-borders-interactive-with-active",
-                      {
-                        "border-ui-border-interactive":
-                          option.id === selectedShippingMethod?.id,
-                      }
-                    )}
-                  >
-                    <div className="flex items-center gap-x-4">
-                      <Radio
-                        checked={option.id === selectedShippingMethod?.id}
-                      />
-                      <span className="text-base-regular">{option.name}</span>
-                    </div>
-                    <span className="justify-self-end text-ui-fg-base">
-                      {convertToLocale({
-                        amount: option.amount!,
-                        currency_code: cart?.currency_code,
-                      })}
-                    </span>
-                  </RadioGroup.Option>
-                )
-              })}
+        availableShippingMethods?.length === 0 ? (
+          <div>
+            <p className="text-red-900">
+              There are no shipping methods available for your location. Please
+              contact us for further assistance.
+            </p>
+          </div>
+        ) : (
+          <div>
+            <RadioGroup
+              className="flex flex-col gap-2 mb-8"
+              value={selectedShippingMethod?.id}
+              onChange={set}
+            >
+              {availableShippingMethods?.map((option) => (
+                <UiRadio
+                  key={option.id}
+                  variant="outline"
+                  value={option.id}
+                  className="gap-4"
+                >
+                  <UiRadioBox />
+                  <UiRadioLabel className="group-data-[selected=true]:font-normal">
+                    {option.name}
+                  </UiRadioLabel>
+                  <UiRadioLabel className="ml-auto group-data-[selected=true]:font-normal">
+                    {convertToLocale({
+                      amount: option.amount!,
+                      currency_code: cart?.currency_code,
+                    })}
+                  </UiRadioLabel>
+                </UiRadio>
+              ))}
             </RadioGroup>
-          </div>
 
-          <ErrorMessage
-            error={error}
-            data-testid="delivery-option-error-message"
-          />
+            <ErrorMessage error={error} />
 
-          <Button
-            size="large"
-            className="mt-6"
-            onClick={handleSubmit}
-            isLoading={isLoading}
-            disabled={!cart.shipping_methods?.[0]}
-            data-testid="submit-delivery-option-button"
-          >
-            Continue to payment
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <div className="text-small-regular">
-            {cart && (cart.shipping_methods?.length ?? 0) > 0 && (
-              <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  Method
-                </Text>
-                <Text className="txt-medium text-ui-fg-subtle">
-                  {selectedShippingMethod?.name}{" "}
-                  {convertToLocale({
-                    amount: selectedShippingMethod?.amount!,
-                    currency_code: cart?.currency_code,
-                  })}
-                </Text>
-              </div>
-            )}
+            <Button
+              onClick={handleSubmit}
+              isLoading={isLoading}
+              disabled={!cart.shipping_methods?.[0]}
+            >
+              Next
+            </Button>
           </div>
-        </div>
-      )}
-      <Divider className="mt-8" />
-    </div>
+        )
+      ) : cart &&
+        (cart.shipping_methods?.length ?? 0) > 0 &&
+        selectedShippingMethod ? (
+        <ul className="flex gap-10">
+          <li className="text-grayscale-500">Shipping</li>
+          <li>{selectedShippingMethod.name}</li>
+        </ul>
+      ) : null}
+    </>
   )
 }
 

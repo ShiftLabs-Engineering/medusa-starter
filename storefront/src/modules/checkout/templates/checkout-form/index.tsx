@@ -1,7 +1,9 @@
+import { HttpTypes } from "@medusajs/types"
+
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import { listCartPaymentMethods } from "@lib/data/payment"
-import { HttpTypes } from "@medusajs/types"
-import Addresses from "@modules/checkout/components/addresses"
+import DeliveryDetails from "@modules/checkout/components/addresses"
+import Email from "@modules/checkout/components/email"
 import Payment from "@modules/checkout/components/payment"
 import Review from "@modules/checkout/components/review"
 import Shipping from "@modules/checkout/components/shipping"
@@ -9,9 +11,11 @@ import Shipping from "@modules/checkout/components/shipping"
 export default async function CheckoutForm({
   cart,
   customer,
+  countryCode,
 }: {
   cart: HttpTypes.StoreCart | null
   customer: HttpTypes.StoreCustomer | null
+  countryCode: string
 }) {
   if (!cart) {
     return null
@@ -25,24 +29,12 @@ export default async function CheckoutForm({
   }
 
   return (
-    <div>
-      <div className="w-full grid grid-cols-1 gap-y-8">
-        <div>
-          <Addresses cart={cart} customer={customer} />
-        </div>
-
-        <div>
-          <Shipping cart={cart} availableShippingMethods={shippingMethods} />
-        </div>
-
-        <div>
-          <Payment cart={cart} availablePaymentMethods={paymentMethods} />
-        </div>
-
-        <div>
-          <Review cart={cart} />
-        </div>
-      </div>
-    </div>
+    <>
+      <Email cart={cart} customer={customer} countryCode={countryCode} />
+      <DeliveryDetails cart={cart} customer={customer} />
+      <Shipping cart={cart} availableShippingMethods={shippingMethods} />
+      <Payment cart={cart} availablePaymentMethods={paymentMethods} />
+      <Review cart={cart} />
+    </>
   )
 }

@@ -1,24 +1,25 @@
 "use client"
 
-import { Button } from "@medusajs/ui"
 import { OnApproveActions, OnApproveData } from "@paypal/paypal-js"
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import React, { useState } from "react"
-import ErrorMessage from "../error-message"
+import { HttpTypes } from "@medusajs/types"
+
 import Spinner from "@modules/common/icons/spinner"
 import { placeOrder } from "@lib/data/cart"
-import { HttpTypes } from "@medusajs/types"
 import { isManual, isPaypal, isStripe } from "@lib/constants"
+import { Button } from "@/components/Button"
+import ErrorMessage from "../error-message"
 
 type PaymentButtonProps = {
   cart: HttpTypes.StoreCart
-  "data-testid": string
+  selectPaymentMethod: () => void
 }
 
 const PaymentButton: React.FC<PaymentButtonProps> = ({
   cart,
-  "data-testid": dataTestId,
+  selectPaymentMethod,
 }) => {
   const notReady =
     !cart ||
@@ -39,27 +40,22 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 
   switch (true) {
     case isStripe(paymentSession?.provider_id):
-      return (
-        <StripePaymentButton
-          notReady={notReady}
-          cart={cart}
-          data-testid={dataTestId}
-        />
-      )
+      return <StripePaymentButton notReady={notReady} cart={cart} />
     case isManual(paymentSession?.provider_id):
-      return (
-        <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
-      )
+      return <ManualTestPaymentButton notReady={notReady} />
     case isPaypal(paymentSession?.provider_id):
-      return (
-        <PayPalPaymentButton
-          notReady={notReady}
-          cart={cart}
-          data-testid={dataTestId}
-        />
-      )
+      return <PayPalPaymentButton notReady={notReady} cart={cart} />
     default:
-      return <Button disabled>Select a payment method</Button>
+      return (
+        <Button
+          className="w-full"
+          onClick={() => {
+            selectPaymentMethod()
+          }}
+        >
+          Select a payment method
+        </Button>
+      )
   }
 }
 
@@ -72,11 +68,7 @@ const GiftCardPaymentButton = () => {
   }
 
   return (
-    <Button
-      onClick={handleOrder}
-      isLoading={submitting}
-      data-testid="submit-order-button"
-    >
+    <Button onClick={handleOrder} isLoading={submitting} className="w-full">
       Place order
     </Button>
   )
@@ -85,11 +77,9 @@ const GiftCardPaymentButton = () => {
 const StripePaymentButton = ({
   cart,
   notReady,
-  "data-testid": dataTestId,
 }: {
   cart: HttpTypes.StoreCart
   notReady: boolean
-  "data-testid"?: string
 }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -175,16 +165,12 @@ const StripePaymentButton = ({
       <Button
         disabled={disabled || notReady}
         onClick={handlePayment}
-        size="large"
         isLoading={submitting}
-        data-testid={dataTestId}
+        className="w-full"
       >
         Place order
       </Button>
-      <ErrorMessage
-        error={errorMessage}
-        data-testid="stripe-payment-error-message"
-      />
+      <ErrorMessage error={errorMessage} />
     </>
   )
 }
@@ -192,11 +178,9 @@ const StripePaymentButton = ({
 const PayPalPaymentButton = ({
   cart,
   notReady,
-  "data-testid": dataTestId,
 }: {
   cart: HttpTypes.StoreCart
   notReady: boolean
-  "data-testid"?: string
 }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -248,12 +232,8 @@ const PayPalPaymentButton = ({
           createOrder={async () => session?.data.id as string}
           onApprove={handlePayment}
           disabled={notReady || submitting || isPending}
-          data-testid={dataTestId}
         />
-        <ErrorMessage
-          error={errorMessage}
-          data-testid="paypal-payment-error-message"
-        />
+        <ErrorMessage error={errorMessage} />
       </>
     )
   }
@@ -285,15 +265,11 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         disabled={notReady}
         isLoading={submitting}
         onClick={handlePayment}
-        size="large"
-        data-testid="submit-order-button"
+        className="w-full"
       >
         Place order
       </Button>
-      <ErrorMessage
-        error={errorMessage}
-        data-testid="manual-payment-error-message"
-      />
+      <ErrorMessage error={errorMessage} />
     </>
   )
 }

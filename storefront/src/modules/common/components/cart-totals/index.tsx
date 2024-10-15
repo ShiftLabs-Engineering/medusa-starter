@@ -1,98 +1,98 @@
 "use client"
 
-import { convertToLocale } from "@lib/util/money"
 import React from "react"
+import { HttpTypes } from "@medusajs/types"
+
+import { convertToLocale } from "@lib/util/money"
 
 type CartTotalsProps = {
-  totals: {
-    total?: number | null
-    subtotal?: number | null
-    tax_total?: number | null
-    shipping_total?: number | null
-    discount_total?: number | null
-    gift_card_total?: number | null
-    currency_code: string
+  cart: HttpTypes.StoreCart & {
+    promotions: HttpTypes.StorePromotion[]
   }
 }
 
-const CartTotals: React.FC<CartTotalsProps> = ({ totals }) => {
+const CartTotals: React.FC<CartTotalsProps> = ({ cart }) => {
   const {
     currency_code,
     total,
     subtotal,
     tax_total,
-    shipping_total,
     discount_total,
+    shipping_total,
     gift_card_total,
-  } = totals
+  } = cart
 
   return (
     <div>
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between">
-          <p className="text-grayscale-500">Subtotal:</p>
-          <p
-            className="self-end"
-            data-testid="cart-subtotal"
-            data-value={subtotal || 0}
-          >
-            {convertToLocale({ amount: subtotal ?? 0, currency_code })}
-          </p>
+      <div className="flex flex-col gap-2 lg:gap-1 mb-6">
+        <div className="flex justify-between max-lg:text-xs">
+          <div>
+            <p>Subtotal</p>
+          </div>
+          <div className="self-end">
+            <p>{convertToLocale({ amount: subtotal ?? 0, currency_code })}</p>
+          </div>
         </div>
         {!!discount_total && (
-          <div className="flex justify-between">
-            <p className="text-grayscale-500">Discount:</p>
-            <p
-              className="self-end"
-              data-testid="cart-discount"
-              data-value={discount_total || 0}
-            >
-              -{" "}
-              {convertToLocale({ amount: discount_total ?? 0, currency_code })}
-            </p>
+          <div className="flex justify-between max-lg:text-xs">
+            <div>
+              <p>Discount</p>
+            </div>
+            <div className="self-end">
+              <p>
+                -{" "}
+                {convertToLocale({
+                  amount: discount_total ?? 0,
+                  currency_code,
+                })}
+              </p>
+            </div>
           </div>
         )}
-        <div className="flex justify-between">
-          <p className="text-grayscale-500">Shipping:</p>
-          <p
-            className="self-end"
-            data-testid="cart-shipping"
-            data-value={shipping_total || 0}
-          >
-            {convertToLocale({ amount: shipping_total ?? 0, currency_code })}
-          </p>
+        <div className="flex justify-between max-lg:text-xs">
+          <div>
+            <p>Shipping</p>
+          </div>
+          <div className="self-end">
+            <p>
+              {convertToLocale({ amount: shipping_total ?? 0, currency_code })}
+            </p>
+          </div>
         </div>
-        <div className="flex justify-between">
-          <p className="text-grayscale-500">Taxes:</p>
-          <p
-            className="self-end"
-            data-testid="cart-taxes"
-            data-value={tax_total || 0}
-          >
-            {convertToLocale({ amount: tax_total ?? 0, currency_code })}
-          </p>
+        <div className="flex justify-between max-lg:text-xs">
+          <div>
+            <p>Taxes</p>
+          </div>
+          <div className="self-end">
+            <p>{convertToLocale({ amount: tax_total ?? 0, currency_code })}</p>
+          </div>
         </div>
         {!!gift_card_total && (
-          <div className="flex justify-between">
-            <p className="text-grayscale-500">Gift card:</p>
-            <p
-              className="self-end"
-              data-testid="cart-gift-card-amount"
-              data-value={gift_card_total || 0}
-            >
-              -{" "}
-              {convertToLocale({ amount: gift_card_total ?? 0, currency_code })}
-            </p>
+          <div className="flex justify-between max-lg:text-xs">
+            <div>
+              <p>Gift card</p>
+            </div>
+            <div className="self-end">
+              <p>
+                -{" "}
+                {convertToLocale({
+                  amount: gift_card_total ?? 0,
+                  currency_code,
+                })}
+              </p>
+            </div>
           </div>
         )}
       </div>
-      <hr className="my-6" />
-      <div className="flex justify-between text-md font-semibold">
-        <p>Total:</p>
-        <p data-testid="cart-total" data-value={total || 0}>
-          {convertToLocale({ amount: total ?? 0, currency_code })}
-        </p>
+      <div className="flex justify-between text-md">
+        <div>
+          <p>Total</p>
+        </div>
+        <div className="self-end">
+          <p>{convertToLocale({ amount: total ?? 0, currency_code })}</p>
+        </div>
       </div>
+      <div className="absolute h-full w-auto top-0 right-0 bg-black" />
     </div>
   )
 }

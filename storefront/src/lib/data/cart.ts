@@ -1,11 +1,13 @@
 "use server"
 
-import { sdk } from "@lib/config"
-import medusaError from "@lib/util/medusa-error"
 import { HttpTypes } from "@medusajs/types"
 import { omit } from "lodash"
 import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
+import { z } from "zod"
+
+import { sdk } from "@lib/config"
+import medusaError from "@lib/util/medusa-error"
 import { getAuthHeaders, getCartId, removeCartId, setCartId } from "./cookies"
 import { getProductsById } from "./products"
 import { getRegion } from "./regions"
@@ -296,6 +298,36 @@ export async function submitPromotionForm(
   }
 }
 
+export async function setEmail(currentState: unknown, formData: FormData) {
+  try {
+    if (!formData) {
+      throw new Error("No form data found when setting addresses")
+    }
+    const cartId = getCartId()
+    if (!cartId) {
+      throw new Error("No existing cart found when setting addresses")
+    }
+  } catch (e: any) {
+    return e.message
+  }
+
+  const countryCode = z.string().min(2).safeParse(formData.get("country_code"))
+
+  if (!countryCode.success) {
+    return "Invalid country code"
+  }
+
+  const email = z.string().min(3).email().safeParse(formData.get("email"))
+
+  if (!email.success) {
+    return "Invalid email"
+  }
+
+  await updateCart({ email: email.data })
+
+  redirect(`/${countryCode.data}/checkout?step=delivery`)
+}
+
 // TODO: Pass a POJO instead of a form entity here
 export async function setAddresses(currentState: unknown, formData: FormData) {
   try {
@@ -320,7 +352,6 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
         province: formData.get("shipping_address.province"),
         phone: formData.get("shipping_address.phone"),
       },
-      email: formData.get("email"),
     } as any
 
     const sameAsBilling = formData.get("same_as_billing")
@@ -345,7 +376,7 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
   }
 
   redirect(
-    `/${formData.get("shipping_address.country_code")}/checkout?step=delivery`
+    `/${formData.get("shipping_address.country_code")}/checkout?step=shipping`
   )
 }
 
