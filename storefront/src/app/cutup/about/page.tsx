@@ -96,7 +96,7 @@ export default function AboutPage() {
                 space and personality.
               </p>
             </div>
-            <div className="md:text-md max-lg:mb-8">
+            <div className="md:text-md max-lg:mb-26">
               <p>
                 We believe that great design should be environmentally
                 conscious, which is why we strive to minimise our environmental
