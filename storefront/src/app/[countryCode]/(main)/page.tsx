@@ -191,7 +191,7 @@ export default async function Home({
                 Our mission is to transform your living space into a sanctuary
                 of relaxation and beauty, with products built to last.
               </p>
-              <LocalizedLink href="/" variant="underline">
+              <LocalizedLink href="/about" variant="underline">
                 Read more about Sofa Society
               </LocalizedLink>
             </div>
