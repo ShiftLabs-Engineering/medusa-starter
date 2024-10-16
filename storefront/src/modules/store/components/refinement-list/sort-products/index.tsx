@@ -31,6 +31,7 @@ const SortProducts = ({ sortBy, setQueryParams }: SortProductsProps) => {
       onSelectionChange={(key) => {
         handleChange(key as SortOptions)
       }}
+      className="max-md:hidden"
     >
       <UiSelectButton>
         <UiSelectValue />

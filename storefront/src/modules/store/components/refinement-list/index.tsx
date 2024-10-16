@@ -3,11 +3,13 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useCallback } from "react"
 
+import { Layout, LayoutColumn } from "@/components/Layout"
 import SortProducts, { SortOptions } from "./sort-products"
-import { Button, Layout, LayoutColumn } from "components"
 import { CollectionFilter } from "./collection-filter"
 import { CategoryFilter } from "./category-filter"
 import { TypeFilter } from "./type-filter"
+import { MobileFilters } from "./mobile-filters"
+import { MobileSort } from "./mobile-sort"
 
 type RefinementListProps = {
   title?: string
@@ -36,26 +38,39 @@ const RefinementList = ({
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  const createQueryString = useCallback(
+  const setQueryParams = useCallback(
     (name: string, value: string | string[]) => {
-      const params = new URLSearchParams(searchParams)
+      const query = new URLSearchParams(searchParams)
 
       if (Array.isArray(value)) {
-        params.delete(name)
-        value.forEach((v) => params.append(name, v))
+        query.delete(name)
+        value.forEach((v) => query.append(name, v))
       } else {
-        params.set(name, value)
+        query.set(name, value)
       }
 
-      return params.toString()
+      router.push(`${pathname}?${query.toString()}`, { scroll: false })
     },
-    [searchParams]
+    [pathname, router, searchParams]
   )
 
-  const setQueryParams = (name: string, value: string | string[]) => {
-    const query = createQueryString(name, value)
-    router.push(`${pathname}?${query}`, { scroll: false })
-  }
+  const setMultipleQueryParams = useCallback(
+    (params: Record<string, string | string[]>) => {
+      const query = new URLSearchParams(searchParams)
+
+      Object.entries(params).forEach(([name, value]) => {
+        if (Array.isArray(value)) {
+          query.delete(name)
+          value.forEach((v) => query.append(name, v))
+        } else {
+          query.set(name, value)
+        }
+      })
+
+      router.push(`${pathname}?${query.toString()}`, { scroll: false })
+    },
+    [searchParams, pathname, router]
+  )
 
   return (
     <Layout className="mb-4 md:mb-6">
@@ -64,13 +79,16 @@ const RefinementList = ({
           {title}
         </h2>
         <div className="flex justify-between gap-10">
-          <Button
-            iconName="plus"
-            iconPosition="end"
-            className="bg-white md:hidden border px-4 hover:bg-white border-grayscale-200 h-auto flex-1 grow-0 text-black"
-          >
-            Filter
-          </Button>
+          <MobileFilters
+            collections={collections}
+            collection={collection}
+            categories={categories}
+            category={category}
+            types={types}
+            type={type}
+            setMultipleQueryParams={setMultipleQueryParams}
+          />
+          <MobileSort sortBy={sortBy} setQueryParams={setQueryParams} />
           <div className="flex justify-between gap-6 max-md:hidden">
             {typeof collections !== "undefined" && (
               <CollectionFilter
