@@ -13,13 +13,15 @@ export default async function PaginatedProducts({
   page,
   collectionId,
   categoryId,
+  typeId,
   productsIds,
   countryCode,
 }: {
   sortBy?: SortOptions
   page: number
   collectionId?: string | string[]
-  categoryId?: string
+  categoryId?: string | string[]
+  typeId?: string | string[]
   productsIds?: string[]
   countryCode: string
 }) {
@@ -34,7 +36,13 @@ export default async function PaginatedProducts({
   }
 
   if (categoryId) {
-    queryParams["category_id"] = [categoryId]
+    queryParams["category_id"] = Array.isArray(categoryId)
+      ? categoryId
+      : [categoryId]
+  }
+
+  if (typeId) {
+    queryParams["type_id"] = Array.isArray(typeId) ? typeId : [typeId]
   }
 
   if (productsIds) {

@@ -16,25 +16,25 @@ import {
   UiCheckboxLabel,
 } from "components/ui/Checkbox"
 
-export const CollectionFilter: React.FC<{
-  collections: Record<string, string>
-  collection?: string[]
+export const TypeFilter: React.FC<{
+  types: Record<string, string>
+  type?: string[]
   setQueryParams: (name: string, value: string[]) => void
-}> = ({ collection, collections, setQueryParams }) => (
+}> = ({ type, types, setQueryParams }) => (
   <DialogTrigger>
     <UiSelectButton className="w-35">
-      <span>Collection</span>
+      <span>Type</span>
       <UiSelectIcon />
     </UiSelectButton>
     <Popover className="w-64" crossOffset={58}>
       <UiSelectDialog>
         <CheckboxGroup
-          value={collection ?? []}
+          value={type ?? []}
           onChange={(value) => {
-            setQueryParams("collection", value)
+            setQueryParams("type", value)
           }}
         >
-          {Object.entries(collections).map(([key, value]) => (
+          {Object.entries(types).map(([key, value]) => (
             <UiCheckbox value={key} className="py-3 px-4" key={key}>
               <UiCheckboxBox>
                 <UiCheckboxIcon />

@@ -12,6 +12,8 @@ type Params = {
   searchParams: {
     sortBy?: SortOptions
     collection?: string | string[]
+    category?: string | string[]
+    type?: string | string[]
     page?: string
   }
   params: {
@@ -20,7 +22,7 @@ type Params = {
 }
 
 export default async function StorePage({ searchParams, params }: Params) {
-  const { sortBy, page, collection } = searchParams
+  const { sortBy, page, collection, category, type } = searchParams
 
   return (
     <StoreTemplate
@@ -34,6 +36,10 @@ export default async function StorePage({ searchParams, params }: Params) {
           ? collection
           : [collection]
       }
+      category={
+        !category ? undefined : Array.isArray(category) ? category : [category]
+      }
+      type={!type ? undefined : Array.isArray(type) ? type : [type]}
     />
   )
 }

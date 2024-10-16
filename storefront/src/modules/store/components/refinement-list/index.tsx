@@ -6,13 +6,18 @@ import { useCallback } from "react"
 import SortProducts, { SortOptions } from "./sort-products"
 import { Button, Layout, LayoutColumn } from "components"
 import { CollectionFilter } from "./collection-filter"
+import { CategoryFilter } from "./category-filter"
+import { TypeFilter } from "./type-filter"
 
 type RefinementListProps = {
   title?: string
   collections?: Record<string, string>
   collection?: string[]
+  categories?: Record<string, string>
+  category?: string[]
+  types?: Record<string, string>
+  type?: string[]
   sortBy: SortOptions | undefined
-  search?: boolean
   "data-testid"?: string
 }
 
@@ -20,6 +25,10 @@ const RefinementList = ({
   title = "Shop",
   collections,
   collection,
+  categories,
+  category,
+  types,
+  type,
   sortBy,
   "data-testid": dataTestId,
 }: RefinementListProps) => {
@@ -63,19 +72,24 @@ const RefinementList = ({
             Filter
           </Button>
           <div className="flex justify-between gap-6 max-md:hidden">
-            <Button variant="ghost" className="px-2">
-              Price
-            </Button>
-            <Button variant="ghost" className="px-2">
-              Color
-            </Button>
-            <Button variant="ghost" className="px-2">
-              Materials
-            </Button>
             {typeof collections !== "undefined" && (
               <CollectionFilter
                 collections={collections}
                 collection={collection}
+                setQueryParams={setQueryParams}
+              />
+            )}
+            {typeof categories !== "undefined" && (
+              <CategoryFilter
+                categories={categories}
+                category={category}
+                setQueryParams={setQueryParams}
+              />
+            )}
+            {typeof types !== "undefined" && (
+              <TypeFilter
+                types={types}
+                type={type}
                 setQueryParams={setQueryParams}
               />
             )}
