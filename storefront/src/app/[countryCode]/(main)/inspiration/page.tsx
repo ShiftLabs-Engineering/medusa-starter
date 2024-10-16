@@ -116,7 +116,7 @@ export default function InspirationPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-semibold">1500€</p>
+                  <p className="font-semibold">1200€</p>
                 </div>
               </div>
             </LocalizedLink>
@@ -160,7 +160,7 @@ export default function InspirationPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-semibold">1800€</p>
+                  <p className="font-semibold">1500€</p>
                 </div>
               </div>
             </LocalizedLink>
