@@ -27,7 +27,6 @@ import {
 import {
   ContainerRegistrationKeys,
   Modules,
-  PriceListStatus,
   ProductStatus,
 } from '@medusajs/framework/utils';
 import type FashionModuleService from 'src/modules/fashion/service';
@@ -37,7 +36,7 @@ async function getImageUrlContent(url: string) {
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch image: ${response.statusText}`);
+    throw new Error(`Failed to fetch image "${url}": ${response.statusText}`);
   }
 
   const arrayBuffer = await response.arrayBuffer();
@@ -441,10 +440,10 @@ export default async function seedDemoData({ container }: ExecArgs) {
         files: [
           {
             access: 'public',
-            filename: 'sofas.jpeg',
-            mimeType: 'image/jpeg',
+            filename: 'sofas.png',
+            mimeType: 'image/png',
             content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/product-types/sofas/image.jpeg',
+              'https://assets.agilo.com/fashion-starter/product-types/sofas/image.png',
             ),
           },
           {
