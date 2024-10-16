@@ -49,7 +49,7 @@ export default function InspirationPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-semibold">1800€</p>
+                  <p className="font-semibold">1500€</p>
                 </div>
               </div>
             </LocalizedLink>
@@ -96,11 +96,11 @@ export default function InspirationPage() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-semibold">1000€</p>
+                  <p className="font-semibold">1500€</p>
                 </div>
               </div>
             </LocalizedLink>
-            <LocalizedLink href="/products/belime-haven">
+            <LocalizedLink href="/products/nordic-breeze">
               <Image
                 src="/images/content/shop3.png"
                 width={768}
@@ -110,11 +110,13 @@ export default function InspirationPage() {
               />
               <div className="flex justify-between">
                 <div>
-                  <p className="mb-1">Belime Haven</p>
-                  <p className="text-grayscale-500 text-xs">Modern Luxe</p>
+                  <p className="mb-1">Nordic Breeze</p>
+                  <p className="text-grayscale-500 text-xs">
+                    Scandinavian Simplicity
+                  </p>
                 </div>
                 <div>
-                  <p className="font-semibold">1200€</p>
+                  <p className="font-semibold">1500€</p>
                 </div>
               </div>
             </LocalizedLink>
