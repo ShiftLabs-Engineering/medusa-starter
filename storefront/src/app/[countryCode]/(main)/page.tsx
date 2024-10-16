@@ -2,14 +2,13 @@
 import { Metadata } from "next"
 import Image from "next/image"
 
-// Lib
 import { getCollectionsList } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
-
-// Components
-import { Button, Carousel, Layout, LayoutColumn, Link } from "components"
 import { getProductTypesList } from "@lib/data/product-types"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { Layout, LayoutColumn } from "@/components/Layout"
+import { Carousel } from "@/components/Carousel"
+import { Button } from "@/components/Button"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export const metadata: Metadata = {
   title: "Medusa Next.js Starter Template",
@@ -17,9 +16,7 @@ export const metadata: Metadata = {
     "A performant frontend ecommerce starter template with Next.js 14 and Medusa.",
 }
 
-const ProductTypesSection: React.FC<{ countryCode: string }> = async ({
-  countryCode,
-}) => {
+const ProductTypesSection: React.FC = async () => {
   const productTypes = await getProductTypesList(0, 20, [
     "id",
     "value",
@@ -41,7 +38,7 @@ const ProductTypesSection: React.FC<{ countryCode: string }> = async ({
           start={index % 2 === 0 ? 1 : 7}
           end={index % 2 === 0 ? 7 : 13}
         >
-          <Link href={`/${countryCode}/store?type=${productType.id}`}>
+          <LocalizedLink href={`/store?type=${productType.value}`}>
             {typeof productType.metadata?.image === "object" &&
               productType.metadata.image &&
               "url" in productType.metadata.image &&
@@ -55,16 +52,14 @@ const ProductTypesSection: React.FC<{ countryCode: string }> = async ({
                 />
               )}
             <p className="text-xs md:text-md">{productType.value}</p>
-          </Link>
+          </LocalizedLink>
         </LayoutColumn>
       ))}
     </Layout>
   )
 }
 
-const CollectionsSection: React.FC<{ countryCode: string }> = async ({
-  countryCode,
-}) => {
+const CollectionsSection: React.FC = async () => {
   const collections = await getCollectionsList(0, 20, [
     "id",
     "title",
@@ -80,19 +75,19 @@ const CollectionsSection: React.FC<{ countryCode: string }> = async ({
     <Carousel
       heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
       button={
-        <LocalizedClientLink href="/store" className="md:h-auto">
+        <LocalizedLink href="/store" className="md:h-auto">
           <Button size="md" className="h-full flex-1 max-md:hidden">
             View All
           </Button>
           <Button size="sm" className="md:hidden">
             View All
           </Button>
-        </LocalizedClientLink>
+        </LocalizedLink>
       }
       className="mb-26 md:mb-36"
     >
       {collections.collections.map((collection) => (
-        <LocalizedClientLink
+        <LocalizedLink
           key={collection.id}
           href={`/collections/${collection.handle}`}
         >
@@ -115,7 +110,7 @@ const CollectionsSection: React.FC<{ countryCode: string }> = async ({
                 {collection.metadata.description}
               </p>
             )}
-        </LocalizedClientLink>
+        </LocalizedLink>
       ))}
     </Carousel>
   )
@@ -154,15 +149,15 @@ export default async function Home({
             <div className="flex items-center h-full">
               <div className="text-md">
                 <p>Discover Your Perfect Sofa Today</p>
-                <Link href={`/${countryCode}/store`} variant="underline">
+                <LocalizedLink href="/store" variant="underline">
                   Explore Now
-                </Link>
+                </LocalizedLink>
               </div>
             </div>
           </LayoutColumn>
         </Layout>
-        <ProductTypesSection countryCode={countryCode} />
-        <CollectionsSection countryCode={countryCode} />
+        <ProductTypesSection />
+        <CollectionsSection />
         <Layout>
           <LayoutColumn className="col-span-full">
             <h3 className="text-lg md:text-2xl mb-8 md:mb-15">
@@ -196,9 +191,9 @@ export default async function Home({
                 Our mission is to transform your living space into a sanctuary
                 of relaxation and beauty, with products built to last.
               </p>
-              <Link href="/cutup" variant="underline">
+              <LocalizedLink href="/" variant="underline">
                 Read more about Sofa Society
-              </Link>
+              </LocalizedLink>
             </div>
           </LayoutColumn>
         </Layout>

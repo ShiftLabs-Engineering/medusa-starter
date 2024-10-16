@@ -1,13 +1,13 @@
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
+import { HttpTypes } from "@medusajs/types"
 
 import InteractiveLink from "@modules/common/components/interactive-link"
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import { HttpTypes } from "@medusajs/types"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export default function CategoryTemplate({
   categories,
@@ -39,13 +39,13 @@ export default function CategoryTemplate({
           {parents &&
             parents.map((parent) => (
               <span key={parent.id} className="text-ui-fg-subtle">
-                <LocalizedClientLink
+                <LocalizedLink
                   className="mr-4 hover:text-black"
                   href={`/categories/${parent.handle}`}
                   data-testid="sort-by-link"
                 >
                   {parent.name}
-                </LocalizedClientLink>
+                </LocalizedLink>
                 /
               </span>
             ))}

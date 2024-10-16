@@ -3,12 +3,10 @@
 // External components
 import * as React from "react"
 
-// Modules
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-
 // Components
 import { Button } from "@/components/Button"
 import { Input } from "@/components/Forms"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export const NewsletterForm: React.FC<{ className?: string }> = ({
   className,
@@ -49,13 +47,13 @@ export const NewsletterForm: React.FC<{ className?: string }> = ({
           </form>
           <p className="text-xs text-grayscale-500">
             By subscribing you agree to with our{" "}
-            <LocalizedClientLink
+            <LocalizedLink
               href="/privacy-policy"
               variant="underline"
               className="!pb-0"
             >
               Privacy Policy
-            </LocalizedClientLink>{" "}
+            </LocalizedLink>{" "}
             and provide consent to receive updates from our company.
           </p>
         </>

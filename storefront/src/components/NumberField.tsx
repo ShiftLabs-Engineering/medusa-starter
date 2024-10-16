@@ -4,8 +4,7 @@
 import * as ReactAria from "react-aria-components"
 import { twJoin, twMerge } from "tailwind-merge"
 
-// Components
-import { Icon } from "components"
+import { Icon } from "@/components/Icon"
 
 export const NumberField: React.FC<
   ReactAria.NumberFieldProps & {

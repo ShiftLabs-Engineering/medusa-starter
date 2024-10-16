@@ -6,7 +6,7 @@ import { twJoin, twMerge } from "tailwind-merge"
 import * as Aria from "react-aria-components"
 
 // Components
-import { Icon } from "./"
+import { Icon } from "@/components/Icon"
 
 export const getFormFieldClassNames = ({
   variant,

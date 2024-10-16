@@ -1,8 +1,7 @@
 // External components
 import Image from "next/image"
 
-// Components
-import { Layout, LayoutColumn } from "components"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 export default function AboutPage() {
   return (

@@ -3,13 +3,13 @@ import * as React from "react"
 import NextLink, { LinkProps as NextLinkProps } from "next/link"
 import { twJoin, twMerge } from "tailwind-merge"
 
-type LinkOwnProps = {
+export type LinkOwnProps = {
   variant?: "underline" | "hover:underline" | "unstyled"
 }
 
-const getLinkClassNames = ({ variant }: LinkOwnProps): string =>
+export const getLinkClassNames = ({ variant }: LinkOwnProps): string =>
   twJoin(
-    "transition-colors",
+    variant !== "unstyled" && "transition-colors",
     (variant === "underline" || variant === "hover:underline") &&
       "border-b border-current pb-0.5 md:pb-1",
     variant === "hover:underline" &&

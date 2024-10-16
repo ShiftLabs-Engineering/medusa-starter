@@ -1,8 +1,10 @@
 // External components
 import Image from "next/image"
 
-// Components
-import { Button, Carousel, Layout, LayoutColumn, Link } from "components"
+import { Layout, LayoutColumn } from "@/components/Layout"
+import { Carousel } from "@/components/Carousel"
+import { Button } from "@/components/Button"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export default function InspirationPage() {
   return (
@@ -31,7 +33,7 @@ export default function InspirationPage() {
             </div>
           </LayoutColumn>
           <LayoutColumn start={{ base: 1, md: 9 }} end={13}>
-            <Link href="/cutup/product">
+            <LocalizedLink href="/products/astrid-curve">
               <Image
                 src="/images/content/shop6.png"
                 width={768}
@@ -50,7 +52,7 @@ export default function InspirationPage() {
                   <p className="font-semibold">1800€</p>
                 </div>
               </div>
-            </Link>
+            </LocalizedLink>
           </LayoutColumn>
           <LayoutColumn>
             <Image
@@ -75,7 +77,10 @@ export default function InspirationPage() {
             </div>
           </LayoutColumn>
           <LayoutColumn start={{ base: 1, md: 9 }} end={13}>
-            <Link href="/cutup/product" className="mb-8 md:mb-16 inline-block">
+            <LocalizedLink
+              href="/products/nordic-haven"
+              className="mb-8 md:mb-16 inline-block"
+            >
               <Image
                 src="/images/content/shop1.png"
                 width={768}
@@ -94,8 +99,8 @@ export default function InspirationPage() {
                   <p className="font-semibold">1000€</p>
                 </div>
               </div>
-            </Link>
-            <Link href="/cutup/product">
+            </LocalizedLink>
+            <LocalizedLink href="/products/belime-haven">
               <Image
                 src="/images/content/shop3.png"
                 width={768}
@@ -112,7 +117,7 @@ export default function InspirationPage() {
                   <p className="font-semibold">1200€</p>
                 </div>
               </div>
-            </Link>
+            </LocalizedLink>
           </LayoutColumn>
         </Layout>
         <Image
@@ -137,7 +142,7 @@ export default function InspirationPage() {
             </div>
           </LayoutColumn>
           <LayoutColumn start={{ base: 1, md: 9 }} end={13}>
-            <Link href="/cutup/product">
+            <LocalizedLink href="/products/oslo-drift">
               <Image
                 src="/images/content/shop12.png"
                 width={768}
@@ -156,7 +161,7 @@ export default function InspirationPage() {
                   <p className="font-semibold">1800€</p>
                 </div>
               </div>
-            </Link>
+            </LocalizedLink>
           </LayoutColumn>
         </Layout>
         <Carousel
@@ -173,7 +178,7 @@ export default function InspirationPage() {
           }
           className="mt-26 md:mt-36"
         >
-          <Link href="/cutup/collection">
+          <LocalizedLink href="/collections/scandinavian-simplicity">
             <Image
               src="/images/content/scandinavian-simplicity.png"
               width={992}
@@ -185,8 +190,8 @@ export default function InspirationPage() {
             <p className="text-xs text-grayscale-500 md:text-md">
               Minimalistic designs, neutral colors, and high-quality textures
             </p>
-          </Link>
-          <Link href="/cutup/collection">
+          </LocalizedLink>
+          <LocalizedLink href="/collections/modern-luxe">
             <Image
               src="/images/content/modern-luxe.png"
               width={992}
@@ -199,8 +204,8 @@ export default function InspirationPage() {
               Sophisticated and sleek, these sofas blend modern design with
               luxurious comfort
             </p>
-          </Link>
-          <Link href="/cutup/collection">
+          </LocalizedLink>
+          <LocalizedLink href="/collections/boho-chic">
             <Image
               src="/images/content/boho-chic.png"
               width={992}
@@ -213,7 +218,7 @@ export default function InspirationPage() {
               Infused with playful textures and vibrant patterns with eclectic
               vibes.
             </p>
-          </Link>
+          </LocalizedLink>
         </Carousel>
       </div>
     </>

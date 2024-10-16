@@ -6,7 +6,7 @@ import * as AriaCheckbox from "react-aria-components"
 import { twMerge } from "tailwind-merge"
 
 // Components
-import { Icon } from "."
+import { Icon } from "@/components/Icon"
 
 export type CheckboxOwnProps = {
   label: React.ReactNode

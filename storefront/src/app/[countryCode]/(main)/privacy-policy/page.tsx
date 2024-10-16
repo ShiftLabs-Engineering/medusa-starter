@@ -1,5 +1,4 @@
-// Components
-import { Layout, LayoutColumn } from "components"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 export default function PrivacyPolicyPage() {
   return (

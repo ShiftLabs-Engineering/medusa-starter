@@ -1,9 +1,9 @@
 import { HttpTypes } from "@medusajs/types"
 
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import PaymentDetails from "@modules/order/components/payment-details"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { Button } from "@/components/Button"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 type OrderCompletedTemplateProps = {
   order: HttpTypes.StoreOrder
@@ -60,11 +60,11 @@ export default function OrderCompletedTemplate({
             <PaymentDetails order={order} />
           </div>
         </div>
-        <LocalizedClientLink href="/">
+        <LocalizedLink href="/">
           <Button isFullWidth className="mt-16">
             Go back to home page
           </Button>
-        </LocalizedClientLink>
+        </LocalizedLink>
       </LayoutColumn>
     </Layout>
   )

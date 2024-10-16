@@ -4,7 +4,7 @@ import { HttpTypes } from "@medusajs/types"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-import { Layout, LayoutColumn } from "components"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 const PRODUCT_LIMIT = 12
 

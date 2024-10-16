@@ -6,14 +6,7 @@ import Divider from "@modules/common/components/divider"
 import { HttpTypes } from "@medusajs/types"
 
 // Components
-import {
-  Button,
-  Icon,
-  Layout,
-  LayoutColumn,
-  Link,
-  NumberField,
-} from "components"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 const CartTemplate = ({
   cart,

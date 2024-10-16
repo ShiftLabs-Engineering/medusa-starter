@@ -10,7 +10,7 @@ import {
   UiSelectListBox,
   UiSelectListBoxItem,
   UiSelectValue,
-} from "components/ui/Select"
+} from "@/components/ui/Select"
 
 export type SortOptions = "price_asc" | "price_desc" | "created_at"
 

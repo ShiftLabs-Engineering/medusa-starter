@@ -1,9 +1,7 @@
-// Modules
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-
 // Components
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { NewsletterForm } from "@/components/NewsletterForm"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export const Footer: React.FC = () => {
   return (
@@ -23,16 +21,16 @@ export const Footer: React.FC = () => {
               <div className="flex gap-10 xl:gap-18 max-md:text-xs flex-1 justify-between lg:justify-center">
                 <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
-                    <LocalizedClientLink href="/">FAQ</LocalizedClientLink>
+                    <LocalizedLink href="/">FAQ</LocalizedLink>
                   </li>
                   <li>
-                    <LocalizedClientLink href="/">Help</LocalizedClientLink>
+                    <LocalizedLink href="/">Help</LocalizedLink>
                   </li>
                   <li>
-                    <LocalizedClientLink href="/">Delivery</LocalizedClientLink>
+                    <LocalizedLink href="/">Delivery</LocalizedLink>
                   </li>
                   <li>
-                    <LocalizedClientLink href="/">Returns</LocalizedClientLink>
+                    <LocalizedLink href="/">Returns</LocalizedLink>
                   </li>
                 </ul>
                 <ul className="flex flex-col gap-6 md:gap-3.5">
@@ -62,19 +60,19 @@ export const Footer: React.FC = () => {
                 </ul>
                 <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
-                    <LocalizedClientLink href="/privacy-policy">
+                    <LocalizedLink href="/privacy-policy">
                       Privacy Policy
-                    </LocalizedClientLink>
+                    </LocalizedLink>
                   </li>
                   <li>
-                    <LocalizedClientLink href="/cookie-policy">
+                    <LocalizedLink href="/cookie-policy">
                       Cookie Policy
-                    </LocalizedClientLink>
+                    </LocalizedLink>
                   </li>
                   <li>
-                    <LocalizedClientLink href="/terms-of-use">
+                    <LocalizedLink href="/terms-of-use">
                       Terms of Use
-                    </LocalizedClientLink>
+                    </LocalizedLink>
                   </li>
                 </ul>
               </div>

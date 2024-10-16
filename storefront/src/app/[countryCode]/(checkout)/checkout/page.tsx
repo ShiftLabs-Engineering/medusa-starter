@@ -7,9 +7,9 @@ import { getCustomer } from "@lib/data/customer"
 import Wrapper from "@modules/checkout/components/payment-wrapper"
 import CheckoutForm from "@modules/checkout/templates/checkout-form"
 import CheckoutSummary from "@modules/checkout/templates/checkout-summary"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { Icon } from "@/components/Icon"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export const metadata: Metadata = {
   title: "Checkout",
@@ -44,9 +44,9 @@ export default async function Checkout({
       <Layout className="lg:hidden">
         <LayoutColumn>
           <div className="flex justify-between items-center h-18">
-            <LocalizedClientLink href="/" className="text-md font-medium">
+            <LocalizedLink href="/" className="text-md font-medium">
               SofaSocietyCo.
-            </LocalizedClientLink>
+            </LocalizedLink>
             <div>
               <p className="font-semibold">Checkout</p>
             </div>
@@ -75,12 +75,12 @@ export default async function Checkout({
       <Layout>
         <LayoutColumn className="flex max-lg:flex-col-reverse lg:justify-between">
           <div className="flex-1 pt-7 lg:max-w-125 xl:max-w-150 pb-9 lg:pb-40">
-            <LocalizedClientLink
+            <LocalizedLink
               href="/"
               className="text-md font-medium mb-16 inline-block max-lg:hidden"
             >
               SofaSocietyCo.
-            </LocalizedClientLink>
+            </LocalizedLink>
             <Wrapper cart={cart}>
               <CheckoutForm
                 cart={cart}

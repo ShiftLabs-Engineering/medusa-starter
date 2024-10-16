@@ -1,9 +1,10 @@
 "use client"
 
-import CartTotals from "@modules/cart/components/cart-totals"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { HttpTypes } from "@medusajs/types"
-import { Button } from "components"
+
+import CartTotals from "@modules/cart/components/cart-totals"
+import { Button } from "@/components/Button"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 type SummaryProps = {
   cart: HttpTypes.StoreCart & {
@@ -33,14 +34,14 @@ const Summary = ({ cart }: SummaryProps) => {
   return (
     <>
       <CartTotals cart={cart} />
-      <LocalizedClientLink
+      <LocalizedLink
         href={"/checkout?step=" + step}
         data-testid="checkout-button"
       >
         <Button isFullWidth className="mt-10">
           Proceed to checkout
         </Button>
-      </LocalizedClientLink>
+      </LocalizedLink>
     </>
   )
 }

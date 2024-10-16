@@ -3,8 +3,7 @@ import { Checkbox, CheckboxProps } from "react-aria-components"
 import { twMerge } from "tailwind-merge"
 
 // Components
-import { Icon } from "components"
-import { IconNames, IconProps } from "components/Icon"
+import { Icon, IconNames, IconProps } from "@/components/Icon"
 
 export const UiCheckbox: React.FC<CheckboxProps> = ({
   className,

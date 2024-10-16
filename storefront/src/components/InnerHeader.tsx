@@ -7,9 +7,6 @@ import { twJoin } from "tailwind-merge"
 import { Popover, Select } from "react-aria-components"
 import { HttpTypes } from "@medusajs/types"
 
-// Modules
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-
 // Components
 import {
   UiSelectButton,
@@ -23,6 +20,7 @@ import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { Drawer } from "@/components/Drawer"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
   const pathName = usePathname()
@@ -92,14 +90,12 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
         <LayoutColumn>
           <div className="flex justify-between items-center h-18 md:h-21">
             <h1 className="font-medium text-md">
-              <LocalizedClientLink href="/">SofaSocietyCo.</LocalizedClientLink>
+              <LocalizedLink href="/">SofaSocietyCo.</LocalizedLink>
             </h1>
             <div className="flex items-center gap-8 max-md:hidden">
-              <LocalizedClientLink href="/about">About</LocalizedClientLink>
-              <LocalizedClientLink href="/inspiration">
-                Inspiration
-              </LocalizedClientLink>
-              <LocalizedClientLink href="/store">Shop</LocalizedClientLink>
+              <LocalizedLink href="/about">About</LocalizedLink>
+              <LocalizedLink href="/inspiration">Inspiration</LocalizedLink>
+              <LocalizedLink href="/store">Shop</LocalizedLink>
             </div>
             <div className="flex items-center gap-3 lg:gap-6 max-md:hidden">
               <Select
@@ -155,7 +151,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
               >
                 <Icon name="user" className="w-6 h-6" />
               </Button> */}
-              <LocalizedClientLink href="/cart">
+              <LocalizedLink href="/cart">
                 <Button
                   variant="ghost"
                   className={twJoin(
@@ -166,10 +162,10 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                 >
                   <Icon name="case" className="w-6 h-6" />
                 </Button>
-              </LocalizedClientLink>
+              </LocalizedLink>
             </div>
             <div className="flex items-center gap-6 md:hidden">
-              <LocalizedClientLink href="/cart">
+              <LocalizedLink href="/cart">
                 <Button
                   variant="ghost"
                   className={twJoin(
@@ -179,7 +175,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                 >
                   <Icon name="case" className="w-6 h-6" />
                 </Button>
-              </LocalizedClientLink>
+              </LocalizedLink>
               <Button
                 variant="ghost"
                 className={twJoin(
@@ -212,24 +208,18 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
             <Input placeholder="Search" className="h-auto bg-black px-1" /> */}
           </div>
           <div className="text-lg flex flex-col gap-8 font-medium px-8">
-            <LocalizedClientLink
-              href="/about"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            <LocalizedLink href="/about" onClick={() => setIsMenuOpen(false)}>
               About
-            </LocalizedClientLink>
-            <LocalizedClientLink
+            </LocalizedLink>
+            <LocalizedLink
               href="/inspiration"
               onClick={() => setIsMenuOpen(false)}
             >
               Inspiration
-            </LocalizedClientLink>
-            <LocalizedClientLink
-              href="/store"
-              onClick={() => setIsMenuOpen(false)}
-            >
+            </LocalizedLink>
+            <LocalizedLink href="/store" onClick={() => setIsMenuOpen(false)}>
               Shop
-            </LocalizedClientLink>
+            </LocalizedLink>
           </div>
           <Select
             selectedKey={`${countryCode}`}

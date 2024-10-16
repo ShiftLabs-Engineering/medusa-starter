@@ -7,7 +7,9 @@ import { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel from "embla-carousel-react"
 
 // Components
-import { Icon, IconCircle, Layout, LayoutColumn } from "./index"
+import { Icon } from "@/components/Icon"
+import { IconCircle } from "@/components/IconCircle"
+import { Layout, LayoutColumn } from "@/components/Layout"
 
 // Utils
 import useWindowSize from "@lib/hooks/useWindowSize"

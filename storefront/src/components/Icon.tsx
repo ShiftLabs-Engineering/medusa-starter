@@ -2,8 +2,34 @@
 import * as React from "react"
 import { twJoin, twMerge } from "tailwind-merge"
 
-// Components
-import * as Icons from "./icons"
+// Icons
+import { ArrowLeft } from "@/components/icons/ArrowLeft"
+import { ArrowRight } from "@/components/icons/ArrowRight"
+import { ArrowUpRight } from "@/components/icons/ArrowUpRight"
+import { Calendar } from "@/components/icons/Calendar"
+import { Case } from "@/components/icons/Case"
+import { Check } from "@/components/icons/Check"
+import { ChevronDown } from "@/components/icons/ChevronDown"
+import { ChevronLeft } from "@/components/icons/ChevronLeft"
+import { ChevronRight } from "@/components/icons/ChevronRight"
+import { ChevronUp } from "@/components/icons/ChevronUp"
+import { Close } from "@/components/icons/Close"
+import { CreditCard } from "@/components/icons/CreditCard"
+import { Heart } from "@/components/icons/Heart"
+import { Info } from "@/components/icons/Info"
+import { Loader } from "@/components/icons/Loader"
+import { MapPin } from "@/components/icons/MapPin"
+import { Menu } from "@/components/icons/Menu"
+import { Minus } from "@/components/icons/Minus"
+import { Package } from "@/components/icons/Package"
+import { Plus } from "@/components/icons/Plus"
+import { Receipt } from "@/components/icons/Receipt"
+import { Search } from "@/components/icons/Search"
+import { Sliders } from "@/components/icons/Sliders"
+import { Trash } from "@/components/icons/Trash"
+import { Truck } from "@/components/icons/Truck"
+import { Undo } from "@/components/icons/Undo"
+import { User } from "@/components/icons/User"
 
 export type IconNames =
   | "arrow-left"
@@ -61,97 +87,85 @@ export const Icon: React.FC<IconProps> = ({
       </div>
     )}
     {name === "arrow-left" && (
-      <Icons.ArrowLeft {...rest} className={twMerge(baseClasses, className)} />
+      <ArrowLeft {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "arrow-right" && (
-      <Icons.ArrowRight {...rest} className={twMerge(baseClasses, className)} />
+      <ArrowRight {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "arrow-up-right" && (
-      <Icons.ArrowUpRight
-        {...rest}
-        className={twMerge(baseClasses, className)}
-      />
+      <ArrowUpRight {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "calendar" && (
-      <Icons.Calendar {...rest} className={twMerge(baseClasses, className)} />
+      <Calendar {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "case" && (
-      <Icons.Case {...rest} className={twMerge(baseClasses, className)} />
+      <Case {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "check" && (
-      <Icons.Check {...rest} className={twMerge(baseClasses, className)} />
+      <Check {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "chevron-down" && (
-      <Icons.ChevronDown
-        {...rest}
-        className={twMerge(baseClasses, className)}
-      />
+      <ChevronDown {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "chevron-left" && (
-      <Icons.ChevronLeft
-        {...rest}
-        className={twMerge(baseClasses, className)}
-      />
+      <ChevronLeft {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "chevron-right" && (
-      <Icons.ChevronRight
-        {...rest}
-        className={twMerge(baseClasses, className)}
-      />
+      <ChevronRight {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "chevron-up" && (
-      <Icons.ChevronUp {...rest} className={twMerge(baseClasses, className)} />
+      <ChevronUp {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "close" && (
-      <Icons.Close {...rest} className={twMerge(baseClasses, className)} />
+      <Close {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "credit-card" && (
-      <Icons.CreditCard {...rest} className={twMerge(baseClasses, className)} />
+      <CreditCard {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "heart" && (
-      <Icons.Heart {...rest} className={twMerge(baseClasses, className)} />
+      <Heart {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "info" && (
-      <Icons.Info {...rest} className={twMerge(baseClasses, className)} />
+      <Info {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "loader" && (
-      <Icons.Loader {...rest} className={twMerge(baseClasses, className)} />
+      <Loader {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "map-pin" && (
-      <Icons.MapPin {...rest} className={twMerge(baseClasses, className)} />
+      <MapPin {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "menu" && (
-      <Icons.Menu {...rest} className={twMerge(baseClasses, className)} />
+      <Menu {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "minus" && (
-      <Icons.Minus {...rest} className={twMerge(baseClasses, className)} />
+      <Minus {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "package" && (
-      <Icons.Package {...rest} className={twMerge(baseClasses, className)} />
+      <Package {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "plus" && (
-      <Icons.Plus {...rest} className={twMerge(baseClasses, className)} />
+      <Plus {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "receipt" && (
-      <Icons.Receipt {...rest} className={twMerge(baseClasses, className)} />
+      <Receipt {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "search" && (
-      <Icons.Search {...rest} className={twMerge(baseClasses, className)} />
+      <Search {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "sliders" && (
-      <Icons.Sliders {...rest} className={twMerge(baseClasses, className)} />
+      <Sliders {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "trash" && (
-      <Icons.Trash {...rest} className={twMerge(baseClasses, className)} />
+      <Trash {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "truck" && (
-      <Icons.Truck {...rest} className={twMerge(baseClasses, className)} />
+      <Truck {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "undo" && (
-      <Icons.Undo {...rest} className={twMerge(baseClasses, className)} />
+      <Undo {...rest} className={twMerge(baseClasses, className)} />
     )}
     {name === "user" && (
-      <Icons.User {...rest} className={twMerge(baseClasses, className)} />
+      <User {...rest} className={twMerge(baseClasses, className)} />
     )}
   </div>
 )

@@ -12,9 +12,9 @@ export const ChevronLeft: React.FC<React.ComponentPropsWithoutRef<"svg">> = (
   >
     <path
       fill="currentColor"
-      fill-rule="evenodd"
+      fillRule="evenodd"
       d="m14.53 5 1.061 1.06-5.47 5.47 5.47 5.47-1.06 1.06L8 11.53 14.53 5Z"
-      clip-rule="evenodd"
+      clipRule="evenodd"
     />
   </svg>
 )

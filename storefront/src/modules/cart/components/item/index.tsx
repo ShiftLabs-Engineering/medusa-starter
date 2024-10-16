@@ -2,13 +2,14 @@
 
 import { useState } from "react"
 import { HttpTypes } from "@medusajs/types"
+
+import { updateLineItem } from "@lib/data/cart"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import DeleteButton from "@modules/common/components/delete-button"
 import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Thumbnail from "@modules/products/components/thumbnail"
-import { updateLineItem } from "@lib/data/cart"
-import { NumberField } from "components"
+import { NumberField } from "@/components/NumberField"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 type ItemProps = {
   item: HttpTypes.StoreCartLineItem
@@ -42,20 +43,20 @@ const Item = ({ item }: ItemProps) => {
 
   return (
     <div className="flex gap-6 border-b border-grayscale-100 py-8 last:pb-0 last:border-b-0">
-      <LocalizedClientLink href={`/products/${handle}`}>
+      <LocalizedLink href={`/products/${handle}`}>
         <Thumbnail
           thumbnail={item.variant?.product?.thumbnail}
           images={item.variant?.product?.images}
           size="3/4"
           className="w-25 sm:w-30"
         />
-      </LocalizedClientLink>
+      </LocalizedLink>
       <div className="flex-grow flex flex-col justify-between">
         <div>
           <h2 className="sm:text-md text-base font-normal">
-            <LocalizedClientLink href={`/products/${handle}`}>
+            <LocalizedLink href={`/products/${handle}`}>
               {item.product_title}
-            </LocalizedClientLink>
+            </LocalizedLink>
           </h2>
           <p className="text-grayscale-500 text-xs sm:text-base">
             {item.variant?.title}

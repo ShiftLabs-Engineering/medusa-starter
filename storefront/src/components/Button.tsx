@@ -6,7 +6,7 @@ import { twJoin, twMerge } from "tailwind-merge"
 import * as ReactAria from "react-aria-components"
 
 // Components
-import { Icon, IconNames } from "./Icon"
+import { Icon, IconNames } from "@/components/Icon"
 
 export type ButtonOwnProps = {
   isFullWidth?: boolean

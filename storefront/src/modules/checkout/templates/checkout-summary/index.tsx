@@ -3,9 +3,9 @@ import { HttpTypes } from "@medusajs/types"
 import { getPricesForVariant } from "@lib/util/get-product-price"
 import DiscountCode from "@modules/checkout/components/discount-code"
 import CartTotals from "@modules/common/components/cart-totals"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Thumbnail from "@modules/products/components/thumbnail"
 import { Button } from "@/components/Button"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 const ItemPrice: React.FC<{
   item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem
@@ -50,9 +50,9 @@ const CheckoutSummary = ({
             Order — {numOfItems} item{numOfItems > 1 ? "s" : ""}
           </p>
         </div>
-        <LocalizedClientLink href="/cart">
+        <LocalizedLink href="/cart">
           <Button variant="link">Edit cart</Button>
-        </LocalizedClientLink>
+        </LocalizedLink>
       </div>
       {numOfItems > 0 &&
         items
@@ -61,7 +61,7 @@ const CheckoutSummary = ({
           })
           .map((item) => (
             <div key={item.id} className="flex gap-4 lg:gap-6 mb-8">
-              <LocalizedClientLink
+              <LocalizedLink
                 href={`/products/${item.variant?.product?.handle}`}
               >
                 <Thumbnail
@@ -70,16 +70,16 @@ const CheckoutSummary = ({
                   size="3/4"
                   className="w-25 lg:w-33"
                 />
-              </LocalizedClientLink>
+              </LocalizedLink>
               <div className="flex flex-col flex-1 justify-between">
                 <div className="flex flex-wrap gap-x-4 gap-y-1 justify-between">
                   <div>
-                    <LocalizedClientLink
+                    <LocalizedLink
                       href={`/products/${item.variant?.product?.handle}`}
                       className="font-semibold"
                     >
                       {item.product_title}
-                    </LocalizedClientLink>
+                    </LocalizedLink>
                   </div>
                   <ItemPrice item={item} />
                 </div>

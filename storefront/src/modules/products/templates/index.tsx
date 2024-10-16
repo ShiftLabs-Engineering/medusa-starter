@@ -1,5 +1,4 @@
 import React, { Suspense } from "react"
-import { z } from "zod"
 import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 import Image from "next/image"
@@ -10,7 +9,7 @@ import ProductActions from "@modules/products/components/product-actions"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { LocalizedLink } from "@/components/LocalizedLink"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import ProductActionsWrapper from "./product-actions-wrapper"
 
@@ -168,12 +167,12 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
                   collectionDetails.data.product_page_cta_link.length > 0 &&
                   typeof product.collection?.handle === "string" && (
                     <p className="text-base md:text-md">
-                      <LocalizedClientLink
+                      <LocalizedLink
                         href={`/collections/${product.collection.handle}`}
                         variant="underline"
                       >
                         {collectionDetails.data.product_page_cta_link}
-                      </LocalizedClientLink>
+                      </LocalizedLink>
                     </p>
                   )}
               </LayoutColumn>

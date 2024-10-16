@@ -8,7 +8,7 @@ import Image from "next/image"
 import { getCollectionsList } from "@lib/data/collections"
 import { getCategoriesList } from "@lib/data/categories"
 import { getProductTypesList } from "@lib/data/product-types"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { LocalizedLink } from "@/components/LocalizedLink"
 import { Carousel } from "@/components/Carousel"
 import PaginatedProducts from "./paginated-products"
 
@@ -31,7 +31,7 @@ const CollectionsSlider = async () => {
       disableOnDesktop
     >
       {collections.collections.map((c) => (
-        <LocalizedClientLink key={c.id} href={`/collections/${c.handle}`}>
+        <LocalizedLink key={c.id} href={`/collections/${c.handle}`}>
           {typeof c.metadata?.image === "object" &&
             c.metadata.image &&
             "url" in c.metadata.image &&
@@ -45,7 +45,7 @@ const CollectionsSlider = async () => {
               />
             )}
           <h3>{c.title}</h3>
-        </LocalizedClientLink>
+        </LocalizedLink>
       ))}
     </Carousel>
   )

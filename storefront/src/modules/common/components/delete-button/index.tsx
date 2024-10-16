@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { deleteLineItem } from "@lib/data/cart"
-import { Icon } from "components"
+import { Icon } from "@/components/Icon"
 
 const DeleteButton = ({ id }: { id: string }) => {
   const [isDeleting, setIsDeleting] = useState(false)

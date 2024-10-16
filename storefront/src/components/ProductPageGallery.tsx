@@ -9,7 +9,8 @@ import { EmblaCarouselType } from "embla-carousel"
 import useEmblaCarousel from "embla-carousel-react"
 
 // Components
-import { Icon, IconCircle, Layout, LayoutColumn } from "./index"
+import { Icon } from "@/components/Icon"
+import { IconCircle } from "@/components/IconCircle"
 
 export const ProductPageGallery: React.FC<
   React.ComponentPropsWithRef<"div">

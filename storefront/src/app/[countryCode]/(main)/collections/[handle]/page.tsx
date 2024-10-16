@@ -14,6 +14,8 @@ import { collectionMetadataCustomFieldsSchema } from "@lib/util/collections"
 type Props = {
   params: { handle: string; countryCode: string }
   searchParams: {
+    category?: string | string[]
+    type?: string | string[]
     page?: string
     sortBy?: SortOptions
   }
@@ -79,7 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CollectionPage({ params, searchParams }: Props) {
-  const { sortBy, page } = searchParams
+  const { sortBy, page, category, type } = searchParams
 
   const collection = await getCollectionByHandle(params.handle, [
     "id",
@@ -97,6 +99,10 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       page={page}
       sortBy={sortBy}
       countryCode={params.countryCode}
+      category={
+        !category ? undefined : Array.isArray(category) ? category : [category]
+      }
+      type={!type ? undefined : Array.isArray(type) ? type : [type]}
     />
   )
 }
