@@ -23,14 +23,16 @@ export default function ProductPrice({
     selectedPrice.calculated_price_number < selectedPrice.original_price_number
 
   if (hasReducedPrice && variant) {
-    ;<>
-      <p className="text-md mb-2 text-red-primary">
-        {selectedPrice.calculated_price}
-      </p>
-      <p className="text-md mb-8 text-grayscale-500 line-through">
-        {selectedPrice.original_price}
-      </p>
-    </>
+    return (
+      <div>
+        <p className="text-sm mb-1 text-grayscale-500 line-through">
+          {selectedPrice.original_price}
+        </p>
+        <p className="text-md mb-8 text-red-primary">
+          {selectedPrice.calculated_price}
+        </p>
+      </div>
+    )
   }
 
   return (

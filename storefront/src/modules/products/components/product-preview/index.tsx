@@ -27,6 +27,10 @@ export default async function ProductPreview({
     product: pricedProduct,
   })
 
+  const hasReducedPrice =
+    cheapestPrice &&
+    cheapestPrice.calculated_price_number < cheapestPrice.original_price_number
+
   return (
     <LocalizedLink href={`/products/${product.handle}`}>
       <Thumbnail
@@ -44,12 +48,24 @@ export default async function ProductPreview({
             </p>
           )}
         </div>
-        <div>
-          {/** TODO: show discounted price */}
-          <p className="font-semibold max-md:text-xs">
-            {cheapestPrice?.calculated_price}
-          </p>
-        </div>
+        {cheapestPrice ? (
+          hasReducedPrice ? (
+            <div>
+              <p className="font-semibold max-md:text-xs text-red-primary">
+                {cheapestPrice.calculated_price}
+              </p>
+              <p className="max-md:text-xs text-grayscale-500 line-through">
+                {cheapestPrice.original_price}
+              </p>
+            </div>
+          ) : (
+            <div>
+              <p className="font-semibold max-md:text-xs">
+                {cheapestPrice.calculated_price}
+              </p>
+            </div>
+          )
+        ) : null}
       </div>
     </LocalizedLink>
   )
