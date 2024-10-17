@@ -38,7 +38,7 @@ const Summary = ({ cart }: SummaryProps) => {
         href={"/checkout?step=" + step}
         data-testid="checkout-button"
       >
-        <Button isFullWidth className="mt-10">
+        <Button isFullWidth className="mt-6">
           Proceed to checkout
         </Button>
       </LocalizedLink>
