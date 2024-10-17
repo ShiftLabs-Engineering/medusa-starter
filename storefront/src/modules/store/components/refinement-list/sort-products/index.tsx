@@ -37,7 +37,7 @@ const SortProducts = ({ sortBy, setQueryParams }: SortProductsProps) => {
         <UiSelectValue />
         <UiSelectIcon />
       </UiSelectButton>
-      <Popover className="w-60">
+      <Popover className="w-60" crossOffset={-126}>
         <UiSelectListBox>
           <UiSelectListBoxItem id="created_at">
             Latest Arrivals
