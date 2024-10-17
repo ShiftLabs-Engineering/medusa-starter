@@ -27,6 +27,9 @@ yarn
 # Spin up the database and redis
 docker-compose up -d
 
+# Build the project
+yarn build
+
 # Run the migrations
 yarn medusa db:migrate
 
