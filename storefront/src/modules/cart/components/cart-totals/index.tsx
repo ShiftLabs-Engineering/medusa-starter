@@ -99,7 +99,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ cart }) => {
           variant="outline"
           wrapperClassName="flex flex-1"
         />
-        <SubmitButton>Next</SubmitButton>
+        <SubmitButton>Apply</SubmitButton>
       </div>
     </div>
   )
