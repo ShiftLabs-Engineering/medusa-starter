@@ -34,11 +34,12 @@ export const NewsletterForm: React.FC<{ className?: string }> = ({
           >
             <div className="flex gap-2">
               <Input
+                size="sm"
                 name="email"
                 type="email"
                 placeholder="Your email"
-                wrapperClassName="flex-1"
-                className="mb-4 rounded-xs h-9 text-xs"
+                wrapperClassName="mb-4 flex-1"
+                className="rounded-xs"
               />
               <Button type="submit" size="sm" className="h-9 text-xs">
                 Subscribe

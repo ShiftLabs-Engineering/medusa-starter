@@ -10,17 +10,24 @@ import { Icon } from "@/components/Icon"
 
 export const getFormFieldClassNames = ({
   variant,
+  size,
   isVisuallyDisabled,
   isSuccess,
   hasError,
 }: InputOwnProps): string => {
   return twJoin(
     // Base
-    "block w-full rounded-xs transition-colors focus-within:outline-none bg-white px-6 h-14",
+    "peer block w-full rounded-xs transition-colors transition-padding focus-within:outline-none bg-white px-4 placeholder:invisible",
 
     // Variant
     variant === "outline" &&
       "border border-grayscale-200 hover:border-grayscale-500 focus:border-grayscale-500 bg-transparent",
+
+    // Size
+    size === "sm" &&
+      "h-9 text-xs focus:pt-3.5 [&:not(:placeholder-shown)]:pt-3.5",
+    size === "md" && "h-12 focus:pt-3 [&:not(:placeholder-shown)]:pt-3",
+    size === "lg" && "h-14 focus:pt-4 [&:not(:placeholder-shown)]:pt-4",
 
     // Disabled
     isVisuallyDisabled &&
@@ -81,6 +88,7 @@ export const InputSubLabel: React.FC<
  */
 export type InputOwnProps = {
   variant?: "solid" | "outline"
+  size?: "sm" | "md" | "lg"
   isVisuallyDisabled?: boolean
   isSuccess?: boolean
   hasError?: boolean
@@ -95,30 +103,49 @@ export const Input = React.forwardRef<
   (
     {
       variant,
+      size = "lg",
       isVisuallyDisabled,
       isSuccess,
       hasError,
       errorMessage,
       wrapperClassName,
+      placeholder,
       className,
       ...rest
     },
     ref
   ) => (
-    <div className={twMerge(isSuccess ? "relative" : "", wrapperClassName)}>
+    <div className={twMerge("relative", wrapperClassName)}>
       <Aria.Input
         {...rest}
         ref={ref}
         className={twMerge(
           getFormFieldClassNames({
             variant,
+            size,
             isVisuallyDisabled,
             isSuccess,
             hasError,
           }),
           className
         )}
+        placeholder={placeholder}
       />
+      {placeholder && (
+        <span
+          className={twJoin(
+            "absolute -translate-y-1/2 peer-placeholder-shown:top-1/2 left-4 peer-focus:text-xs peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:translate-y-0 peer-focus:translate-y-0 text-grayscale-500 pointer-events-none transition-all",
+            size === "lg" &&
+              "peer-focus:top-2.5 peer-[:not(:placeholder-shown)]:top-2.5",
+            size === "md" &&
+              "peer-focus:top-1 peer-[:not(:placeholder-shown)]:top-1",
+            size === "sm" &&
+              "peer-focus:top-1 peer-[:not(:placeholder-shown)]:top-1 text-xs peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:text-[10px]"
+          )}
+        >
+          {placeholder}
+        </span>
+      )}
       {isSuccess && (
         <Icon
           name="check"

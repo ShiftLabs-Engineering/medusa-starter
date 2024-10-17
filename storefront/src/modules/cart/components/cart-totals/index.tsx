@@ -94,8 +94,8 @@ const CartTotals: React.FC<CartTotalsProps> = ({ cart }) => {
       </div>
       <div className="flex gap-2 mt-10">
         <Input
+          size="md"
           placeholder="Discount code"
-          className="h-auto flex-1"
           variant="outline"
           wrapperClassName="flex flex-1"
         />

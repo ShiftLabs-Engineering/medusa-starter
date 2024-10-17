@@ -101,6 +101,7 @@ module.exports = {
       },
       transitionProperty: {
         fontWeight: "font-weight",
+        padding: "padding",
       },
       zIndex: {
         header: "9999",
