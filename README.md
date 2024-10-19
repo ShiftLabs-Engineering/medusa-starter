@@ -1,10 +1,10 @@
 <h1 align="center">Fashion E-commerce Starter for Medusa 2.0</h1>
 
-<video src="./media/storefront-demo.mp4" controls="controls" muted="muted" playsinline="playsinline" autoplay="autoplay"></video>
+<video src="https://github.com/user-attachments/assets/e27fd9b9-f902-4927-9a64-0ac1689b3429" controls="controls" muted="muted" playsinline="playsinline"></video>
 
 The **Fashion E-commerce Starter** is a modern, customizable e-commerce template built with **Medusa 2.0**. Designed around the concept of the sustainable furniture brand **Sofa Society**, this starter showcases the power of new Medusa 2.0 version. With its focus on cutting-edge design, sustainability, and personalization, Sofa Society offers users an elegant shopping experience where they can explore customizable collections, product options, and a streamlined checkout flow.
 
-This starter kit is an ideal solution for developers who need to quickly set up a professional, feature-rich fashion e-commerce store. It comes with a sleek and modern design, customizable collections, an inspiration page, an about section, and a streamlined checkout process. The storefront is fully responsive and optimized for mobile, tablet, and desktop devices.
+This starter kit is an ideal solution for developers who need to set up a professional, feature-rich fashion e-commerce store quickly. It comes with a sleek and modern design, customizable collections, an Inspiration page, an About page, and a streamlined checkout process. The storefront is fully responsive and optimized for mobile, tablet, and desktop devices.
 
 <h2>Table of Contents</h2>
 
@@ -162,7 +162,7 @@ cp .env.template .env
 # Install dependencies
 yarn
 
-# Spin up the database and redis
+# Spin up the database and Redis
 docker-compose up -d
 
 # Build the project
@@ -181,7 +181,7 @@ yarn medusa user -e "admin@medusa.local" -p "supersecret"
 yarn dev
 ```
 
-At this point you should be able to access the Medusa admin at http://localhost:9000/app with the credentials you just created. After logging in, you should go to http://localhost:9000/app/settings/publishable-api-keys, copy the publishable key and paste it into the `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` env variable in the `storefront/.env.local` file.
+At this point, you should be able to access the Medusa admin at http://localhost:9000/app with the credentials you just created. After logging in, you should go to http://localhost:9000/app/settings/publishable-api-keys, copy the publishable key, and paste it into the `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` env variable in the `storefront/.env.local` file.
 
 ### Storefront
 
