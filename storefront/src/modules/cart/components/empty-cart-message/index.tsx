@@ -1,6 +1,4 @@
-import { Heading, Text } from "@medusajs/ui"
-
-import InteractiveLink from "@modules/common/components/interactive-link"
+import { LocalizedLink } from "@/components/LocalizedLink"
 
 const EmptyCartMessage = () => {
   return (
@@ -13,7 +11,7 @@ const EmptyCartMessage = () => {
         the link below to start browsing our products.
       </p>
       <div>
-        <InteractiveLink href="/store">Explore products</InteractiveLink>
+        <LocalizedLink href="/store">Explore products</LocalizedLink>
       </div>
     </div>
   )

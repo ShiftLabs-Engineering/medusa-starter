@@ -14,7 +14,7 @@ import ErrorMessage from "../error-message"
 import ShippingAddress from "../shipping-address"
 import { SubmitButton } from "../submit-button"
 
-const DeliveryDetails = ({
+const Addresses = ({
   cart,
   customer,
 }: {
@@ -141,4 +141,4 @@ const DeliveryDetails = ({
   )
 }
 
-export default DeliveryDetails
+export default Addresses
