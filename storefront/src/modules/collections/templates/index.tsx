@@ -37,7 +37,7 @@ export default async function CollectionTemplate({
 
   return (
     <>
-      <div className="max-md:pt-18 relative aspect-[2/1] md:h-screen mb-8 md:mb-16">
+      <div className="max-md:pt-18 relative aspect-[2/1] md:h-screen max-w-full mb-8 md:mb-16">
         <Image
           src={
             collectionDetails.data?.collection_page_image?.url ||
