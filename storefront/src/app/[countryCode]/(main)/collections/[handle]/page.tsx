@@ -87,7 +87,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
     "id",
     "title",
     "metadata",
-  ]).then((collection: StoreCollection) => collection)
+  ])
 
   if (!collection) {
     notFound()
