@@ -173,7 +173,11 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                     isPageWithHeroImage && "md:text-white"
                   )}
                 >
-                  <Icon name="case" className="w-6 h-6" />
+                  <Icon
+                    name="case"
+                    className="w-6 h-6"
+                    wrapperClassName="w-6 h-6"
+                  />
                 </Button>
               </LocalizedLink>
               <Button
@@ -182,9 +186,13 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                   "p-1",
                   isPageWithHeroImage && "md:text-white"
                 )}
-                onClick={() => setIsMenuOpen(true)}
+                onPress={() => setIsMenuOpen(true)}
               >
-                <Icon name="menu" className="w-6 h-6" />
+                <Icon
+                  name="menu"
+                  className="w-6 h-6"
+                  wrapperClassName="w-6 h-6"
+                />
               </Button>
             </div>
           </div>
