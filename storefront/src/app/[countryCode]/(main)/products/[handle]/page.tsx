@@ -10,7 +10,7 @@ import {
 } from "@lib/data/products"
 
 type Props = {
-  params: { countryCode: string; handle: string }
+  params: Promise<{ countryCode: string; handle: string }>
 }
 
 export async function generateStaticParams() {
@@ -47,8 +47,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { handle } = params
-  const region = await getRegion(params.countryCode)
+  const { handle, countryCode } = await params
+  const region = await getRegion(countryCode)
 
   if (!region) {
     notFound()
@@ -72,15 +72,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const region = await getRegion(params.countryCode)
+  const { handle, countryCode } = await params
+  const region = await getRegion(countryCode)
 
   if (!region) {
     notFound()
   }
 
   const [pricedProduct, fashionData] = await Promise.all([
-    getProductByHandle(params.handle, region.id),
-    getProductFashionDataByHandle(params.handle),
+    getProductByHandle(handle, region.id),
+    getProductFashionDataByHandle(handle),
   ])
 
   if (!pricedProduct) {
@@ -92,7 +93,7 @@ export default async function ProductPage({ params }: Props) {
       product={pricedProduct}
       materials={fashionData.materials}
       region={region}
-      countryCode={params.countryCode}
+      countryCode={countryCode}
     />
   )
 }
