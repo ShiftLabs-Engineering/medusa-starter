@@ -165,20 +165,18 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
               </LocalizedLink>
             </div>
             <div className="flex items-center gap-6 md:hidden">
-              <LocalizedLink href="/cart">
-                <Button
-                  variant="ghost"
-                  className={twJoin(
-                    "p-1",
-                    isPageWithHeroImage && "md:text-white"
-                  )}
-                >
-                  <Icon
-                    name="case"
-                    className="w-6 h-6"
-                    wrapperClassName="w-6 h-6"
-                  />
-                </Button>
+              <LocalizedLink
+                href="/cart"
+                className={twJoin(
+                  "inline-flex items-center focus-visible:outline-none rounded-xs justify-center transition-colors text-black h-auto p-1",
+                  isPageWithHeroImage && "md:text-white"
+                )}
+              >
+                <Icon
+                  name="case"
+                  className="w-6 h-6"
+                  wrapperClassName="w-6 h-6"
+                />
               </LocalizedLink>
               <Button
                 variant="ghost"
