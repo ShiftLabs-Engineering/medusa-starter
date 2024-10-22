@@ -2,8 +2,7 @@ import Image from "next/image"
 
 import { getCollectionsList } from "@lib/data/collections"
 import { Carousel } from "@/components/Carousel"
-import { LocalizedLink } from "@/components/LocalizedLink"
-import { Button } from "@/components/Button"
+import { LocalizedButtonLink, LocalizedLink } from "@/components/LocalizedLink"
 
 export const CollectionsSection: React.FC<{ className?: string }> = async ({
   className,
@@ -23,14 +22,18 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
     <Carousel
       heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
       button={
-        <LocalizedLink href="/store" className="md:h-auto">
-          <Button size="md" className="h-full flex-1 max-md:hidden">
+        <>
+          <LocalizedButtonLink
+            href="/store"
+            size="md"
+            className="h-full flex-1 max-md:hidden md:h-auto"
+          >
             View All
-          </Button>
-          <Button size="sm" className="md:hidden">
+          </LocalizedButtonLink>
+          <LocalizedButtonLink href="/store" size="sm" className="md:hidden">
             View All
-          </Button>
-        </LocalizedLink>
+          </LocalizedButtonLink>
+        </>
       }
       className={className}
     >

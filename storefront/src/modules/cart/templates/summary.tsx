@@ -3,8 +3,7 @@
 import { HttpTypes } from "@medusajs/types"
 
 import CartTotals from "@modules/cart/components/cart-totals"
-import { Button } from "@/components/Button"
-import { LocalizedLink } from "@/components/LocalizedLink"
+import { LocalizedButtonLink } from "@/components/LocalizedLink"
 
 type SummaryProps = {
   cart: HttpTypes.StoreCart & {
@@ -34,14 +33,13 @@ const Summary = ({ cart }: SummaryProps) => {
   return (
     <>
       <CartTotals cart={cart} />
-      <LocalizedLink
+      <LocalizedButtonLink
         href={"/checkout?step=" + step}
-        data-testid="checkout-button"
+        isFullWidth
+        className="mt-10"
       >
-        <Button isFullWidth className="mt-10">
-          Proceed to checkout
-        </Button>
-      </LocalizedLink>
+        Proceed to checkout
+      </LocalizedButtonLink>
     </>
   )
 }
