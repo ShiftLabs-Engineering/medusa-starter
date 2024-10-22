@@ -22,14 +22,13 @@
     "swc": true
   },
   "include": [
-    ".medusa",
-    "src"
+    "**/*",
+    ".medusa/types/*",
   ],
   "exclude": [
-    "**/__tests__",
-    "**/__fixtures__",
     "node_modules",
-    "build",
+    ".medusa/server",
+    ".medusa/admin",
     ".cache"
   ]
 }

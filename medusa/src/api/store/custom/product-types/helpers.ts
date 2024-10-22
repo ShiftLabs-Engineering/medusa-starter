@@ -1,23 +1,16 @@
-import { MedusaContainer } from "@medusajs/framework/types"
-import {
-  ContainerRegistrationKeys,
-  remoteQueryObjectFromString,
-} from "@medusajs/framework/utils"
+import { MedusaContainer, ProductTypeDTO } from "@medusajs/framework/types"
 
 export const refetchProductType = async (
   productTypeId: string,
   scope: MedusaContainer,
-  fields: string[]
+  fields: (keyof ProductTypeDTO)[]
 ) => {
-  const remoteQuery = scope.resolve(ContainerRegistrationKeys.REMOTE_QUERY)
-  const queryObject = remoteQueryObjectFromString({
-    entryPoint: "product_type",
-    variables: {
-      filters: { id: productTypeId },
-    },
-    fields: fields,
+  const query = scope.resolve("query")
+  const { data: [ productType ] } = await query.graph({
+    entity: "product_type",
+    filters: { id: productTypeId },
+    fields,
   })
 
-  const productTypes = await remoteQuery(queryObject)
-  return productTypes[0]
+  return productType 
 }
