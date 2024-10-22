@@ -1,6 +1,6 @@
 import { refetchProductType } from '../helpers';
 import { AdminGetProductTypeParamsType } from '../validators';
-import { HttpTypes } from '@medusajs/framework/types';
+import { ProductTypeDTO } from '@medusajs/framework/types';
 import {
   AuthenticatedMedusaRequest,
   MedusaResponse,
@@ -8,12 +8,12 @@ import {
 
 export const GET = async (
   req: AuthenticatedMedusaRequest<AdminGetProductTypeParamsType>,
-  res: MedusaResponse<HttpTypes.AdminProductTypeResponse>,
+  res: MedusaResponse
 ) => {
   const productType = await refetchProductType(
     req.params.id,
     req.scope,
-    req.remoteQueryConfig.fields,
+    req.remoteQueryConfig.fields as (keyof ProductTypeDTO)[],
   );
 
   res.status(200).json({ product_type: productType });

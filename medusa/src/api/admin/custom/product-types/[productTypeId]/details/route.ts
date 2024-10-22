@@ -33,9 +33,7 @@ export async function POST(
   res: MedusaResponse,
 ): Promise<void> {
   const { productTypeId } = req.params;
-  const customFields = productTypeFieldsMetadataSchema.parse(
-    JSON.parse(req.body),
-  );
+  const customFields = productTypeFieldsMetadataSchema.parse(req.body);
 
   const productService = req.scope.resolve(Modules.PRODUCT);
   const productType = await productService.retrieveProductType(productTypeId);

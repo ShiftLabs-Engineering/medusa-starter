@@ -11,7 +11,6 @@
     "skipDefaultLibCheck": true,
     "declaration": true,
     "sourceMap": false,
-    "outDir": "./dist",
     "rootDir": "./",
     "baseUrl": ".",
     "jsx": "react-jsx",
@@ -22,12 +21,14 @@
   "ts-node": {
     "swc": true
   },
-  "include": [".medusa", "src"],
+  "include": [
+    "**/*",
+    ".medusa/types/*",
+  ],
   "exclude": [
-    "**/__tests__",
-    "**/__fixtures__",
     "node_modules",
-    "build",
+    ".medusa/server",
+    ".medusa/admin",
     ".cache"
   ]
 }
