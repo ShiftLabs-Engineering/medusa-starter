@@ -58,10 +58,11 @@ const ProductTypesSection: React.FC = async () => {
 }
 
 export default async function Home({
-  params: { countryCode },
+  params,
 }: {
-  params: { countryCode: string }
+  params: Promise<{ countryCode: string }>
 }) {
+  const { countryCode } = await params
   const region = await getRegion(countryCode)
 
   if (!region) {

@@ -12,13 +12,13 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import { collectionMetadataCustomFieldsSchema } from "@lib/util/collections"
 
 type Props = {
-  params: { handle: string; countryCode: string }
-  searchParams: {
+  params: Promise<{ handle: string; countryCode: string }>
+  searchParams: Promise<{
     category?: string | string[]
     type?: string | string[]
     page?: string
     sortBy?: SortOptions
-  }
+  }>
 }
 
 export const PRODUCT_LIMIT = 12
@@ -55,7 +55,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const collection = await getCollectionByHandle(params.handle, [
+  const { handle } = await params
+
+  const collection = await getCollectionByHandle(handle, [
     "id",
     "title",
     "metadata",
@@ -81,9 +83,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CollectionPage({ params, searchParams }: Props) {
-  const { sortBy, page, category, type } = searchParams
+  const { handle, countryCode } = await params
+  const { sortBy, page, category, type } = await searchParams
 
-  const collection = await getCollectionByHandle(params.handle, [
+  const collection = await getCollectionByHandle(handle, [
     "id",
     "title",
     "metadata",
@@ -98,7 +101,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
       collection={collection}
       page={page}
       sortBy={sortBy}
-      countryCode={params.countryCode}
+      countryCode={countryCode}
       category={
         !category ? undefined : Array.isArray(category) ? category : [category]
       }
