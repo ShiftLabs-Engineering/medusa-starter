@@ -25,7 +25,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
 
   const material = await fashionModuleService.updateMaterials({
     id: req.params.id,
-    ...updateMaterialBodySchema.parse(JSON.parse(req.body)),
+    ...updateMaterialBodySchema.parse(req.body),
   });
 
   res.status(200).json(material);

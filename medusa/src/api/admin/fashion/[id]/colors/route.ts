@@ -45,7 +45,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
     req.scope.resolve(FASHION_MODULE);
 
   const color = await fashionModuleService.createColors({
-    ...colorsCreateBodySchema.parse(JSON.parse(req.body)),
+    ...colorsCreateBodySchema.parse(req.body),
     material_id: req.params.id,
   });
 

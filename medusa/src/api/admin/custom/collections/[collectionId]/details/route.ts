@@ -99,13 +99,11 @@ export async function GET(
 }
 
 export async function POST(
-  req: MedusaRequest,
+  req: MedusaRequest<typeof collectionFieldsMetadataSchema>,
   res: MedusaResponse,
 ): Promise<void> {
   const { collectionId } = req.params;
-  const customFields = collectionFieldsMetadataSchema.parse(
-    JSON.parse(req.body),
-  );
+  const customFields = collectionFieldsMetadataSchema.parse(req.body);
 
   const productService = req.scope.resolve(Modules.PRODUCT);
   const collection = await productService.retrieveProductCollection(
