@@ -130,7 +130,6 @@ export const ButtonAnchor: React.FC<
   size = "md",
   spinnerPosition = "start",
   variant = "solid",
-  type = "button",
   className,
   children,
   ...rest
@@ -182,20 +181,29 @@ export const ButtonLink: React.FC<
   children,
   ...rest
 }) => (
-  <Link {...rest} passHref>
-    <ButtonAnchor
-      isFullWidth={isFullWidth}
-      isVisuallyDisabled={isVisuallyDisabled}
-      iconName={iconName}
-      iconPosition={iconPosition}
-      isLoading={isLoading}
-      loadingText={loadingText}
-      size={size}
-      spinnerPosition={spinnerPosition}
-      variant={variant}
-      className={className}
-    >
-      {children}
-    </ButtonAnchor>
+  <Link
+    {...rest}
+    className={twMerge(
+      getButtonClassNames({
+        isFullWidth,
+        isVisuallyDisabled,
+        iconName,
+        iconPosition,
+        isLoading,
+        loadingText,
+        size,
+        spinnerPosition,
+        variant,
+      }),
+      className
+    )}
+  >
+    {Boolean(isLoading) && <Icon name="loader" className="animate-spin" />}
+    {iconName && !Boolean(isLoading) && <Icon name={iconName} />}
+    {Boolean(isLoading)
+      ? Boolean(loadingText)
+        ? loadingText
+        : null
+      : children}
   </Link>
 )
