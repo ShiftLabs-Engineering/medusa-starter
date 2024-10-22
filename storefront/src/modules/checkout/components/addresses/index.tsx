@@ -51,7 +51,7 @@ const Addresses = ({
         {!isOpen && cart?.shipping_address && (
           <Button
             variant="link"
-            onClick={() => {
+            onPress={() => {
               router.push(pathname + "?step=delivery")
             }}
           >

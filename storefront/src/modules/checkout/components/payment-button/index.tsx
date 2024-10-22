@@ -49,7 +49,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
       return (
         <Button
           className="w-full"
-          onClick={() => {
+          onPress={() => {
             selectPaymentMethod()
           }}
         >
@@ -68,7 +68,7 @@ const GiftCardPaymentButton = () => {
   }
 
   return (
-    <Button onClick={handleOrder} isLoading={submitting} className="w-full">
+    <Button onPress={handleOrder} isLoading={submitting} className="w-full">
       Place order
     </Button>
   )
@@ -164,7 +164,7 @@ const StripePaymentButton = ({
     <>
       <Button
         disabled={disabled || notReady}
-        onClick={handlePayment}
+        onPress={handlePayment}
         isLoading={submitting}
         className="w-full"
       >
@@ -264,7 +264,7 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
       <Button
         disabled={notReady}
         isLoading={submitting}
-        onClick={handlePayment}
+        onPress={handlePayment}
         className="w-full"
       >
         Place order

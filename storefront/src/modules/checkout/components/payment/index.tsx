@@ -127,7 +127,7 @@ const Payment = ({
           </p>
         </div>
         {!isOpen && paymentReady && (
-          <Button variant="link" onClick={handleEdit}>
+          <Button variant="link" onPress={handleEdit}>
             Change
           </Button>
         )}
@@ -187,7 +187,7 @@ const Payment = ({
 
         <Button
           className="mt-6"
-          onClick={handleSubmit}
+          onPress={handleSubmit}
           isLoading={isLoading}
           disabled={
             (isStripe && !cardComplete) ||
