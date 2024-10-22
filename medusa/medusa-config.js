@@ -1,10 +1,10 @@
-const { loadEnv, defineConfig, Modules } = require('@medusajs/framework/utils');
+const { loadEnv, defineConfig } = require('@medusajs/framework/utils');
 
 loadEnv(process.env.NODE_ENV, process.cwd());
 
 module.exports = defineConfig({
   admin: {
-    backendUrl: process.env.BACKEND_URL,
+    backendUrl: process.env.BACKEND_URL ?? "https://sofa-society-starter.medusajs.app",
     storefrontUrl: process.env.STOREFRONT_URL,
   },
   projectConfig: {
@@ -18,14 +18,14 @@ module.exports = defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || 'supersecret',
     },
   },
-  modules: {
-    [Modules.PAYMENT]: {
-      resolve: '@medusajs/payment',
+  modules: [
+    {
+      resolve: '@medusajs/medusa/payment',
       options: {
         providers: [
           {
             id: 'stripe',
-            resolve: '@medusajs/payment-stripe',
+            resolve: '@medusajs/medusa/payment-stripe',
             options: {
               apiKey: process.env.STRIPE_API_KEY,
               webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
@@ -34,10 +34,10 @@ module.exports = defineConfig({
         ],
       },
     },
-    fashionModuleService: {
-      resolve: './modules/fashion',
+    {
+      resolve: './src/modules/fashion',
     },
-    [Modules.FILE]: {
+    {
       resolve: '@medusajs/medusa/file',
       options: {
         providers: [
@@ -55,5 +55,5 @@ module.exports = defineConfig({
         ],
       },
     },
-  },
+  ],
 });
