@@ -314,7 +314,7 @@ export default function ProductActions({
           className="w-full sm:w-35 max-md:justify-center max-md:gap-2"
         />
         <Button
-          onClick={handleAddToCart}
+          onPress={handleAddToCart}
           disabled={!inStock || !selectedVariant || !!disabled || isAdding}
           isLoading={isAdding}
           className="sm:flex-1"
