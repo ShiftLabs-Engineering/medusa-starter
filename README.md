@@ -1,6 +1,6 @@
 <h1 align="center">Fashion E-commerce Starter for Medusa 2.0</h1>
 
-<video src="https://github.com/user-attachments/assets/e27fd9b9-f902-4927-9a64-0ac1689b3429" controls="controls" muted="muted" playsinline="playsinline"></video>
+<video src="https://github.com/user-attachments/assets/1afe48e4-5a28-4aee-b4bd-e405701d3cc6" controls="controls" muted="muted" playsinline="playsinline"></video>
 
 The **Fashion E-commerce Starter** is a modern, customizable e-commerce template built with **Medusa 2.0**. Designed around the concept of the sustainable furniture brand **Sofa Society**, this starter showcases the power of new Medusa 2.0 version. With its focus on cutting-edge design, sustainability, and personalization, Sofa Society offers users an elegant shopping experience where they can explore customizable collections, product options, and a streamlined checkout flow.
 
@@ -199,3 +199,10 @@ yarn dev
 ```
 
 You should now be able to access the storefront at http://localhost:8000.
+
+<a href="https://agilo.com" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/a4429448-a08a-4f5a-8195-2cea1416ca87">
+    <img src="https://github.com/user-attachments/assets/772994f8-32c6-4b27-832f-2660f833fd78">
+  </picture>
+</a>
