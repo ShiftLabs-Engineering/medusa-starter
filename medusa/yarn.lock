@@ -2665,7 +2665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/admin-sdk@npm:2":
+"@medusajs/admin-sdk@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/admin-sdk@npm:2.0.0"
   dependencies:
@@ -2792,7 +2792,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/cli@npm:2":
+"@medusajs/cli@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/cli@npm:2.0.0"
   dependencies:
@@ -2968,7 +2968,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/framework@npm:2":
+"@medusajs/framework@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/framework@npm:2.0.0"
   dependencies:
@@ -3129,7 +3129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/medusa@npm:2":
+"@medusajs/medusa@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/medusa@npm:2.0.0"
   dependencies:
@@ -3437,7 +3437,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/test-utils@npm:2":
+"@medusajs/test-utils@npm:^2.0.0":
   version: 2.0.0
   resolution: "@medusajs/test-utils@npm:2.0.0"
   dependencies:
@@ -12553,11 +12553,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "medusa-starter-default@workspace:."
   dependencies:
-    "@medusajs/admin-sdk": "npm:2"
-    "@medusajs/cli": "npm:2"
-    "@medusajs/framework": "npm:2"
-    "@medusajs/medusa": "npm:2"
-    "@medusajs/test-utils": "npm:2"
+    "@medusajs/admin-sdk": "npm:^2.0.0"
+    "@medusajs/cli": "npm:^2.0.0"
+    "@medusajs/framework": "npm:^2.0.0"
+    "@medusajs/medusa": "npm:^2.0.0"
+    "@medusajs/test-utils": "npm:^2.0.0"
     "@mikro-orm/cli": "npm:5.9.7"
     "@mikro-orm/core": "npm:5.9.7"
     "@mikro-orm/knex": "npm:5.9.7"
