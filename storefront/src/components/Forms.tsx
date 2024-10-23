@@ -10,7 +10,7 @@ import { Icon } from "@/components/Icon"
 
 export const getFormFieldClassNames = ({
   variant,
-  size,
+  uiSize,
   isVisuallyDisabled,
   isSuccess,
   hasError,
@@ -24,10 +24,10 @@ export const getFormFieldClassNames = ({
       "border border-grayscale-200 hover:border-grayscale-500 focus:border-grayscale-500 bg-transparent",
 
     // Size
-    size === "sm" &&
+    uiSize === "sm" &&
       "h-9 text-xs focus:pt-3.5 [&:not(:placeholder-shown)]:pt-3.5",
-    size === "md" && "h-12 focus:pt-3 [&:not(:placeholder-shown)]:pt-3",
-    size === "lg" && "h-14 focus:pt-4 [&:not(:placeholder-shown)]:pt-4",
+    uiSize === "md" && "h-12 focus:pt-3 [&:not(:placeholder-shown)]:pt-3",
+    uiSize === "lg" && "h-14 focus:pt-4 [&:not(:placeholder-shown)]:pt-4",
 
     // Disabled
     isVisuallyDisabled &&
@@ -88,7 +88,7 @@ export const InputSubLabel: React.FC<
  */
 export type InputOwnProps = {
   variant?: "solid" | "outline"
-  size?: "sm" | "md" | "lg"
+  uiSize?: "sm" | "md" | "lg"
   isVisuallyDisabled?: boolean
   isSuccess?: boolean
   hasError?: boolean
@@ -103,7 +103,7 @@ export const Input = React.forwardRef<
   (
     {
       variant,
-      size = "lg",
+      uiSize = "lg",
       isVisuallyDisabled,
       isSuccess,
       hasError,
@@ -122,7 +122,7 @@ export const Input = React.forwardRef<
         className={twMerge(
           getFormFieldClassNames({
             variant,
-            size,
+            uiSize,
             isVisuallyDisabled,
             isSuccess,
             hasError,
@@ -135,11 +135,11 @@ export const Input = React.forwardRef<
         <span
           className={twJoin(
             "absolute -translate-y-1/2 peer-placeholder-shown:top-1/2 left-4 peer-focus:text-xs peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:translate-y-0 peer-focus:translate-y-0 text-grayscale-500 pointer-events-none transition-all",
-            size === "lg" &&
+            uiSize === "lg" &&
               "peer-focus:top-2.5 peer-[:not(:placeholder-shown)]:top-2.5",
-            size === "md" &&
+            uiSize === "md" &&
               "peer-focus:top-1 peer-[:not(:placeholder-shown)]:top-1",
-            size === "sm" &&
+            uiSize === "sm" &&
               "peer-focus:top-1 peer-[:not(:placeholder-shown)]:top-1 text-xs peer-focus:text-[10px] peer-[:not(:placeholder-shown)]:text-[10px]"
           )}
         >

@@ -5,9 +5,6 @@ import React from "react"
 
 import { convertToLocale } from "@lib/util/money"
 
-import { SubmitButton } from "@modules/checkout/components/submit-button"
-import { Input } from "@/components/Forms"
-
 type CartTotalsProps = {
   cart: HttpTypes.StoreCart & {
     promotions: HttpTypes.StorePromotion[]
@@ -91,15 +88,6 @@ const CartTotals: React.FC<CartTotalsProps> = ({ cart }) => {
         <p data-testid="cart-total" data-value={total || 0}>
           {convertToLocale({ amount: total ?? 0, currency_code })}
         </p>
-      </div>
-      <div className="flex gap-2 mt-10">
-        <Input
-          size="md"
-          placeholder="Discount code"
-          variant="outline"
-          wrapperClassName="flex flex-1"
-        />
-        <SubmitButton>Apply</SubmitButton>
       </div>
     </div>
   )

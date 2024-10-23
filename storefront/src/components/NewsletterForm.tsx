@@ -34,7 +34,7 @@ export const NewsletterForm: React.FC<{ className?: string }> = ({
           >
             <div className="flex gap-2">
               <Input
-                size="sm"
+                uiSize="sm"
                 name="email"
                 type="email"
                 placeholder="Your email"
