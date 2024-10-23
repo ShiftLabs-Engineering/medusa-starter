@@ -2,7 +2,7 @@ import { HttpTypes } from "@medusajs/types"
 
 import { listCartShippingMethods } from "@lib/data/fulfillment"
 import { listCartPaymentMethods } from "@lib/data/payment"
-import DeliveryDetails from "@modules/checkout/components/addresses"
+import Addresses from "@modules/checkout/components/addresses"
 import Email from "@modules/checkout/components/email"
 import Payment from "@modules/checkout/components/payment"
 import Review from "@modules/checkout/components/review"
@@ -31,7 +31,7 @@ export default async function CheckoutForm({
   return (
     <>
       <Email cart={cart} customer={customer} countryCode={countryCode} />
-      <DeliveryDetails cart={cart} customer={customer} />
+      <Addresses cart={cart} customer={customer} />
       <Shipping cart={cart} availableShippingMethods={shippingMethods} />
       <Payment cart={cart} availablePaymentMethods={paymentMethods} />
       <Review cart={cart} />

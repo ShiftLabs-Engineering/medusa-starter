@@ -56,10 +56,13 @@ const getInitialOptions = (product: ProductActionsProps["product"]) => {
     const singleOptionValues = product.options
       .filter((option) => option.values)
       .filter((option) => option.values!.length === 1)
-      .reduce((acc, option) => {
-        acc[option.id] = option.values![0].value
-        return acc
-      }, {} as Record<string, string>)
+      .reduce(
+        (acc, option) => {
+          acc[option.id] = option.values![0].value
+          return acc
+        },
+        {} as Record<string, string>
+      )
 
     return singleOptionValues
   }
@@ -201,7 +204,7 @@ export default function ProductActions({
                   )}
                 </p>
                 <Select
-                  selectedKey={options[materialOption.id]}
+                  selectedKey={options[materialOption.id] ?? null}
                   onSelectionChange={(value) => {
                     setOptionValue(materialOption.id, `${value}`)
                   }}
@@ -236,7 +239,7 @@ export default function ProductActions({
                     </span>
                   </p>
                   <RadioGroup
-                    value={options[colorOption.id]}
+                    value={options[colorOption.id] ?? null}
                     onChange={(value) => {
                       setOptionValue(colorOption.id, value)
                     }}
@@ -271,7 +274,7 @@ export default function ProductActions({
                     )}
                   </p>
                   <Select
-                    selectedKey={options[option.id]}
+                    selectedKey={options[option.id] ?? null}
                     onSelectionChange={(value) => {
                       setOptionValue(option.id, `${value}`)
                     }}
@@ -311,7 +314,7 @@ export default function ProductActions({
           className="w-full sm:w-35 max-md:justify-center max-md:gap-2"
         />
         <Button
-          onClick={handleAddToCart}
+          onPress={handleAddToCart}
           disabled={!inStock || !selectedVariant || !!disabled || isAdding}
           isLoading={isAdding}
           className="sm:flex-1"
@@ -319,8 +322,8 @@ export default function ProductActions({
           {!selectedVariant
             ? "Select variant"
             : !inStock
-            ? "Out of stock"
-            : "Add to cart"}
+              ? "Out of stock"
+              : "Add to cart"}
         </Button>
       </div>
     </>

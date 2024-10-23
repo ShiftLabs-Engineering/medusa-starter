@@ -44,7 +44,7 @@ const Email = ({
         {!isOpen && (
           <Button
             variant="link"
-            onClick={() => {
+            onPress={() => {
               router.push(pathname + "?step=email")
             }}
           >

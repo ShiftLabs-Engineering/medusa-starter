@@ -73,7 +73,7 @@ const Shipping: React.FC<ShippingProps> = ({
           cart?.email && (
             <Button
               variant="link"
-              onClick={() => {
+              onPress={() => {
                 router.push(pathname + "?step=shipping", { scroll: false })
               }}
             >
@@ -120,7 +120,7 @@ const Shipping: React.FC<ShippingProps> = ({
             <ErrorMessage error={error} />
 
             <Button
-              onClick={handleSubmit}
+              onPress={handleSubmit}
               isLoading={isLoading}
               disabled={!cart.shipping_methods?.[0]}
             >

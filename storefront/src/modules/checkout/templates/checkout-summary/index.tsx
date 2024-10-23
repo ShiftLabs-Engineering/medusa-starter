@@ -4,8 +4,7 @@ import { getPricesForVariant } from "@lib/util/get-product-price"
 import DiscountCode from "@modules/checkout/components/discount-code"
 import CartTotals from "@modules/common/components/cart-totals"
 import Thumbnail from "@modules/products/components/thumbnail"
-import { Button } from "@/components/Button"
-import { LocalizedLink } from "@/components/LocalizedLink"
+import { LocalizedButtonLink, LocalizedLink } from "@/components/LocalizedLink"
 
 const ItemPrice: React.FC<{
   item: HttpTypes.StoreCartLineItem | HttpTypes.StoreOrderLineItem
@@ -50,9 +49,9 @@ const CheckoutSummary = ({
             Order — {numOfItems} item{numOfItems > 1 ? "s" : ""}
           </p>
         </div>
-        <LocalizedLink href="/cart">
-          <Button variant="link">Edit cart</Button>
-        </LocalizedLink>
+        <LocalizedButtonLink href="/cart" variant="link">
+          Edit cart
+        </LocalizedButtonLink>
       </div>
       {numOfItems > 0 &&
         items

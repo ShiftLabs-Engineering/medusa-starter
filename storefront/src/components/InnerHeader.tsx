@@ -20,7 +20,7 @@ import { Button } from "@/components/Button"
 import { Icon } from "@/components/Icon"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { Drawer } from "@/components/Drawer"
-import { LocalizedLink } from "@/components/LocalizedLink"
+import { LocalizedButtonLink, LocalizedLink } from "@/components/LocalizedLink"
 
 export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
   const pathName = usePathname()
@@ -151,40 +151,47 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
               >
                 <Icon name="user" className="w-6 h-6" />
               </Button> */}
-              <LocalizedLink href="/cart">
-                <Button
-                  variant="ghost"
-                  className={twJoin(
-                    "p-1 data-[changecolor=true]:md:text-black js-bg-change",
-                    isPageWithHeroImage && "md:text-white"
-                  )}
-                  data-changecolor={false}
-                >
-                  <Icon name="case" className="w-6 h-6" />
-                </Button>
-              </LocalizedLink>
+
+              <LocalizedButtonLink
+                href="/cart"
+                variant="ghost"
+                className={twJoin(
+                  "p-1 data-[changecolor=true]:md:text-black js-bg-change",
+                  isPageWithHeroImage && "md:text-white"
+                )}
+                data-changecolor={false}
+              >
+                <Icon name="case" className="w-6 h-6" />
+              </LocalizedButtonLink>
             </div>
             <div className="flex items-center gap-6 md:hidden">
-              <LocalizedLink href="/cart">
-                <Button
-                  variant="ghost"
-                  className={twJoin(
-                    "p-1",
-                    isPageWithHeroImage && "md:text-white"
-                  )}
-                >
-                  <Icon name="case" className="w-6 h-6" />
-                </Button>
-              </LocalizedLink>
+              <LocalizedButtonLink
+                href="/cart"
+                variant="ghost"
+                className={twJoin(
+                  "p-1",
+                  isPageWithHeroImage && "md:text-white"
+                )}
+              >
+                <Icon
+                  name="case"
+                  className="w-6 h-6"
+                  wrapperClassName="w-6 h-6"
+                />
+              </LocalizedButtonLink>
               <Button
                 variant="ghost"
                 className={twJoin(
                   "p-1",
                   isPageWithHeroImage && "md:text-white"
                 )}
-                onClick={() => setIsMenuOpen(true)}
+                onPress={() => setIsMenuOpen(true)}
               >
-                <Icon name="menu" className="w-6 h-6" />
+                <Icon
+                  name="menu"
+                  className="w-6 h-6"
+                  wrapperClassName="w-6 h-6"
+                />
               </Button>
             </div>
           </div>

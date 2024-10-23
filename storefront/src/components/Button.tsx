@@ -4,6 +4,7 @@
 import * as React from "react"
 import { twJoin, twMerge } from "tailwind-merge"
 import * as ReactAria from "react-aria-components"
+import Link, { LinkProps } from "next/link"
 
 // Components
 import { Icon, IconNames } from "@/components/Icon"
@@ -115,4 +116,94 @@ export const Button: React.FC<ButtonProps> = ({
         : null
       : children}
   </ReactAria.Button>
+)
+
+export const ButtonAnchor: React.FC<
+  React.ComponentPropsWithoutRef<"a"> & ButtonOwnProps
+> = ({
+  isFullWidth,
+  isVisuallyDisabled,
+  iconName,
+  iconPosition = "start",
+  isLoading,
+  loadingText,
+  size = "md",
+  spinnerPosition = "start",
+  variant = "solid",
+  className,
+  children,
+  ...rest
+}) => (
+  <a
+    {...rest}
+    className={twMerge(
+      getButtonClassNames({
+        isFullWidth,
+        isVisuallyDisabled,
+        iconName,
+        iconPosition,
+        isLoading,
+        loadingText,
+        size,
+        spinnerPosition,
+        variant,
+      }),
+      className
+    )}
+  >
+    {Boolean(isLoading) && <Icon name="loader" className="animate-spin" />}
+    {iconName && !Boolean(isLoading) && <Icon name={iconName} />}
+    {Boolean(isLoading)
+      ? Boolean(loadingText)
+        ? loadingText
+        : null
+      : children}
+  </a>
+)
+
+export const ButtonLink: React.FC<
+  Omit<LinkProps, "passHref"> &
+    ButtonOwnProps & {
+      className?: string
+      children?: React.ReactNode
+    }
+> = ({
+  isFullWidth,
+  isVisuallyDisabled,
+  iconName,
+  iconPosition = "start",
+  isLoading,
+  loadingText,
+  size = "md",
+  spinnerPosition = "start",
+  variant = "solid",
+  className,
+  children,
+  ...rest
+}) => (
+  <Link
+    {...rest}
+    className={twMerge(
+      getButtonClassNames({
+        isFullWidth,
+        isVisuallyDisabled,
+        iconName,
+        iconPosition,
+        isLoading,
+        loadingText,
+        size,
+        spinnerPosition,
+        variant,
+      }),
+      className
+    )}
+  >
+    {Boolean(isLoading) && <Icon name="loader" className="animate-spin" />}
+    {iconName && !Boolean(isLoading) && <Icon name={iconName} />}
+    {Boolean(isLoading)
+      ? Boolean(loadingText)
+        ? loadingText
+        : null
+      : children}
+  </Link>
 )

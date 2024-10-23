@@ -41,7 +41,7 @@ const Review = ({ cart }: { cart: any }) => {
           cart?.email && (
             <Button
               variant="link"
-              onClick={() => {
+              onPress={() => {
                 router.push(pathname + "?step=review", { scroll: false })
               }}
             >

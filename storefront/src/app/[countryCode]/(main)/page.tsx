@@ -2,13 +2,11 @@
 import { Metadata } from "next"
 import Image from "next/image"
 
-import { getCollectionsList } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
 import { getProductTypesList } from "@lib/data/product-types"
 import { Layout, LayoutColumn } from "@/components/Layout"
-import { Carousel } from "@/components/Carousel"
-import { Button } from "@/components/Button"
 import { LocalizedLink } from "@/components/LocalizedLink"
+import { CollectionsSection } from "@/components/CollectionsSection"
 
 export const metadata: Metadata = {
   title: "Medusa Next.js Starter Template",
@@ -59,68 +57,12 @@ const ProductTypesSection: React.FC = async () => {
   )
 }
 
-const CollectionsSection: React.FC = async () => {
-  const collections = await getCollectionsList(0, 20, [
-    "id",
-    "title",
-    "handle",
-    "metadata",
-  ])
-
-  if (!collections) {
-    return null
-  }
-
-  return (
-    <Carousel
-      heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
-      button={
-        <LocalizedLink href="/store" className="md:h-auto">
-          <Button size="md" className="h-full flex-1 max-md:hidden">
-            View All
-          </Button>
-          <Button size="sm" className="md:hidden">
-            View All
-          </Button>
-        </LocalizedLink>
-      }
-      className="mb-26 md:mb-36"
-    >
-      {collections.collections.map((collection) => (
-        <LocalizedLink
-          key={collection.id}
-          href={`/collections/${collection.handle}`}
-        >
-          {typeof collection.metadata?.image === "object" &&
-            collection.metadata.image &&
-            "url" in collection.metadata.image &&
-            typeof collection.metadata.image.url === "string" && (
-              <Image
-                src={collection.metadata.image.url}
-                width={992}
-                height={1322}
-                alt={collection.title}
-                className="mb-4 md:mb-10"
-              />
-            )}
-          <h3 className="md:text-lg mb-2 md:mb-4">{collection.title}</h3>
-          {typeof collection.metadata?.description === "string" &&
-            collection.metadata?.description.length > 0 && (
-              <p className="text-xs text-grayscale-500 md:text-md">
-                {collection.metadata.description}
-              </p>
-            )}
-        </LocalizedLink>
-      ))}
-    </Carousel>
-  )
-}
-
 export default async function Home({
-  params: { countryCode },
+  params,
 }: {
-  params: { countryCode: string }
+  params: Promise<{ countryCode: string }>
 }) {
+  const { countryCode } = await params
   const region = await getRegion(countryCode)
 
   if (!region) {
@@ -157,7 +99,7 @@ export default async function Home({
           </LayoutColumn>
         </Layout>
         <ProductTypesSection />
-        <CollectionsSection />
+        <CollectionsSection className="mb-26 md:mb-36" />
         <Layout>
           <LayoutColumn className="col-span-full">
             <h3 className="text-lg md:text-2xl mb-8 md:mb-15">

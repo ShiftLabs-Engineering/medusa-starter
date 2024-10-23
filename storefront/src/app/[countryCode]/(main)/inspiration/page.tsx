@@ -2,9 +2,8 @@
 import Image from "next/image"
 
 import { Layout, LayoutColumn } from "@/components/Layout"
-import { Carousel } from "@/components/Carousel"
-import { Button } from "@/components/Button"
 import { LocalizedLink } from "@/components/LocalizedLink"
+import { CollectionsSection } from "@/components/CollectionsSection"
 
 export default function InspirationPage() {
   return (
@@ -166,62 +165,7 @@ export default function InspirationPage() {
             </LocalizedLink>
           </LayoutColumn>
         </Layout>
-        <Carousel
-          heading={<h3 className="text-lg md:text-2xl">Collections</h3>}
-          button={
-            <>
-              <Button size="md" className="h-auto flex-1 max-md:hidden">
-                View All
-              </Button>
-              <Button size="sm" className="md:hidden">
-                View All
-              </Button>
-            </>
-          }
-          className="mt-26 md:mt-36"
-        >
-          <LocalizedLink href="/collections/scandinavian-simplicity">
-            <Image
-              src="/images/content/scandinavian-simplicity.png"
-              width={992}
-              height={1322}
-              alt="Scandinavian simplicity"
-              className="mb-4 md:mb-10"
-            />
-            <h3 className="md:text-lg mb-2 md:mb-4">Scandinavian Simplicity</h3>
-            <p className="text-xs text-grayscale-500 md:text-md">
-              Minimalistic designs, neutral colors, and high-quality textures
-            </p>
-          </LocalizedLink>
-          <LocalizedLink href="/collections/modern-luxe">
-            <Image
-              src="/images/content/modern-luxe.png"
-              width={992}
-              height={1322}
-              alt="Modern luxe"
-              className="mb-4 md:mb-10"
-            />
-            <h3 className="md:text-lg mb-2 md:mb-4">Modern Luxe</h3>
-            <p className="text-xs text-grayscale-500 md:text-md">
-              Sophisticated and sleek, these sofas blend modern design with
-              luxurious comfort
-            </p>
-          </LocalizedLink>
-          <LocalizedLink href="/collections/boho-chic">
-            <Image
-              src="/images/content/boho-chic.png"
-              width={992}
-              height={1322}
-              alt="Boho chic"
-              className="mb-4 md:mb-10"
-            />
-            <h3 className="md:text-lg mb-2 md:mb-4">Boho Chic</h3>
-            <p className="text-xs text-grayscale-500 md:text-md">
-              Infused with playful textures and vibrant patterns with eclectic
-              vibes.
-            </p>
-          </LocalizedLink>
-        </Carousel>
+        <CollectionsSection className="mt-26 md:mt-36" />
       </div>
     </>
   )

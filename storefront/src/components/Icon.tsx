@@ -60,7 +60,7 @@ export type IconNames =
   | "undo"
   | "user"
 
-const baseClasses = "w-4 h-auto flex-shrink-0"
+const baseClasses = "w-4 h-auto shrink-0"
 
 export type IconProps = React.ComponentPropsWithoutRef<"svg"> & {
   name: IconNames

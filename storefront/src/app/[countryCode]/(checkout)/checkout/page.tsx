@@ -30,10 +30,12 @@ const fetchCart = async () => {
 }
 
 export default async function Checkout({
-  params: { countryCode },
+  params,
 }: {
-  params: { countryCode: string }
+  params: Promise<{ countryCode: string }>
 }) {
+  const { countryCode } = await params
+
   const cart = (await fetchCart()) as HttpTypes.StoreCart & {
     promotions: HttpTypes.StorePromotion[]
   }

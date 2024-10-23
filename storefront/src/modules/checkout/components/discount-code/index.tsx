@@ -43,7 +43,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
         wrapperClassName="flex-1"
         className="max-lg:h-12"
       />
-      <Button onClick={addPromotionCode} className="lg:h-auto grow-0 h-12">
+      <Button onPress={addPromotionCode} className="lg:h-auto grow-0 h-12">
         Apply
       </Button>
     </div>

@@ -1,16 +1,14 @@
 "use client"
 
 import * as React from "react"
-import Link, { LinkProps } from "next/link"
+import { LinkProps } from "next/link"
 import { useParams } from "next/navigation"
-import { twMerge } from "tailwind-merge"
-import { getLinkClassNames, LinkOwnProps } from "./Link"
+import { Link, LinkOwnProps } from "./Link"
+import { ButtonLink, ButtonOwnProps } from "./Button"
 
 export const LocalizedLink = <RouteInferType extends any>({
   children,
   href,
-  variant = "unstyled",
-  className,
   ...props
 }: React.ComponentPropsWithoutRef<"a"> &
   LinkProps<RouteInferType> &
@@ -18,12 +16,26 @@ export const LocalizedLink = <RouteInferType extends any>({
   const { countryCode } = useParams()
 
   return (
-    <Link
-      {...props}
-      href={`/${countryCode}${href}`}
-      className={twMerge(getLinkClassNames({ variant }), className)}
-    >
+    <Link {...props} href={`/${countryCode}${href}`}>
       {children}
     </Link>
+  )
+}
+
+export const LocalizedButtonLink = <RouteInferType extends any>({
+  children,
+  href,
+  ...props
+}: ButtonOwnProps &
+  Omit<LinkProps<RouteInferType>, "passHref"> & {
+    className?: string
+    children?: React.ReactNode
+  }) => {
+  const { countryCode } = useParams()
+
+  return (
+    <ButtonLink {...props} href={`/${countryCode}${href}`}>
+      {children}
+    </ButtonLink>
   )
 }

@@ -120,18 +120,7 @@ export const Carousel: React.FC<CarouselProps> = ({
                 disableOnDesktop && "md:gap-6"
               )}
             >
-              {React.Children.map(children, (child) => {
-                return (
-                  <div
-                    className={twJoin(
-                      "w-[70%] sm:w-[60%] lg:w-full max-w-124 flex-shrink-0",
-                      disableOnDesktop && width > 768 && "max-w-full flex-1"
-                    )}
-                  >
-                    {child}
-                  </div>
-                )
-              })}
+              {children}
             </div>
           </div>
         </LayoutColumn>
