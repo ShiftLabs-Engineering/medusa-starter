@@ -1,6 +1,6 @@
 "use client"
 
-import { useFormState } from "react-dom"
+import { useActionState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { twJoin } from "tailwind-merge"
 import { HttpTypes } from "@medusajs/types"
@@ -26,7 +26,7 @@ const Email = ({
 
   const isOpen = searchParams.get("step") === "email"
 
-  const [state, formAction] = useFormState(setEmail, null)
+  const [state, formAction] = useActionState(setEmail, null)
 
   return (
     <>

@@ -1,9 +1,9 @@
 "use client"
 
+import { useActionState } from "react"
 import { useToggleState } from "@medusajs/ui"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { twJoin } from "tailwind-merge"
-import { useFormState } from "react-dom"
 import { HttpTypes } from "@medusajs/types"
 
 import { setAddresses } from "@lib/data/cart"
@@ -33,7 +33,7 @@ const Addresses = ({
       : true
   )
 
-  const [message, formAction] = useFormState(setAddresses, null)
+  const [message, formAction] = useActionState(setAddresses, null)
 
   return (
     <>
