@@ -45,6 +45,7 @@ module.exports = {
       xs: ["0.75rem", 1.4],
     },
     borderRadius: {
+      "2xs": "2px",
       xs: "4px",
       md: "24px",
       lg: "30px",
@@ -105,6 +106,16 @@ module.exports = {
       },
       zIndex: {
         header: "9999",
+      },
+      keyframes: {
+        shine: {
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+      },
+      animation: {
+        shine: "shine 1s linear infinite",
       },
     },
   },
