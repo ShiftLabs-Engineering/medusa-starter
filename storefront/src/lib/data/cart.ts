@@ -332,7 +332,7 @@ export async function setEmail(currentState: unknown, formData: FormData) {
   redirect(`/${countryCode.data}/checkout?step=delivery`)
 }
 
-// TODO: Pass a POJO instead of a form entity here
+// TODO: Validate incoming data
 export async function setAddresses(currentState: unknown, formData: FormData) {
   try {
     if (!formData) {
