@@ -20,7 +20,7 @@ const SkeletonCartTotals = ({ header = true }) => {
         </div>
       </div>
       <hr className="my-6" />
-      <div className="flex justify-between mb-10">
+      <div className="flex justify-between mb-12">
         <Skeleton className="w-20 h-9" />
         <Skeleton className="w-30 h-9" />
       </div>

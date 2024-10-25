@@ -15,7 +15,7 @@ const SkeletonCartPage = () => {
         className="mb-14 lg:mb-0"
       >
         <div className="lg:h-22 pb-12 lg:pb-0 border-b border-b-grayscale-100">
-          <Skeleton className="w-75 h-17" />
+          <Skeleton className="w-75 md:w-108 h-8 md:h-17" />
         </div>
         <div>
           {repeat(3).map((index) => (
