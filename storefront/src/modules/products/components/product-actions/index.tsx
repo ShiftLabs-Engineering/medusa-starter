@@ -3,13 +3,13 @@
 import { isEqual } from "lodash"
 import { useParams } from "next/navigation"
 import { useEffect, useMemo, useState } from "react"
-
-import ProductPrice from "../product-price"
-import { addToCart } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
+import { Popover, Radio, RadioGroup, Select } from "react-aria-components"
+
+import { addToCart } from "@lib/data/cart"
+import { getVariantItemsInStock } from "@lib/util/inventory"
 import { Button } from "@/components/Button"
 import { NumberField } from "@/components/NumberField"
-import { Popover, Radio, RadioGroup, Select } from "react-aria-components"
 import {
   UiSelectButton,
   UiSelectIcon,
@@ -17,6 +17,7 @@ import {
   UiSelectListBoxItem,
   UiSelectValue,
 } from "@/components/ui/Select"
+import ProductPrice from "../product-price"
 
 type ProductActionsProps = {
   product: HttpTypes.StoreProduct
@@ -110,28 +111,9 @@ export default function ProductActions({
   }
 
   // check if the selected variant is in stock
-  const inStock = useMemo(() => {
-    // If we don't manage inventory, we can always add to cart
-    if (selectedVariant && !selectedVariant.manage_inventory) {
-      return true
-    }
-
-    // If we allow back orders on the variant, we can add to cart
-    if (selectedVariant?.allow_backorder) {
-      return true
-    }
-
-    // If there is inventory available, we can add to cart
-    if (
-      selectedVariant?.manage_inventory &&
-      (selectedVariant?.inventory_quantity || 0) > 0
-    ) {
-      return true
-    }
-
-    // Otherwise, we can't add to cart
-    return false
-  }, [selectedVariant])
+  const itemsInStock = selectedVariant
+    ? getVariantItemsInStock(selectedVariant)
+    : 0
 
   // add the selected variant to the cart
   const handleAddToCart = async () => {
@@ -313,18 +295,19 @@ export default function ProductActions({
           value={quantity}
           onChange={setQuantity}
           minValue={1}
+          maxValue={itemsInStock}
           className="w-full sm:w-35 max-md:justify-center max-md:gap-2"
           aria-label="Quantity"
         />
         <Button
           onPress={handleAddToCart}
-          disabled={!inStock || !selectedVariant || !!disabled || isAdding}
+          disabled={!itemsInStock || !selectedVariant || !!disabled || isAdding}
           isLoading={isAdding}
           className="sm:flex-1"
         >
           {!selectedVariant
             ? "Select variant"
-            : !inStock
+            : !itemsInStock
               ? "Out of stock"
               : "Add to cart"}
         </Button>

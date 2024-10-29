@@ -4,6 +4,7 @@ import { useState } from "react"
 import { HttpTypes } from "@medusajs/types"
 
 import { updateLineItem } from "@lib/data/cart"
+import { getVariantItemsInStock } from "@lib/util/inventory"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import DeleteButton from "@modules/common/components/delete-button"
 import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
@@ -37,45 +38,45 @@ const Item = ({ item }: ItemProps) => {
       })
   }
 
-  // TODO: Update this to grab the actual max inventory
-  const maxQtyFromInventory = 10
-  const maxQuantity = item.variant?.manage_inventory ? 10 : maxQtyFromInventory
+  const maxQuantity = item.variant ? getVariantItemsInStock(item.variant) : 0
 
   return (
-    <div className="flex gap-6 border-b border-grayscale-100 py-8 last:pb-0 last:border-b-0">
-      <LocalizedLink href={`/products/${handle}`}>
-        <Thumbnail
-          thumbnail={item.variant?.product?.thumbnail}
-          images={item.variant?.product?.images}
-          size="3/4"
-          className="w-25 sm:w-30"
-        />
-      </LocalizedLink>
-      <div className="flex-grow flex flex-col justify-between">
-        <div>
-          <h2 className="sm:text-md text-base font-normal">
-            <LocalizedLink href={`/products/${handle}`}>
-              {item.product_title}
-            </LocalizedLink>
-          </h2>
-          <p className="text-grayscale-500 text-xs sm:text-base">
-            {item.variant?.title}
-          </p>
-        </div>
-        <NumberField
-          size="sm"
-          minValue={1}
-          maxValue={maxQuantity}
-          value={item.quantity}
-          onChange={(value) => changeQuantity(value)}
-          isDisabled={updating}
-          className="w-25"
+    <div className="border-b border-grayscale-100 py-8 last:pb-0 last:border-b-0">
+      <div className="flex gap-6">
+        <LocalizedLink href={`/products/${handle}`}>
+          <Thumbnail
+            thumbnail={item.variant?.product?.thumbnail}
+            images={item.variant?.product?.images}
+            size="3/4"
+            className="w-25 sm:w-30"
+          />
+        </LocalizedLink>
+        <div className="flex-grow flex flex-col justify-between">
+          <div>
+            <h2 className="sm:text-md text-base font-normal">
+              <LocalizedLink href={`/products/${handle}`}>
+                {item.product_title}
+              </LocalizedLink>
+            </h2>
+            <p className="text-grayscale-500 text-xs sm:text-base">
+              {item.variant?.title}
+            </p>
+          </div>
+          <NumberField
+            size="sm"
+            minValue={1}
+            maxValue={maxQuantity}
+            value={item.quantity}
+            onChange={(value) => changeQuantity(value)}
+            isDisabled={updating}
+            className="w-25"
             aria-label="Quantity"
-        />
-      </div>
-      <div className="flex flex-col justify-between items-end text-right">
-        <LineItemUnitPrice item={item} />
-        <DeleteButton id={item.id} data-testid="product-delete-button" />
+          />
+        </div>
+        <div className="flex flex-col justify-between items-end text-right">
+          <LineItemUnitPrice item={item} />
+          <DeleteButton id={item.id} data-testid="product-delete-button" />
+        </div>
       </div>
       <ErrorMessage error={error} data-testid="product-error-message" />
     </div>
