@@ -104,6 +104,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
                   updateRegion(`${key}`, currentPath)
                 }}
                 className="w-16"
+                aria-label="Select country"
               >
                 <UiSelectButton className="bg-transparent border-0 h-auto !gap-0 !p-1 w-full">
                   <UiSelectValue>
@@ -234,6 +235,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
               updateRegion(`${key}`, currentPath)
             }}
             className="mt-auto ml-8 mb-8"
+            aria-label="Select country"
           >
             <UiSelectButton className="bg-transparent border-0 max-md:text-base gap-2 p-1 w-auto">
               <UiSelectValue>

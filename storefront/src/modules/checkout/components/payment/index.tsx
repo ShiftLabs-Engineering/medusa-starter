@@ -138,6 +138,7 @@ const Payment = ({
             <RadioGroup
               value={selectedPaymentMethod}
               onChange={setSelectedPaymentMethod}
+              aria-label="Payment methods"
             >
               {availablePaymentMethods
                 .sort((a, b) => {

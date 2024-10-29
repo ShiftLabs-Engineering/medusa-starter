@@ -211,6 +211,7 @@ export default function ProductActions({
                   placeholder="Choose material"
                   className="w-full md:w-60"
                   isDisabled={!!disabled || isAdding}
+                  aria-label="Material"
                 >
                   <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
                     <UiSelectValue />
@@ -281,6 +282,7 @@ export default function ProductActions({
                     placeholder={`Choose ${option.title.toLowerCase()}`}
                     className="w-full md:w-60"
                     isDisabled={!!disabled || isAdding}
+                    aria-label={option.title}
                   >
                     <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
                       <UiSelectValue />
@@ -312,6 +314,7 @@ export default function ProductActions({
           onChange={setQuantity}
           minValue={1}
           className="w-full sm:w-35 max-md:justify-center max-md:gap-2"
+          aria-label="Quantity"
         />
         <Button
           onPress={handleAddToCart}

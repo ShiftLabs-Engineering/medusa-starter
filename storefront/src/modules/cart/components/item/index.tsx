@@ -70,6 +70,7 @@ const Item = ({ item }: ItemProps) => {
           onChange={(value) => changeQuantity(value)}
           isDisabled={updating}
           className="w-25"
+            aria-label="Quantity"
         />
       </div>
       <div className="flex flex-col justify-between items-end text-right">

@@ -29,7 +29,7 @@ const CountrySelect: React.FC<
   }, [region])
 
   return (
-    <Select {...props} placeholder={placeholder}>
+    <Select aria-label="Select country" {...props} placeholder={placeholder}>
       <UiSelectButton className="!h-14">
         <UiSelectValue />
         <UiSelectIcon />

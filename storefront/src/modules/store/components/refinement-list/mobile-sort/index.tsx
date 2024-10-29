@@ -48,6 +48,7 @@ export const MobileSort: React.FC<{
                   className="flex flex-col mb-5"
                   name="sortBy"
                   defaultValue={sortBy}
+                  aria-label="Sort by"
                 >
                   <Label className="block text-md font-semibold mb-3">
                     Sort by

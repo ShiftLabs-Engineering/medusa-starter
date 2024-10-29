@@ -95,6 +95,7 @@ const Shipping: React.FC<ShippingProps> = ({
               className="flex flex-col gap-2 mb-8"
               value={selectedShippingMethod?.id}
               onChange={set}
+              aria-label="Shipping methods"
             >
               {availableShippingMethods?.map((option) => (
                 <UiRadio

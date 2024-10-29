@@ -32,6 +32,7 @@ const SortProducts = ({ sortBy, setQueryParams }: SortProductsProps) => {
         handleChange(key as SortOptions)
       }}
       className="max-md:hidden"
+      aria-label="Sort by"
     >
       <UiSelectButton>
         <UiSelectValue />
