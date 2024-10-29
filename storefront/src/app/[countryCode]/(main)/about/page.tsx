@@ -1,7 +1,33 @@
 // External components
 import Image from "next/image"
+import { StoreRegion } from "@medusajs/types"
 
+// Lib
+import { listRegions } from "@lib/data/regions"
+
+// Components
 import { Layout, LayoutColumn } from "@/components/Layout"
+
+export async function generateStaticParams() {
+  const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
+    regions.flatMap((r) =>
+      r.countries
+        ? r.countries
+            .map((c) => c.iso_2)
+            .filter(
+              (value): value is string =>
+                typeof value === "string" && Boolean(value)
+            )
+        : []
+    )
+  )
+
+  const staticParams = countryCodes.map((countryCode) => ({
+    countryCode,
+  }))
+
+  return staticParams
+}
 
 export default function AboutPage() {
   return (

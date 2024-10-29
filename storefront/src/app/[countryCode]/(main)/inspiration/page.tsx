@@ -1,9 +1,32 @@
 // External components
 import Image from "next/image"
+import { StoreRegion } from "@medusajs/types"
 
+import { listRegions } from "@lib/data/regions"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { LocalizedLink } from "@/components/LocalizedLink"
 import { CollectionsSection } from "@/components/CollectionsSection"
+
+export async function generateStaticParams() {
+  const countryCodes = await listRegions().then((regions: StoreRegion[]) =>
+    regions.flatMap((r) =>
+      r.countries
+        ? r.countries
+            .map((c) => c.iso_2)
+            .filter(
+              (value): value is string =>
+                typeof value === "string" && Boolean(value)
+            )
+        : []
+    )
+  )
+
+  const staticParams = countryCodes.map((countryCode) => ({
+    countryCode,
+  }))
+
+  return staticParams
+}
 
 export default function InspirationPage() {
   return (
