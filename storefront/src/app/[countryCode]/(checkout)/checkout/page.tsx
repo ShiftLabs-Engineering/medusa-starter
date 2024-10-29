@@ -8,8 +8,8 @@ import Wrapper from "@modules/checkout/components/payment-wrapper"
 import CheckoutForm from "@modules/checkout/templates/checkout-form"
 import CheckoutSummary from "@modules/checkout/templates/checkout-summary"
 import { Layout, LayoutColumn } from "@/components/Layout"
-import { Icon } from "@/components/Icon"
 import { LocalizedLink } from "@/components/LocalizedLink"
+import MobileCheckoutSummary from "@modules/checkout/templates/mobile-checkout-summary"
 
 export const metadata: Metadata = {
   title: "Checkout",
@@ -58,19 +58,7 @@ export default async function Checkout({
       <div className="w-full bg-grayscale-50 lg:hidden">
         <Layout>
           <LayoutColumn>
-            <button className="h-18 flex justify-between items-center w-full">
-              <p>Order summary</p>
-              <div className="flex items-center gap-4">
-                <span>€1250</span>
-                <Icon name="chevron-down" className="w-6" />
-              </div>
-            </button>
-            <div className="pt-4 pb-8">
-              <CheckoutSummary cart={cart} />
-            </div>
-            {/* <Summary
-              className={twJoin("pt-4 pb-8", !summaryOpen && "hidden")}
-            /> */}
+            <MobileCheckoutSummary cart={cart} />
           </LayoutColumn>
         </Layout>
       </div>
