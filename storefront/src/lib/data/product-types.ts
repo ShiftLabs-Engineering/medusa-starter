@@ -5,7 +5,7 @@ import { HttpTypes, PaginatedResponse } from "@medusajs/types"
 export const getProductTypesList = cache(async function (
   offset: number = 0,
   limit: number = 100,
-  fields: (keyof HttpTypes.StoreProductType)[] = []
+  fields?: (keyof HttpTypes.StoreProductType)[]
 ): Promise<{ productTypes: HttpTypes.StoreProductType[]; count: number }> {
   return sdk.client
     .fetch<
@@ -14,7 +14,7 @@ export const getProductTypesList = cache(async function (
         count: number
       }>
     >("/store/custom/product-types", {
-      query: { limit, offset, fields: fields.join(",") },
+      query: { limit, offset, fields: fields ? fields.join(",") : undefined },
       headers: { next: { tags: ["product-types"] } },
     })
     .then(({ product_types, count }) => ({
