@@ -32,6 +32,10 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
     currentPath === "/about" ||
     currentPath === "/inspiration" ||
     currentPath === "/collection"
+  const isAuthPage = currentPath === "/register" || currentPath === "/login"
+  const isAccountPage =
+    currentPath === "/account/my-orders" ||
+    currentPath === "/account/personal-and-security"
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
@@ -82,7 +86,8 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
     <div
       className={twJoin(
         "top-0 left-0 w-full max-md:bg-grayscale-50 data-[changecolor=true]:md:bg-white data-[changecolor=true]:md:text-black transition-colors fixed max-md:px-6 z-40 js-bg-change",
-        isPageWithHeroImage && "md:text-white"
+        isPageWithHeroImage && "md:text-white",
+        (isAuthPage || isAccountPage) && "md:bg-white"
       )}
       data-changecolor={false}
     >
@@ -146,9 +151,10 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
               {/* <Button
                 variant="ghost"
                 className={twJoin(
-                  "p-1",
+                  "p-1 data-[changecolor=true]:md:text-black js-bg-change",
                   isPageWithHeroImage && "md:text-white"
                 )}
+                data-changecolor={false}
               >
                 <Icon name="user" className="w-6 h-6" />
               </Button> */}
