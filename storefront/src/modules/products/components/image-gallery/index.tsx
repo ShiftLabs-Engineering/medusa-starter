@@ -27,8 +27,7 @@ const ImageGallery = ({ images, className }: ImageGalleryProps) => {
             priority={index <= 2 ? true : false}
             alt={`Product image ${index + 1}`}
             fill
-            // TODO: update sizes to match the design
-            sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
+            sizes="(max-width: 576px) 575px, (max-width: 768px) 767px, (max-width: 1024px) 589px, 456px"
             className="object-cover"
           />
         </div>
