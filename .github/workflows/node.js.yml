@@ -5,11 +5,10 @@ name: PR test
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: ['master']
 
 jobs:
-  build:
-
+  lint-storefront:
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,11 +17,12 @@ jobs:
         node-version: [20.x, 22.x]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-    - run: yarn install --frozen-lockfile
-    - run: yarn lint
+      - uses: actions/checkout@v4
+      - run: cd storefront
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
