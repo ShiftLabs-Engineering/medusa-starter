@@ -16,6 +16,18 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [20.x, 22.x]
 
+    env:
+      NODE_ENV: production
+      CI: true
+      NEXT_PUBLIC_MEDUSA_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_MEDUSA_BACKEND_URL }}
+      NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY }}
+      NEXT_PUBLIC_STRIPE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_KEY }}
+      REVALIDATE_SECRET: ${{ secrets.REVALIDATE_SECRET }}
+      DISALLOW_ROBOTS: true
+      NEXT_PUBLIC_DEFAULT_REGION: us
+      NEXT_PUBLIC_FEATURE_SEARCH_ENABLED: false
+      NEXT_PUBLIC_BASE_URL: https://fashion-starter.agilo.com
+
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
