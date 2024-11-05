@@ -17,7 +17,6 @@ jobs:
         node-version: [20.x, 22.x]
 
     env:
-      NODE_ENV: production
       CI: true
       NEXT_PUBLIC_MEDUSA_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_MEDUSA_BACKEND_URL }}
       NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY }}
@@ -40,3 +39,5 @@ jobs:
         working-directory: storefront
       - run: yarn lint
         working-directory: storefront
+        env:
+          NODE_ENV: production
