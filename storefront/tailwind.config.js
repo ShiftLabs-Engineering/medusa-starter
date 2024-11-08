@@ -12,6 +12,7 @@ module.exports = {
     colors: {
       black: "#050505",
       "black-10%": "rgba(5, 5, 5, 0.1)",
+      "black-30%": "rgba(5, 5, 5, 0.3)",
       white: "#FDFDFD",
       grayscale: {
         800: "#1F1F20",
@@ -102,9 +103,13 @@ module.exports = {
         150: "37.5rem",
         154: "38.5rem",
         159: "39.75rem",
+        200: "50rem",
       },
       borderWidth: {
         6: "6px",
+      },
+      boxShadow: {
+        modal: "0px 0px 40px -16px rgba(0, 0, 0, 0.20)",
       },
       transitionProperty: {
         fontWeight: "font-weight",
@@ -131,5 +136,5 @@ module.exports = {
       variants: ["xs", "sm", "md", "lg", "xl"],
     },
   ],
-  plugins: [require("tailwindcss-radix")()],
+  plugins: [require("tailwindcss-radix"), require("tailwindcss-animate")],
 }
