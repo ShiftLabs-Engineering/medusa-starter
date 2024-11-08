@@ -12,10 +12,10 @@ import CountrySelect from "@modules/checkout/components/country-select"
 
 export default function AccountPersonalAndSecurityPage() {
   return (
-    <div className="md:max-w-150 xl:max-w-200 w-full mx-auto pt-8 md:pt-45 pb-36 md:px-10">
+    <>
       <h1 className="text-lg mb-8 md:mb-14">Personal &amp; security</h1>
       <h2 className="text-md font-normal mb-6">Personal information</h2>
-      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex flex-wrap gap-8 max-lg:flex-col lg:items-center mb-16">
+      <div className="w-full border border-grayscale-200 rounded-xs p-4 flex flex-wrap gap-8 max-lg:flex-col lg:items-center mb-16">
         <div className="flex gap-8 flex-1">
           <Icon name="user" className="w-6 h-6 mt-2.5" />
           <div className="flex max-sm:flex-col sm:flex-wrap gap-6 sm:gap-x-16">
@@ -78,7 +78,7 @@ export default function AccountPersonalAndSecurityPage() {
         </DialogTrigger>
       </div>
       <h2 className="text-md font-normal mb-6">Contact</h2>
-      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex flex-wrap gap-y-6 gap-x-8 items-center mb-4">
+      <div className="w-full border border-grayscale-200 rounded-xs p-4 flex flex-wrap gap-y-6 gap-x-8 items-center mb-4">
         <Icon name="user" className="w-6 h-6" />
         <div>
           <p className="text-xs text-grayscale-500 mb-1.5">Email</p>
@@ -89,7 +89,7 @@ export default function AccountPersonalAndSecurityPage() {
         If you want to change your email please contact us via customer support.
       </p>
       <h2 className="text-md font-normal mb-6">Address</h2>
-      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex flex-wrap gap-8 max-lg:flex-col mb-6">
+      <div className="w-full border border-grayscale-200 rounded-xs p-4 flex flex-wrap gap-8 max-lg:flex-col mb-6">
         <div className="flex flex-1 gap-8">
           <Icon name="user" className="w-6 h-6 mt-2.5" />
           <div className="flex flex-col gap-8 flex-1">
@@ -248,6 +248,6 @@ export default function AccountPersonalAndSecurityPage() {
           </UiModal>
         </UiModalOverlay>
       </DialogTrigger>
-    </div>
+    </>
   )
 }
