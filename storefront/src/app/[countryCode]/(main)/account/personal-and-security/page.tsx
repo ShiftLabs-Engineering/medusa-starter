@@ -15,50 +15,56 @@ export default function AccountPersonalAndSecurityPage() {
     <div className="md:max-w-150 xl:max-w-200 w-full mx-auto pt-8 md:pt-45 pb-36 md:px-10">
       <h1 className="text-lg mb-8 md:mb-14">Personal &amp; security</h1>
       <h2 className="text-md font-normal mb-6">Personal information</h2>
-      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex items-center mb-16">
-        <Icon name="user" className="w-6 h-6" />
-        <div className="ml-8 mr-16">
-          <p className="text-xs text-grayscale-500 mb-1.5">Name</p>
-          <p className="max-w-50 truncate">Jovana Jerimic</p>
-        </div>
-        <div className="mr-4">
-          <p className="text-xs text-grayscale-500 mb-1.5">Number</p>
-          <p>-</p>
+      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex flex-wrap gap-8 max-lg:flex-col lg:items-center mb-16">
+        <div className="flex gap-8 flex-1">
+          <Icon name="user" className="w-6 h-6 mt-2.5" />
+          <div className="flex max-sm:flex-col sm:flex-wrap gap-6 sm:gap-x-16">
+            <div>
+              <p className="text-xs text-grayscale-500 mb-1.5">Name</p>
+              <p>Jovana Jerimic</p>
+            </div>
+            <div>
+              <p className="text-xs text-grayscale-500 mb-1.5">Number</p>
+              <p>-</p>
+            </div>
+          </div>
         </div>
         <DialogTrigger>
-          <Button variant="outline" className="h-auto self-stretch ml-auto">
-            Change
-          </Button>
+          <Button variant="outline">Change</Button>
           <UiModalOverlay>
             <UiModal>
               <Dialog className="focus-visible:outline-none">
                 {({ close }) => (
                   <>
-                    <p className="text-md mb-10">Personal information</p>
-                    <div className="flex gap-6 mb-8">
+                    <p className="text-md mb-8 sm:mb-10">
+                      Personal information
+                    </p>
+                    <div className="flex flex-col gap-4 sm:gap-8">
+                      <div className="flex max-xs:flex-col gap-y-4 gap-x-6">
+                        <Input
+                          placeholder="First name"
+                          name="first_name"
+                          required
+                          variant="outline"
+                          wrapperClassName="flex-1"
+                        />
+                        <Input
+                          placeholder="Last name"
+                          name="last_name"
+                          required
+                          variant="outline"
+                          wrapperClassName="flex-1"
+                        />
+                      </div>
                       <Input
-                        placeholder="First name"
-                        name="first_name"
-                        required
-                        variant="outline"
-                        wrapperClassName="flex-1"
-                      />
-                      <Input
-                        placeholder="Last name"
+                        placeholder="Phone"
                         name="last_name"
                         required
                         variant="outline"
-                        wrapperClassName="flex-1"
+                        wrapperClassName="flex-1 mb-8 sm:mb-10"
                       />
                     </div>
-                    <Input
-                      placeholder="Phone"
-                      name="last_name"
-                      required
-                      variant="outline"
-                      wrapperClassName="flex-1 mb-10"
-                    />
-                    <div className="flex justify-between">
+                    <div className="flex gap-6 justify-between">
                       <Button>Save changes</Button>
                       <Button variant="outline" onClick={close}>
                         Cancel
@@ -72,9 +78,9 @@ export default function AccountPersonalAndSecurityPage() {
         </DialogTrigger>
       </div>
       <h2 className="text-md font-normal mb-6">Contact</h2>
-      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex items-center mb-4">
+      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex flex-wrap gap-y-6 gap-x-8 items-center mb-4">
         <Icon name="user" className="w-6 h-6" />
-        <div className="ml-8 mr-16">
+        <div>
           <p className="text-xs text-grayscale-500 mb-1.5">Email</p>
           <p>jovana.jerimic@gmail.com</p>
         </div>
@@ -83,87 +89,95 @@ export default function AccountPersonalAndSecurityPage() {
         If you want to change your email please contact us via customer support.
       </p>
       <h2 className="text-md font-normal mb-6">Address</h2>
-      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex mb-6">
-        <Icon name="user" className="w-6 h-6 mt-2.5" />
-        <div className="ml-8 mr-4 max-w-66 w-full">
-          <div className="flex justify-between gap-4 mb-8">
-            <div className="flex-1">
-              <p className="text-xs text-grayscale-500 mb-1.5">Country</p>
-              <p className="max-w-50 truncate">Croatia</p>
+      <div className="w-full border border-grayscale-200 rounded-2xs p-4 flex flex-wrap gap-8 max-lg:flex-col mb-6">
+        <div className="flex flex-1 gap-8">
+          <Icon name="user" className="w-6 h-6 mt-2.5" />
+          <div className="flex flex-col gap-8 flex-1">
+            <div className="flex flex-wrap justify-between gap-6">
+              <div className="grow basis-0">
+                <p className="text-xs text-grayscale-500 mb-1.5">Country</p>
+                <p>Croatia</p>
+              </div>
+              <div className="grow basis-0">
+                <p className="text-xs text-grayscale-500 mb-1.5">Address</p>
+                <p>Duvanjska 3</p>
+              </div>
             </div>
-            <div className="flex-1">
-              <p className="text-xs text-grayscale-500 mb-1.5">Address</p>
-              <p className="max-w-50 truncate">Duvanjska 3</p>
+            <div>
+              <p className="text-xs text-grayscale-500 mb-1.5">
+                Apartment, suite, etc. (Optional)
+              </p>
+              <p>2nd floor</p>
             </div>
-          </div>
-          <div className="mb-8">
-            <p className="text-xs text-grayscale-500 mb-1.5">
-              Apartment, suite, etc. (Optional)
-            </p>
-            <p className="max-w-50 truncate">2nd floor</p>
-          </div>
-          <div className="flex justify-between gap-4">
-            <div className="flex-1">
-              <p className="text-xs text-grayscale-500 mb-1.5">Postal Code</p>
-              <p className="max-w-50 truncate">10000</p>
-            </div>
-            <div className="flex-1">
-              <p className="text-xs text-grayscale-500 mb-1.5">City</p>
-              <p className="max-w-50 truncate">Zagreb</p>
+            <div className="flex flex-wrap justify-between gap-6">
+              <div className="grow basis-0">
+                <p className="text-xs text-grayscale-500 mb-1.5">Postal Code</p>
+                <p>10000</p>
+              </div>
+              <div className="grow basis-0">
+                <p className="text-xs text-grayscale-500 mb-1.5">City</p>
+                <p>Zagreb</p>
+              </div>
             </div>
           </div>
         </div>
-        <Button
-          iconName="trash"
-          size="sm"
-          variant="outline"
-          className="ml-auto w-8 px-0 shrink-0"
-        />
-        <DialogTrigger>
-          <Button variant="outline" size="sm" className="ml-4 shrink-0">
-            Change
-          </Button>
-          <UiModalOverlay>
-            <UiModal>
-              <Dialog className="focus-visible:outline-none">
-                {({ close }) => (
-                  <>
-                    <p className="text-md mb-10">Change address</p>
-                    <div className="flex flex-col gap-8">
-                      <CountrySelect />
-                      <Input placeholder="Adress" required variant="outline" />
-                      <Input
-                        placeholder="Apartment, suite, etc. (Optional)"
-                        required
-                        variant="outline"
-                      />
-                      <div className="flex gap-6 mb-10">
+        <div className="flex gap-4">
+          <Button
+            iconName="trash"
+            size="sm"
+            variant="outline"
+            className="w-8 px-0 shrink-0"
+          />
+          <DialogTrigger>
+            <Button variant="outline" size="sm" className="shrink-0 flex-1">
+              Change
+            </Button>
+            <UiModalOverlay>
+              <UiModal>
+                <Dialog className="focus-visible:outline-none">
+                  {({ close }) => (
+                    <>
+                      <p className="text-md mb-8 md:mb-10">Change address</p>
+                      <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
+                        <CountrySelect />
                         <Input
-                          placeholder="Postal code"
+                          placeholder="Adress"
                           required
                           variant="outline"
-                          wrapperClassName="flex-1"
                         />
                         <Input
-                          placeholder="City"
+                          placeholder="Apartment, suite, etc. (Optional)"
                           required
                           variant="outline"
-                          wrapperClassName="flex-1"
                         />
+                        <div className="flex max-xs:flex-col gap-4 md:gap-6">
+                          <Input
+                            placeholder="Postal code"
+                            required
+                            variant="outline"
+                            wrapperClassName="flex-1"
+                          />
+                          <Input
+                            placeholder="City"
+                            required
+                            variant="outline"
+                            wrapperClassName="flex-1"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex justify-between">
-                      <Button>Save changes</Button>
-                      <Button variant="outline" onClick={close}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </Dialog>
-            </UiModal>
-          </UiModalOverlay>
-        </DialogTrigger>
+                      <div className="flex gap-6 justify-between">
+                        <Button>Save changes</Button>
+                        <Button variant="outline" onClick={close}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </Dialog>
+              </UiModal>
+            </UiModalOverlay>
+          </DialogTrigger>
+        </div>
       </div>
       <DialogTrigger>
         <Button className="mb-16">Add another address</Button>
@@ -172,8 +186,8 @@ export default function AccountPersonalAndSecurityPage() {
             <Dialog className="focus-visible:outline-none">
               {({ close }) => (
                 <>
-                  <p className="text-md mb-10">Add another address</p>
-                  <div className="flex flex-col gap-8">
+                  <p className="text-md mb-8 md:mb-10">Add another address</p>
+                  <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
                     <CountrySelect />
                     <Input placeholder="Adress" required variant="outline" />
                     <Input
@@ -181,7 +195,7 @@ export default function AccountPersonalAndSecurityPage() {
                       required
                       variant="outline"
                     />
-                    <div className="flex gap-6 mb-10">
+                    <div className="flex max-xs:flex-col gap-4 md:gap-6">
                       <Input
                         placeholder="Postal code"
                         required
@@ -196,7 +210,7 @@ export default function AccountPersonalAndSecurityPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex gap-6 justify-between">
                     <Button>Save changes</Button>
                     <Button variant="outline" onClick={close}>
                       Cancel
