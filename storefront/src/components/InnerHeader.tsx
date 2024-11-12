@@ -33,9 +33,7 @@ export function InnerHeader({ regions }: { regions: HttpTypes.StoreRegion[] }) {
     currentPath === "/inspiration" ||
     currentPath === "/collection"
   const isAuthPage = currentPath === "/register" || currentPath === "/login"
-  const isAccountPage =
-    currentPath === "/account/my-orders" ||
-    currentPath === "/account/personal-and-security"
+  const isAccountPage = currentPath.startsWith("/account/")
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
