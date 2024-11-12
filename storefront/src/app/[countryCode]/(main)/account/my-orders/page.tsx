@@ -13,7 +13,7 @@ export default function AccountMyOrdersPage() {
       {true ? (
         <div className="flex flex-col gap-4">
           <div className="rounded-xs border border-grayscale-200 flex flex-col gap-6 sm:gap-8 md:gap-6 lg:gap-8 p-4">
-            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between">
+            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between lg:flex-wrap">
               <div className="flex-shrink-0">
                 <p className="text-md mb-2">
                   <span className="font-semibold">Order: </span>00000000004
@@ -22,7 +22,7 @@ export default function AccountMyOrdersPage() {
                   Order date: 29 December 2024
                 </p>
               </div>
-              <div className="flex gap-4 overflow-x-auto">
+              <div className="flex gap-4 max-lg:overflow-x-auto">
                 <LocalizedLink
                   href="/account/my-orders/order1"
                   className="shrink-0"
@@ -52,7 +52,7 @@ export default function AccountMyOrdersPage() {
             </div>
           </div>
           <div className="rounded-xs border border-grayscale-200 flex flex-col gap-6 sm:gap-8 md:gap-6 lg:gap-8 p-4">
-            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between">
+            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between lg:flex-wrap">
               <div className="flex-shrink-0">
                 <p className="text-md mb-2">
                   <span className="font-semibold">Order: </span>00000000022
@@ -61,7 +61,7 @@ export default function AccountMyOrdersPage() {
                   Order date: 29 December 2024
                 </p>
               </div>
-              <div className="flex gap-4 overflow-x-auto">
+              <div className="flex gap-4 max-lg:overflow-x-auto">
                 <LocalizedLink
                   href="/account/my-orders/order1"
                   className="shrink-0"
@@ -115,7 +115,7 @@ export default function AccountMyOrdersPage() {
             </div>
           </div>
           <div className="rounded-xs border border-grayscale-200 flex flex-col gap-6 sm:gap-8 md:gap-6 lg:gap-8 p-4">
-            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between">
+            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between lg:flex-wrap">
               <div className="flex-shrink-0">
                 <p className="text-md mb-2">
                   <span className="font-semibold">Order: </span>00000000013
@@ -124,7 +124,7 @@ export default function AccountMyOrdersPage() {
                   Order date: 29 December 2024
                 </p>
               </div>
-              <div className="flex gap-4 overflow-x-auto">
+              <div className="flex gap-4 max-lg:overflow-x-auto">
                 <LocalizedLink
                   href="/account/my-orders/order1"
                   className="shrink-0"
@@ -190,7 +190,7 @@ export default function AccountMyOrdersPage() {
             </div>
           </div>
           <div className="rounded-xs border border-grayscale-200 flex flex-col gap-6 sm:gap-8 md:gap-6 lg:gap-8 p-4">
-            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between">
+            <div className="flex max-sm:flex-col-reverse md:flex-col-reverse lg:flex-row gap-y-6 gap-x-10 justify-between lg:flex-wrap">
               <div className="flex-shrink-0">
                 <p className="text-md mb-2">
                   <span className="font-semibold">Order: </span>00000000001
@@ -199,7 +199,7 @@ export default function AccountMyOrdersPage() {
                   Order date: 29 December 2024
                 </p>
               </div>
-              <div className="flex gap-4 overflow-x-auto">
+              <div className="flex gap-4 max-lg:overflow-x-auto">
                 <LocalizedLink
                   href="/account/my-orders/order1"
                   className="shrink-0"
@@ -238,7 +238,55 @@ export default function AccountMyOrdersPage() {
                 </LocalizedLink>
                 <LocalizedLink
                   href="/account/my-orders/order1"
-                  className="rounded-2xs aspect-[3/4] overflow-hidden relative shrink-0"
+                  className="shrink-0 lg:hidden"
+                >
+                  <Image
+                    src="/images/content/product1.png"
+                    width={1200}
+                    height={1600}
+                    alt="Sofa"
+                    className="w-19 rounded-2xs aspect-[3/4]"
+                  />
+                </LocalizedLink>
+                <LocalizedLink
+                  href="/account/my-orders/order1"
+                  className="shrink-0 lg:hidden"
+                >
+                  <Image
+                    src="/images/content/product1.png"
+                    width={1200}
+                    height={1600}
+                    alt="Sofa"
+                    className="w-19 rounded-2xs aspect-[3/4]"
+                  />
+                </LocalizedLink>
+                <LocalizedLink
+                  href="/account/my-orders/order1"
+                  className="shrink-0 lg:hidden"
+                >
+                  <Image
+                    src="/images/content/product1.png"
+                    width={1200}
+                    height={1600}
+                    alt="Sofa"
+                    className="w-19 rounded-2xs aspect-[3/4]"
+                  />
+                </LocalizedLink>
+                <LocalizedLink
+                  href="/account/my-orders/order1"
+                  className="shrink-0 lg:hidden"
+                >
+                  <Image
+                    src="/images/content/product1.png"
+                    width={1200}
+                    height={1600}
+                    alt="Sofa"
+                    className="w-19 rounded-2xs aspect-[3/4]"
+                  />
+                </LocalizedLink>
+                <LocalizedLink
+                  href="/account/my-orders/order1"
+                  className="rounded-2xs aspect-[3/4] overflow-hidden relative shrink-0 max-lg:hidden"
                 >
                   <Image
                     src="/images/content/product1.png"
