@@ -1,14 +1,10 @@
-"use client"
-
-// External components
-import { DialogTrigger, Dialog } from "react-aria-components"
-
 // Components
 import { Icon } from "@/components/Icon"
 import { Button } from "@/components/Button"
 import { Input } from "@/components/Forms"
 import { UiModal, UiModalOverlay } from "@/components/ui/Modal"
 import CountrySelect from "@modules/checkout/components/country-select"
+import { UiDialog, UiDialogTrigger, UiCloseButton } from "@/components/Dialog"
 
 export default function AccountPersonalAndSecurityPage() {
   return (
@@ -29,53 +25,47 @@ export default function AccountPersonalAndSecurityPage() {
             </div>
           </div>
         </div>
-        <DialogTrigger>
+        <UiDialogTrigger>
           <Button variant="outline">Change</Button>
           <UiModalOverlay>
             <UiModal>
-              <Dialog className="focus-visible:outline-none">
-                {({ close }) => (
-                  <>
-                    <p className="text-md mb-8 sm:mb-10">
-                      Personal information
-                    </p>
-                    <div className="flex flex-col gap-4 sm:gap-8">
-                      <div className="flex max-xs:flex-col gap-y-4 gap-x-6">
-                        <Input
-                          placeholder="First name"
-                          name="first_name"
-                          required
-                          variant="outline"
-                          wrapperClassName="flex-1"
-                        />
-                        <Input
-                          placeholder="Last name"
-                          name="last_name"
-                          required
-                          variant="outline"
-                          wrapperClassName="flex-1"
-                        />
-                      </div>
+              <UiDialog className="focus-visible:outline-none">
+                <>
+                  <p className="text-md mb-8 sm:mb-10">Personal information</p>
+                  <div className="flex flex-col gap-4 sm:gap-8">
+                    <div className="flex max-xs:flex-col gap-y-4 gap-x-6">
                       <Input
-                        placeholder="Phone"
+                        placeholder="First name"
+                        name="first_name"
+                        required
+                        variant="outline"
+                        wrapperClassName="flex-1"
+                      />
+                      <Input
+                        placeholder="Last name"
                         name="last_name"
                         required
                         variant="outline"
-                        wrapperClassName="flex-1 mb-8 sm:mb-10"
+                        wrapperClassName="flex-1"
                       />
                     </div>
-                    <div className="flex gap-6 justify-between">
-                      <Button>Save changes</Button>
-                      <Button variant="outline" onClick={close}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </>
-                )}
-              </Dialog>
+                    <Input
+                      placeholder="Phone"
+                      name="last_name"
+                      required
+                      variant="outline"
+                      wrapperClassName="flex-1 mb-8 sm:mb-10"
+                    />
+                  </div>
+                  <div className="flex gap-6 justify-between">
+                    <Button>Save changes</Button>
+                    <UiCloseButton variant="outline">Cancel</UiCloseButton>
+                  </div>
+                </>
+              </UiDialog>
             </UiModal>
           </UiModalOverlay>
-        </DialogTrigger>
+        </UiDialogTrigger>
       </div>
       <h2 className="text-md font-normal mb-6">Contact</h2>
       <div className="w-full border border-grayscale-200 rounded-xs p-4 flex flex-wrap gap-y-6 gap-x-8 items-center mb-4">
@@ -128,126 +118,115 @@ export default function AccountPersonalAndSecurityPage() {
             variant="outline"
             className="w-8 px-0 shrink-0"
           />
-          <DialogTrigger>
+          <UiDialogTrigger>
             <Button variant="outline" size="sm" className="shrink-0 flex-1">
               Change
             </Button>
             <UiModalOverlay>
               <UiModal>
-                <Dialog className="focus-visible:outline-none">
-                  {({ close }) => (
-                    <>
-                      <p className="text-md mb-8 md:mb-10">Change address</p>
-                      <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
-                        <CountrySelect />
+                <UiDialog className="focus-visible:outline-none">
+                  <>
+                    <p className="text-md mb-8 md:mb-10">Change address</p>
+                    <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
+                      <CountrySelect />
+                      <Input placeholder="Adress" required variant="outline" />
+                      <Input
+                        placeholder="Apartment, suite, etc. (Optional)"
+                        required
+                        variant="outline"
+                      />
+                      <div className="flex max-xs:flex-col gap-4 md:gap-6">
                         <Input
-                          placeholder="Adress"
+                          placeholder="Postal code"
                           required
                           variant="outline"
+                          wrapperClassName="flex-1"
                         />
                         <Input
-                          placeholder="Apartment, suite, etc. (Optional)"
+                          placeholder="City"
                           required
                           variant="outline"
+                          wrapperClassName="flex-1"
                         />
-                        <div className="flex max-xs:flex-col gap-4 md:gap-6">
-                          <Input
-                            placeholder="Postal code"
-                            required
-                            variant="outline"
-                            wrapperClassName="flex-1"
-                          />
-                          <Input
-                            placeholder="City"
-                            required
-                            variant="outline"
-                            wrapperClassName="flex-1"
-                          />
-                        </div>
                       </div>
-                      <div className="flex gap-6 justify-between">
-                        <Button>Save changes</Button>
-                        <Button variant="outline" onClick={close}>
-                          Cancel
-                        </Button>
-                      </div>
-                    </>
-                  )}
-                </Dialog>
+                    </div>
+                    <div className="flex gap-6 justify-between">
+                      <Button>Save changes</Button>
+                      <UiCloseButton variant="outline">Cancel</UiCloseButton>
+                    </div>
+                  </>
+                </UiDialog>
               </UiModal>
             </UiModalOverlay>
-          </DialogTrigger>
+          </UiDialogTrigger>
         </div>
       </div>
-      <DialogTrigger>
+      <UiDialogTrigger>
         <Button className="mb-16">Add another address</Button>
         <UiModalOverlay>
           <UiModal>
-            <Dialog className="focus-visible:outline-none">
-              {({ close }) => (
-                <>
-                  <p className="text-md mb-8 md:mb-10">Add another address</p>
-                  <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
-                    <CountrySelect />
-                    <Input placeholder="Adress" required variant="outline" />
+            <UiDialog className="focus-visible:outline-none">
+              <>
+                <p className="text-md mb-8 md:mb-10">Add another address</p>
+                <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
+                  <CountrySelect />
+                  <Input placeholder="Adress" required variant="outline" />
+                  <Input
+                    placeholder="Apartment, suite, etc. (Optional)"
+                    required
+                    variant="outline"
+                  />
+                  <div className="flex max-xs:flex-col gap-4 md:gap-6">
                     <Input
-                      placeholder="Apartment, suite, etc. (Optional)"
+                      placeholder="Postal code"
                       required
                       variant="outline"
+                      wrapperClassName="flex-1"
                     />
-                    <div className="flex max-xs:flex-col gap-4 md:gap-6">
-                      <Input
-                        placeholder="Postal code"
-                        required
-                        variant="outline"
-                        wrapperClassName="flex-1"
-                      />
-                      <Input
-                        placeholder="City"
-                        required
-                        variant="outline"
-                        wrapperClassName="flex-1"
-                      />
-                    </div>
+                    <Input
+                      placeholder="City"
+                      required
+                      variant="outline"
+                      wrapperClassName="flex-1"
+                    />
                   </div>
-                  <div className="flex gap-6 justify-between">
-                    <Button>Save changes</Button>
-                    <Button variant="outline" onClick={close}>
-                      Cancel
-                    </Button>
-                  </div>
-                </>
-              )}
-            </Dialog>
+                </div>
+                <div className="flex gap-6 justify-between">
+                  <Button>Save changes</Button>
+                  <UiCloseButton variant="outline">Cancel</UiCloseButton>
+                </div>
+              </>
+            </UiDialog>
           </UiModal>
         </UiModalOverlay>
-      </DialogTrigger>
+      </UiDialogTrigger>
       <h2 className="text-md font-normal mb-4">Change password</h2>
       <p className="text-grayscale-500 mb-6">
         To change your password, we'll send you an email. Just click on the
         reset button below.
       </p>
-      <DialogTrigger>
+      <UiDialogTrigger>
         <Button>Reset password</Button>
         <UiModalOverlay isDismissable={false} className="bg-transparent">
           <UiModal className="relative">
-            <Dialog className="focus-visible:outline-none">
-              {({ close }) => (
-                <>
-                  <p className="text-md mb-12">Reset password</p>
-                  <p className="text-grayscale-500">
-                    We have sent an email with instructions on how to change the
-                    password.
-                  </p>
-                  <button onClick={close} className="absolute top-4 right-6">
-                    <Icon name="close" className="w-6 h-6" />
-                  </button>
-                </>
-              )}
-            </Dialog>
+            <UiDialog className="focus-visible:outline-none">
+              <>
+                <p className="text-md mb-12">Reset password</p>
+                <p className="text-grayscale-500">
+                  We have sent an email with instructions on how to change the
+                  password.
+                </p>
+                <UiCloseButton
+                  variant="ghost"
+                  className="absolute top-4 right-6 p-0"
+                >
+                  <Icon name="close" className="w-6 h-6" />
+                </UiCloseButton>
+              </>
+            </UiDialog>
           </UiModal>
         </UiModalOverlay>
-      </DialogTrigger>
+      </UiDialogTrigger>
       <div className="mt-16 md:hidden">
         <p className="text-md mb-6">Log out</p>
         <Button variant="outline" isFullWidth>
