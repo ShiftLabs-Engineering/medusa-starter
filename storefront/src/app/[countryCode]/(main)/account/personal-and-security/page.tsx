@@ -13,7 +13,7 @@ import CountrySelect from "@modules/checkout/components/country-select"
 export default function AccountPersonalAndSecurityPage() {
   return (
     <>
-      <h1 className="text-lg mb-8 md:mb-14">Personal &amp; security</h1>
+      <h1 className="text-lg mb-8 md:mb-16">Personal &amp; security</h1>
       <h2 className="text-md font-normal mb-6">Personal information</h2>
       <div className="w-full border border-grayscale-200 rounded-xs p-4 flex flex-wrap gap-8 max-lg:flex-col lg:items-center mb-16">
         <div className="flex gap-8 flex-1">
@@ -239,7 +239,7 @@ export default function AccountPersonalAndSecurityPage() {
                     We have sent an email with instructions on how to change the
                     password.
                   </p>
-                  <button onClick={close} className="absolute top-6 right-6">
+                  <button onClick={close} className="absolute top-4 right-6">
                     <Icon name="close" className="w-6 h-6" />
                   </button>
                 </>
@@ -248,6 +248,12 @@ export default function AccountPersonalAndSecurityPage() {
           </UiModal>
         </UiModalOverlay>
       </DialogTrigger>
+      <div className="mt-16 md:hidden">
+        <p className="text-md mb-6">Log out</p>
+        <Button variant="outline" isFullWidth>
+          Log out
+        </Button>
+      </div>
     </>
   )
 }
