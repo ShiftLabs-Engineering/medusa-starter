@@ -29,39 +29,37 @@ export default function AccountPersonalAndSecurityPage() {
           <Button variant="outline">Change</Button>
           <UiModalOverlay>
             <UiModal>
-              <UiDialog className="focus-visible:outline-none">
-                <>
-                  <p className="text-md mb-8 sm:mb-10">Personal information</p>
-                  <div className="flex flex-col gap-4 sm:gap-8">
-                    <div className="flex max-xs:flex-col gap-y-4 gap-x-6">
-                      <Input
-                        placeholder="First name"
-                        name="first_name"
-                        required
-                        variant="outline"
-                        wrapperClassName="flex-1"
-                      />
-                      <Input
-                        placeholder="Last name"
-                        name="last_name"
-                        required
-                        variant="outline"
-                        wrapperClassName="flex-1"
-                      />
-                    </div>
+              <UiDialog>
+                <p className="text-md mb-8 sm:mb-10">Personal information</p>
+                <div className="flex flex-col gap-4 sm:gap-8">
+                  <div className="flex max-xs:flex-col gap-y-4 gap-x-6">
                     <Input
-                      placeholder="Phone"
+                      placeholder="First name"
+                      name="first_name"
+                      required
+                      variant="outline"
+                      wrapperClassName="flex-1"
+                    />
+                    <Input
+                      placeholder="Last name"
                       name="last_name"
                       required
                       variant="outline"
-                      wrapperClassName="flex-1 mb-8 sm:mb-10"
+                      wrapperClassName="flex-1"
                     />
                   </div>
-                  <div className="flex gap-6 justify-between">
-                    <Button>Save changes</Button>
-                    <UiCloseButton variant="outline">Cancel</UiCloseButton>
-                  </div>
-                </>
+                  <Input
+                    placeholder="Phone"
+                    name="last_name"
+                    required
+                    variant="outline"
+                    wrapperClassName="flex-1 mb-8 sm:mb-10"
+                  />
+                </div>
+                <div className="flex gap-6 justify-between">
+                  <Button>Save changes</Button>
+                  <UiCloseButton variant="outline">Cancel</UiCloseButton>
+                </div>
               </UiDialog>
             </UiModal>
           </UiModalOverlay>
@@ -112,49 +110,62 @@ export default function AccountPersonalAndSecurityPage() {
           </div>
         </div>
         <div className="flex gap-4">
-          <Button
-            iconName="trash"
-            size="sm"
-            variant="outline"
-            className="w-8 px-0 shrink-0"
-          />
+          <UiDialogTrigger>
+            <Button
+              iconName="trash"
+              size="sm"
+              variant="outline"
+              className="w-8 px-0 shrink-0"
+            />
+            <UiModalOverlay>
+              <UiModal>
+                <UiDialog className="text-center">
+                  <p className="text-md mb-8">
+                    Do you want to delete this address?
+                  </p>
+                  <div className="flex gap-6 justify-center">
+                    <Button>Confirm</Button>
+                    <UiCloseButton variant="outline">Cancel</UiCloseButton>
+                  </div>
+                </UiDialog>
+              </UiModal>
+            </UiModalOverlay>
+          </UiDialogTrigger>
           <UiDialogTrigger>
             <Button variant="outline" size="sm" className="shrink-0 flex-1">
               Change
             </Button>
             <UiModalOverlay>
               <UiModal>
-                <UiDialog className="focus-visible:outline-none">
-                  <>
-                    <p className="text-md mb-8 md:mb-10">Change address</p>
-                    <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
-                      <CountrySelect />
-                      <Input placeholder="Adress" required variant="outline" />
+                <UiDialog>
+                  <p className="text-md mb-8 md:mb-10">Change address</p>
+                  <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
+                    <CountrySelect />
+                    <Input placeholder="Adress" required variant="outline" />
+                    <Input
+                      placeholder="Apartment, suite, etc. (Optional)"
+                      required
+                      variant="outline"
+                    />
+                    <div className="flex max-xs:flex-col gap-4 md:gap-6">
                       <Input
-                        placeholder="Apartment, suite, etc. (Optional)"
+                        placeholder="Postal code"
                         required
                         variant="outline"
+                        wrapperClassName="flex-1"
                       />
-                      <div className="flex max-xs:flex-col gap-4 md:gap-6">
-                        <Input
-                          placeholder="Postal code"
-                          required
-                          variant="outline"
-                          wrapperClassName="flex-1"
-                        />
-                        <Input
-                          placeholder="City"
-                          required
-                          variant="outline"
-                          wrapperClassName="flex-1"
-                        />
-                      </div>
+                      <Input
+                        placeholder="City"
+                        required
+                        variant="outline"
+                        wrapperClassName="flex-1"
+                      />
                     </div>
-                    <div className="flex gap-6 justify-between">
-                      <Button>Save changes</Button>
-                      <UiCloseButton variant="outline">Cancel</UiCloseButton>
-                    </div>
-                  </>
+                  </div>
+                  <div className="flex gap-6 justify-between">
+                    <Button>Save changes</Button>
+                    <UiCloseButton variant="outline">Cancel</UiCloseButton>
+                  </div>
                 </UiDialog>
               </UiModal>
             </UiModalOverlay>
@@ -165,37 +176,35 @@ export default function AccountPersonalAndSecurityPage() {
         <Button className="mb-16">Add another address</Button>
         <UiModalOverlay>
           <UiModal>
-            <UiDialog className="focus-visible:outline-none">
-              <>
-                <p className="text-md mb-8 md:mb-10">Add another address</p>
-                <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
-                  <CountrySelect />
-                  <Input placeholder="Adress" required variant="outline" />
+            <UiDialog>
+              <p className="text-md mb-8 md:mb-10">Add another address</p>
+              <div className="flex flex-col gap-4 md:gap-8 mb-8 md:mb-10">
+                <CountrySelect />
+                <Input placeholder="Adress" required variant="outline" />
+                <Input
+                  placeholder="Apartment, suite, etc. (Optional)"
+                  required
+                  variant="outline"
+                />
+                <div className="flex max-xs:flex-col gap-4 md:gap-6">
                   <Input
-                    placeholder="Apartment, suite, etc. (Optional)"
+                    placeholder="Postal code"
                     required
                     variant="outline"
+                    wrapperClassName="flex-1"
                   />
-                  <div className="flex max-xs:flex-col gap-4 md:gap-6">
-                    <Input
-                      placeholder="Postal code"
-                      required
-                      variant="outline"
-                      wrapperClassName="flex-1"
-                    />
-                    <Input
-                      placeholder="City"
-                      required
-                      variant="outline"
-                      wrapperClassName="flex-1"
-                    />
-                  </div>
+                  <Input
+                    placeholder="City"
+                    required
+                    variant="outline"
+                    wrapperClassName="flex-1"
+                  />
                 </div>
-                <div className="flex gap-6 justify-between">
-                  <Button>Save changes</Button>
-                  <UiCloseButton variant="outline">Cancel</UiCloseButton>
-                </div>
-              </>
+              </div>
+              <div className="flex gap-6 justify-between">
+                <Button>Save changes</Button>
+                <UiCloseButton variant="outline">Cancel</UiCloseButton>
+              </div>
             </UiDialog>
           </UiModal>
         </UiModalOverlay>
@@ -209,20 +218,18 @@ export default function AccountPersonalAndSecurityPage() {
         <Button>Reset password</Button>
         <UiModalOverlay isDismissable={false} className="bg-transparent">
           <UiModal className="relative">
-            <UiDialog className="focus-visible:outline-none">
-              <>
-                <p className="text-md mb-12">Reset password</p>
-                <p className="text-grayscale-500">
-                  We have sent an email with instructions on how to change the
-                  password.
-                </p>
-                <UiCloseButton
-                  variant="ghost"
-                  className="absolute top-4 right-6 p-0"
-                >
-                  <Icon name="close" className="w-6 h-6" />
-                </UiCloseButton>
-              </>
+            <UiDialog>
+              <p className="text-md mb-12">Reset password</p>
+              <p className="text-grayscale-500">
+                We have sent an email with instructions on how to change the
+                password.
+              </p>
+              <UiCloseButton
+                variant="ghost"
+                className="absolute top-4 right-6 p-0"
+              >
+                <Icon name="close" className="w-6 h-6" />
+              </UiCloseButton>
             </UiDialog>
           </UiModal>
         </UiModalOverlay>

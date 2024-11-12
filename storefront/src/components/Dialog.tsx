@@ -2,6 +2,7 @@
 
 // External components
 import * as React from "react"
+import { twMerge } from "tailwind-merge"
 
 // Components
 import { Button, ButtonProps } from "@/components/Button"
@@ -18,8 +19,17 @@ export const UiDialogTrigger: React.FC<DialogTriggerProps> = ({
   ...rest
 }) => <DialogTrigger {...rest}>{children}</DialogTrigger>
 
-export const UiDialog: React.FC<DialogProps> = ({ children, ...rest }) => (
-  <Dialog {...rest}>{children}</Dialog>
+export const UiDialog: React.FC<DialogProps> = ({
+  children,
+  className,
+  ...rest
+}) => (
+  <Dialog
+    {...rest}
+    className={twMerge("focus-visible:outline-none", className)}
+  >
+    {children}
+  </Dialog>
 )
 
 export const UiCloseButton: React.FC<ButtonProps> = (props) => {
