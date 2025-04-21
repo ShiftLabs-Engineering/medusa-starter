@@ -8,6 +8,7 @@ import { RegionSwitcher } from "@/components/RegionSwitcher"
 import { HeaderWrapper } from "@/components/HeaderWrapper"
 
 import dynamic from "next/dynamic"
+import HairvenLogoComponent from "./Logo"
 
 const LoginLink = dynamic(
   () => import("@modules/header/components/LoginLink"),
@@ -40,7 +41,12 @@ export const Header: React.FC = async () => {
           <LayoutColumn>
             <div className="flex justify-between items-center h-18 md:h-21">
               <h1 className="font-medium text-md">
-                <LocalizedLink href="/">SofaSocietyCo.</LocalizedLink>
+                <LocalizedLink
+                  href="/"
+                  className="text-pink-700 font-medium text-sm"
+                >
+                  <HairvenLogoComponent />
+                </LocalizedLink>
               </h1>
               <div className="flex items-center gap-8 max-md:hidden">
                 <LocalizedLink href="/about">About</LocalizedLink>

@@ -11,7 +11,10 @@ export const NoResults = () => {
     <LayoutColumn className="pt-28">
       <div className="flex justify-center flex-col items-center">
         <div>
-          <p className="text-md text-center mb-2">No results match!</p>
+          <p className="text-md text-center mb-2">
+            No results match! We may not have any item in that category at the
+            moment
+          </p>
         </div>
         <Link
           scroll={false}

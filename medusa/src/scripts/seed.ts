@@ -14,133 +14,152 @@ import {
   linkSalesChannelsToStockLocationWorkflow,
   updateStoresWorkflow,
   uploadFilesWorkflow,
-} from '@medusajs/medusa/core-flows';
+} from '@medusajs/medusa/core-flows'
 import {
   ExecArgs,
   IFulfillmentModuleService,
   ISalesChannelModuleService,
   IStoreModuleService,
-} from '@medusajs/framework/types';
+} from '@medusajs/framework/types'
 import {
   ContainerRegistrationKeys,
   Modules,
   ProductStatus,
-} from '@medusajs/framework/utils';
-import type FashionModuleService from '../modules/fashion/service';
-import type { MaterialModelType } from '../modules/fashion/models/material';
-
-async function getImageUrlContent(url: string) {
-  const response = await fetch(url);
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch image "${url}": ${response.statusText}`);
-  }
-
-  const arrayBuffer = await response.arrayBuffer();
-
-  return Buffer.from(arrayBuffer).toString('binary');
-}
+} from '@medusajs/framework/utils'
+import type HairPropsModuleService from 'src/modules/hair-props/service'
+import type { ProductLengthModelType } from 'src/modules/hair-props/models/product-length'
+import * as fs from 'fs/promises'
+import * as path from 'path'
+import { getImageFileContent, getImageUrlContent } from './seed-helpers'
 
 export default async function seedDemoData({ container }: ExecArgs) {
-  const logger = container.resolve(ContainerRegistrationKeys.LOGGER);
-  const remoteLink = container.resolve(ContainerRegistrationKeys.LINK);
+  const logger = container.resolve(ContainerRegistrationKeys.LOGGER)
+  const remoteLink = container.resolve(ContainerRegistrationKeys.LINK)
   const fulfillmentModuleService: IFulfillmentModuleService = container.resolve(
-    Modules.FULFILLMENT,
-  );
+    Modules.FULFILLMENT
+  )
   const salesChannelModuleService: ISalesChannelModuleService =
-    container.resolve(Modules.SALES_CHANNEL);
+    container.resolve(Modules.SALES_CHANNEL)
   const storeModuleService: IStoreModuleService = container.resolve(
-    Modules.STORE,
-  );
-  const fashionModuleService: FashionModuleService = container.resolve(
-    'fashionModuleService',
-  );
+    Modules.STORE
+  )
+  const hairPropsModuleService: HairPropsModuleService = container.resolve(
+    'hairPropsModuleService'
+  )
 
-  const countries = ['hr', 'gb', 'de', 'dk', 'se', 'fr', 'es', 'it'];
+  const countries = ['za', 'bw', 'zm', 'mz', 'na', 'ke', 'ug', 'rw']
 
-  logger.info('Seeding store data...');
-  const [store] = await storeModuleService.listStores();
+  logger.info('Seeding store data...')
+  const [store] = await storeModuleService.listStores()
   let defaultSalesChannel = await salesChannelModuleService.listSalesChannels({
     name: 'Default Sales Channel',
-  });
+  })
 
   if (!defaultSalesChannel.length) {
     // create the default sales channel
     const { result: salesChannelResult } = await createSalesChannelsWorkflow(
-      container,
+      container
     ).run({
       input: {
         salesChannelsData: [
           {
-            name: 'Default Sales Channel',
+            name: 'Online',
+          },
+          {
+            name: 'In store',
           },
         ],
       },
-    });
-    defaultSalesChannel = salesChannelResult;
+    })
+    defaultSalesChannel = salesChannelResult
   }
 
-  logger.info('Seeding region data...');
-  const { result: regionResult } = await createRegionsWorkflow(container).run({
-    input: {
-      regions: [
-        {
-          name: 'Europe',
-          currency_code: 'eur',
-          countries,
-          payment_providers: ['pp_stripe_stripe'],
+  logger.info('Seeding region data...')
+  let region
+  try {
+    const { result: regionResult } = await createRegionsWorkflow(container).run(
+      {
+        input: {
+          regions: [
+            {
+              name: 'South Africa',
+              currency_code: 'zar',
+              countries,
+              payment_providers: ['pp_stripe_stripe'], // ['pp_paystack_paystack'],
+            },
+          ],
         },
-      ],
-    },
-  });
-  const region = regionResult[0];
-  logger.info('Finished seeding regions.');
+      }
+    )
+    region = regionResult[0]
+    logger.info('Finished seeding regions.')
+  } catch (error) {
+    if (error.message.includes('already assigned to a region')) {
+      logger.info('Region already exists, skipping...')
+      // Get the existing region from the store
+      if (store.default_region_id) {
+        region = { id: store.default_region_id }
+      }
+    } else {
+      throw error
+    }
+  }
 
-  await updateStoresWorkflow(container).run({
-    input: {
-      selector: { id: store.id },
-      update: {
-        supported_currencies: [
-          {
-            currency_code: 'eur',
-            is_default: true,
-          },
-          {
-            currency_code: 'usd',
-          },
-        ],
-        default_sales_channel_id: defaultSalesChannel[0].id,
-        default_region_id: region.id,
+  if (region) {
+    await updateStoresWorkflow(container).run({
+      input: {
+        selector: { id: store.id },
+        update: {
+          supported_currencies: [
+            {
+              currency_code: 'zar',
+              is_default: true,
+            },
+            {
+              currency_code: 'usd',
+            },
+          ],
+          default_sales_channel_id: defaultSalesChannel[0].id,
+          default_region_id: region.id,
+        },
       },
-    },
-  });
+    })
+  }
 
-  logger.info('Seeding tax regions...');
-  await createTaxRegionsWorkflow(container).run({
-    input: countries.map((country_code) => ({
-      country_code,
-    })),
-  });
-  logger.info('Finished seeding tax regions.');
+  logger.info('Seeding tax regions...')
+  try {
+    await createTaxRegionsWorkflow(container).run({
+      input: countries.map((country_code) => ({
+        country_code,
+      })),
+    })
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Some tax regions already exist, skipping...')
+    } else {
+      throw error
+    }
+  }
+  logger.info('Finished seeding tax regions.')
 
-  logger.info('Seeding stock location data...');
+  logger.info('Seeding stock location data...')
   const { result: stockLocationResult } = await createStockLocationsWorkflow(
-    container,
+    container
   ).run({
     input: {
       locations: [
         {
-          name: 'European Warehouse',
+          name: 'Johannesburg',
           address: {
-            city: 'Copenhagen',
-            country_code: 'DK',
+            city: 'Johannesburg',
+            country_code: 'ZA',
             address_1: '',
           },
         },
       ],
     },
-  });
-  const stockLocation = stockLocationResult[0];
+  })
+  const stockLocation = stockLocationResult[0]
 
   await remoteLink.create({
     [Modules.STOCK_LOCATION]: {
@@ -149,2490 +168,894 @@ export default async function seedDemoData({ container }: ExecArgs) {
     [Modules.FULFILLMENT]: {
       fulfillment_provider_id: 'manual_manual',
     },
-  });
+  })
 
-  logger.info('Seeding fulfillment data...');
-  const { result: shippingProfileResult } =
-    await createShippingProfilesWorkflow(container).run({
-      input: {
-        data: [
-          {
-            name: 'Default',
-            type: 'default',
-          },
-        ],
-      },
-    });
-  const shippingProfile = shippingProfileResult[0];
-
-  const fulfillmentSet = await fulfillmentModuleService.createFulfillmentSets({
-    name: 'European Warehouse delivery',
-    type: 'shipping',
-    service_zones: [
-      {
-        name: 'Europe',
-        geo_zones: [
-          {
-            country_code: 'hr',
-            type: 'country',
-          },
-          {
-            country_code: 'gb',
-            type: 'country',
-          },
-          {
-            country_code: 'de',
-            type: 'country',
-          },
-          {
-            country_code: 'dk',
-            type: 'country',
-          },
-          {
-            country_code: 'se',
-            type: 'country',
-          },
-          {
-            country_code: 'fr',
-            type: 'country',
-          },
-          {
-            country_code: 'es',
-            type: 'country',
-          },
-          {
-            country_code: 'it',
-            type: 'country',
-          },
-        ],
-      },
-    ],
-  });
-
-  await remoteLink.create({
-    [Modules.STOCK_LOCATION]: {
-      stock_location_id: stockLocation.id,
-    },
-    [Modules.FULFILLMENT]: {
-      fulfillment_set_id: fulfillmentSet.id,
-    },
-  });
-
-  await createShippingOptionsWorkflow(container).run({
-    input: [
-      {
-        name: 'Standard Shipping',
-        price_type: 'flat',
-        provider_id: 'manual_manual',
-        service_zone_id: fulfillmentSet.service_zones[0].id,
-        shipping_profile_id: shippingProfile.id,
-        type: {
-          label: 'Standard',
-          description: 'Ship in 2-3 days.',
-          code: 'standard',
+  logger.info('Seeding fulfillment data...')
+  let shippingProfile
+  try {
+    const { result: shippingProfileResult } =
+      await createShippingProfilesWorkflow(container).run({
+        input: {
+          data: [
+            {
+              name: 'Postnet',
+              type: 'default',
+            },
+          ],
         },
-        prices: [
-          {
-            currency_code: 'usd',
-            amount: 10,
-          },
-          {
-            currency_code: 'eur',
-            amount: 10,
-          },
-          {
-            region_id: region.id,
-            amount: 10,
-          },
-        ],
-        rules: [
-          {
-            attribute: 'enabled_in_store',
-            value: '"true"',
-            operator: 'eq',
-          },
-          {
-            attribute: 'is_return',
-            value: 'false',
-            operator: 'eq',
-          },
-        ],
-      },
-      {
-        name: 'Express Shipping',
-        price_type: 'flat',
-        provider_id: 'manual_manual',
-        service_zone_id: fulfillmentSet.service_zones[0].id,
-        shipping_profile_id: shippingProfile.id,
-        type: {
-          label: 'Express',
-          description: 'Ship in 24 hours.',
-          code: 'express',
-        },
-        prices: [
-          {
-            currency_code: 'usd',
-            amount: 10,
-          },
-          {
-            currency_code: 'eur',
-            amount: 10,
-          },
-          {
-            region_id: region.id,
-            amount: 10,
-          },
-        ],
-        rules: [
-          {
-            attribute: 'enabled_in_store',
-            value: '"true"',
-            operator: 'eq',
-          },
-          {
-            attribute: 'is_return',
-            value: 'false',
-            operator: 'eq',
-          },
-        ],
-      },
-    ],
-  });
+      })
+    shippingProfile = shippingProfileResult[0]
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Shipping profile already exists, skipping...')
+      // Get the existing shipping profile from the fulfillment service
+      const [existingProfile] =
+        await fulfillmentModuleService.listShippingProfiles({
+          name: 'Postnet',
+        })
+      if (existingProfile) {
+        shippingProfile = existingProfile
+      }
+    } else {
+      throw error
+    }
+  }
 
-  const pickupFulfillmentSet =
-    await fulfillmentModuleService.createFulfillmentSets({
-      name: 'Store pickup',
-      type: 'pickup',
+  let fulfillmentSet
+  try {
+    fulfillmentSet = await fulfillmentModuleService.createFulfillmentSets({
+      name: 'Africa Warehouse delivery',
+      type: 'shipping',
       service_zones: [
         {
-          name: 'Store pickup',
+          name: 'South Africa',
           geo_zones: [
             {
-              country_code: 'hr',
+              country_code: 'ZA',
               type: 'country',
             },
             {
-              country_code: 'dk',
+              country_code: 'BW',
+              type: 'country',
+            },
+            {
+              country_code: 'ZM',
+              type: 'country',
+            },
+            {
+              country_code: 'MZ',
+              type: 'country',
+            },
+            {
+              country_code: 'NA',
+              type: 'country',
+            },
+            {
+              country_code: 'KE',
+              type: 'country',
+            },
+            {
+              country_code: 'UG',
+              type: 'country',
+            },
+            {
+              country_code: 'RW',
               type: 'country',
             },
           ],
         },
       ],
-    });
+    })
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Fulfillment set already exists, skipping...')
+      // Get the existing fulfillment set
+      const [existingSet] = await fulfillmentModuleService.listFulfillmentSets({
+        name: 'European Warehouse delivery',
+      })
+      console.log('existingSet', existingSet)
+      if (existingSet) {
+        fulfillmentSet = existingSet
+      }
+    } else {
+      throw error
+    }
+  }
 
-  await remoteLink.create({
-    [Modules.STOCK_LOCATION]: {
-      stock_location_id: stockLocation.id,
-    },
-    [Modules.FULFILLMENT]: {
-      fulfillment_set_id: pickupFulfillmentSet.id,
-    },
-  });
-
-  await createShippingOptionsWorkflow(container).run({
-    input: [
+  let pickupFulfillmentSet
+  try {
+    pickupFulfillmentSet = await fulfillmentModuleService.createFulfillmentSets(
       {
-        name: 'Denmark Store Pickup',
-        price_type: 'flat',
-        provider_id: 'manual_manual',
-        service_zone_id: pickupFulfillmentSet.service_zones[0].id,
-        shipping_profile_id: shippingProfile.id,
-        type: {
-          label: 'Denmark Store Pickup',
-          description: 'Free in-store pickup.',
-          code: 'standard',
-        },
-        prices: [
+        name: 'Store pickup',
+        type: 'pickup',
+        service_zones: [
           {
-            currency_code: 'usd',
-            amount: 0,
-          },
-          {
-            currency_code: 'eur',
-            amount: 0,
-          },
-          {
-            region_id: region.id,
-            amount: 0,
+            name: 'Store pickup (JHB)',
+            geo_zones: [
+              {
+                country_code: 'ZA',
+                type: 'country',
+              },
+            ],
           },
         ],
-        rules: [
-          {
-            attribute: 'enabled_in_store',
-            value: '"true"',
-            operator: 'eq',
-          },
-          {
-            attribute: 'is_return',
-            value: 'false',
-            operator: 'eq',
-          },
-        ],
-      },
-    ],
-  });
+      }
+    )
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Pickup fulfillment set already exists, skipping...')
+      // Get the existing pickup fulfillment set
+      const [existingSet] = await fulfillmentModuleService.listFulfillmentSets({
+        name: 'Store pickup',
+      })
+      if (existingSet) {
+        pickupFulfillmentSet = existingSet
+      }
+    } else {
+      throw error
+    }
+  }
 
-  logger.info('Finished seeding fulfillment data.');
-
-  await linkSalesChannelsToStockLocationWorkflow(container).run({
-    input: {
-      id: stockLocation.id,
-      add: [defaultSalesChannel[0].id],
-    },
-  });
-  logger.info('Finished seeding stock location data.');
-
-  logger.info('Seeding publishable API key data...');
-  const { result: publishableApiKeyResult } = await createApiKeysWorkflow(
-    container,
-  ).run({
-    input: {
-      api_keys: [
+  try {
+    await createShippingOptionsWorkflow(container).run({
+      input: [
         {
-          title: 'Webshop',
-          type: 'publishable',
-          created_by: '',
+          name: 'Standard Shipping',
+          price_type: 'flat',
+          provider_id: 'manual_manual',
+          service_zone_id: fulfillmentSet?.service_zones?.[0]?.id,
+          shipping_profile_id: shippingProfile.id,
+          type: {
+            label: 'Standard (Postnet)',
+            description: 'Ship in 2 working days.',
+            code: 'standard',
+          },
+          prices: [
+            {
+              currency_code: 'ZAR',
+              amount: 120,
+            },
+            {
+              region_id: region.id,
+              amount: 120,
+            },
+          ],
+          rules: [
+            {
+              attribute: 'enabled_in_store',
+              value: '"true"',
+              operator: 'eq',
+            },
+            {
+              attribute: 'is_return',
+              value: 'false',
+              operator: 'eq',
+            },
+          ],
         },
       ],
-    },
-  });
-  const publishableApiKey = publishableApiKeyResult[0];
+    })
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Shipping option already exists, skipping...')
+    } else if (
+      error.message.includes('service_zone_id and provider_id are required')
+    ) {
+      logger.info(
+        'Skipping shipping option creation - no valid service zone found'
+      )
+    } else {
+      throw error
+    }
+  }
 
-  await linkSalesChannelsToApiKeyWorkflow(container).run({
-    input: {
-      id: publishableApiKey.id,
-      add: [defaultSalesChannel[0].id],
-    },
-  });
-  logger.info('Finished seeding publishable API key data.');
-
-  logger.info('Seeding product data...');
-
-  const { result: categoryResult } = await createProductCategoriesWorkflow(
-    container,
-  ).run({
-    input: {
-      product_categories: [
+  try {
+    await createShippingOptionsWorkflow(container).run({
+      input: [
         {
-          name: 'One seater',
-          is_active: true,
-        },
-        {
-          name: 'Two seater',
-          is_active: true,
-        },
-        {
-          name: 'Three seater',
-          is_active: true,
+          name: 'JHB Store Pickup',
+          price_type: 'flat',
+          provider_id: 'manual_manual',
+          service_zone_id: pickupFulfillmentSet?.service_zones?.[0]?.id,
+          shipping_profile_id: shippingProfile.id,
+          type: {
+            label: 'JHB Store Pickup',
+            description: 'Free in-store pickup.',
+            code: 'standard',
+          },
+          prices: [
+            {
+              currency_code: 'zar',
+              amount: 0,
+            },
+            {
+              region_id: region.id,
+              amount: 0,
+            },
+          ],
+          rules: [
+            {
+              attribute: 'enabled_in_store',
+              value: '"true"',
+              operator: 'eq',
+            },
+            {
+              attribute: 'is_return',
+              value: 'false',
+              operator: 'eq',
+            },
+          ],
         },
       ],
-    },
-  });
+    })
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Store pickup shipping option already exists, skipping...')
+    } else if (
+      error.message.includes('service_zone_id and provider_id are required')
+    ) {
+      logger.info(
+        'Skipping store pickup shipping option creation - no valid service zone found'
+      )
+    } else {
+      throw error
+    }
+  }
 
-  const [sofasImage, armChairsImage] = await uploadFilesWorkflow(container)
-    .run({
+  logger.info('Finished seeding fulfillment data.')
+
+  try {
+    await linkSalesChannelsToStockLocationWorkflow(container).run({
       input: {
-        files: [
+        id: stockLocation.id,
+        add: [defaultSalesChannel[0].id],
+      },
+    })
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info(
+        'Sales channel to stock location link already exists, skipping...'
+      )
+    } else {
+      throw error
+    }
+  }
+  logger.info('Finished seeding stock location data.')
+
+  logger.info('Seeding publishable API key data...')
+  let publishableApiKey
+  try {
+    const { result: publishableApiKeyResult } = await createApiKeysWorkflow(
+      container
+    ).run({
+      input: {
+        api_keys: [
           {
-            access: 'public',
-            filename: 'sofas.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/product-types/sofas/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'arm-chairs.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/product-types/arm-chairs/image.png',
-            ),
+            title: 'Webshop',
+            type: 'publishable',
+            created_by: '',
           },
         ],
       },
     })
-    .then((res) => res.result);
+    publishableApiKey = publishableApiKeyResult[0]
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('API key already exists, skipping...')
+      // Skip the API key creation and linking
+      logger.info('Finished seeding publishable API key data.')
+      return
+    } else {
+      throw error
+    }
+  }
 
-  const { result: productTypes } = await createProductTypesWorkflow(
-    container,
-  ).run({
-    input: {
-      product_types: [
-        {
-          value: 'Sofas',
-          metadata: {
-            image: sofasImage,
+  try {
+    await linkSalesChannelsToApiKeyWorkflow(container).run({
+      input: {
+        id: publishableApiKey.id,
+        add: [defaultSalesChannel[0].id],
+      },
+    })
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Sales channel to API key link already exists, skipping...')
+    } else {
+      throw error
+    }
+  }
+  logger.info('Finished seeding publishable API key data.')
+
+  logger.info('Seeding product data...')
+
+  let categoryResult
+  try {
+    const { result } = await createProductCategoriesWorkflow(container).run({
+      input: {
+        product_categories: [
+          {
+            name: 'Straight Hair',
+            is_active: true,
           },
-        },
-        {
-          value: 'Arm Chairs',
-          metadata: {
-            image: armChairsImage,
+          {
+            name: 'Curly Hair',
+            is_active: true,
           },
-        },
-      ],
-    },
-  });
+          {
+            name: 'Wavy Hair',
+            is_active: true,
+          },
+          {
+            name: 'Accessories',
+            is_active: true,
+          },
+          {
+            name: 'Hair Care',
+            is_active: true,
+          },
+          {
+            name: 'Bone Straight',
+            is_active: true,
+          },
+        ],
+      },
+    })
+    categoryResult = result
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Product categories already exist, skipping...')
+      // Get existing categories
+      const productModuleService = container.resolve(Modules.PRODUCT)
+      categoryResult = await productModuleService.listProductCategories()
+    } else {
+      throw error
+    }
+  }
 
   const [
-    scandinavianSimplicityImage,
-    scandinavianSimplicityCollectionPageImage,
-    scandinavianSimplicityProductPageImage,
-    scandinavianSimplicityProductPageWideImage,
-    scandinavianSimplicityProductPageCtaImage,
-    modernLuxeImage,
-    modernLuxeCollectionPageImage,
-    modernLuxeProductPageImage,
-    modernLuxeProductPageWideImage,
-    modernLuxeProductPageCtaImage,
-    bohoChicImage,
-    bohoChicCollectionPageImage,
-    bohoChicProductPageImage,
-    bohoChicProductPageWideImage,
-    bohoChicProductPageCtaImage,
-    timelessClassicsImage,
-    timelessClassicsCollectionPageImage,
-    timelessClassicsProductPageImage,
-    timelessClassicsProductPageWideImage,
-    timelessClassicsProductPageCtaImage,
+    boneStraight1Image,
+    straightHair1Image,
+    curlyHair1Image,
+    wavyHair1Image,
+    hairCare1Image,
+    hairAccessories1Image,
   ] = await uploadFilesWorkflow(container)
     .run({
       input: {
         files: [
           {
             access: 'public',
-            filename: 'scandinavian-simplicity.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/scandinavian-simplicity/image.png',
+            filename: 'bone-straight-1.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'product-types/bone-straight/bone-straight-1.jpg'
             ),
           },
           {
             access: 'public',
-            filename: 'scandinavian-simplicity-collection-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/scandinavian-simplicity/collection_page_image.png',
+            filename: 'straight-hair-1.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'product-types/straight/straight-hair-1.jpg'
             ),
           },
           {
             access: 'public',
-            filename: 'scandinavian-simplicity-product-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/scandinavian-simplicity/product_page_image.png',
+            filename: 'curly-hair-1.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'product-types/curly/curly-hair-1.jpg'
             ),
           },
           {
             access: 'public',
-            filename: 'scandinavian-simplicity-product-page-wide-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/scandinavian-simplicity/product_page_wide_image.png',
+            filename: 'wavy-hair-1.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'product-types/wavy/wavy-hair-1.jpg'
             ),
           },
           {
             access: 'public',
-            filename: 'scandinavian-simplicity-product-page-cta-image.png',
+            filename: 'hair-care-1.png',
             mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/scandinavian-simplicity/product_page_cta_image.png',
+            content: await getImageFileContent(
+              'product-types/care/hair-care-1.png'
             ),
           },
           {
             access: 'public',
-            filename: 'modern-luxe.png',
+            filename: 'hair-accessories-1.png',
             mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/modern-luxe/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'modern-luxe-collection-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/modern-luxe/collection_page_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'modern-luxe-product-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/modern-luxe/product_page_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'modern-luxe-product-page-wide-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/modern-luxe/product_page_wide_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'modern-luxe-product-page-cta-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/modern-luxe/product_page_cta_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'boho-chic.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/boho-chic/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'boho-chic-collection-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/boho-chic/collection_page_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'boho-chic-product-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/boho-chic/product_page_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'boho-chic-product-page-wide-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/boho-chic/product_page_wide_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'boho-chic-product-page-cta-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/boho-chic/product_page_cta_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'timeless-classics.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/timeless-classics/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'timeless-classics-collection-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/timeless-classics/collection_page_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'timeless-classics-product-page-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/timeless-classics/product_page_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'timeless-classics-product-page-wide-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/timeless-classics/product_page_wide_image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'timeless-classics-product-page-cta-image.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/collections/timeless-classics/product_page_cta_image.png',
+            content: await getImageFileContent(
+              'product-types/accessories/hair-accessories-1.png'
             ),
           },
         ],
       },
     })
-    .then((res) => res.result);
+    .then((res) => res.result)
 
-  const { result: collections } = await createCollectionsWorkflow(
-    container,
-  ).run({
-    input: {
-      collections: [
-        {
-          title: 'Scandinavian Simplicity',
-          handle: 'scandinavian-simplicity',
-          metadata: {
-            description:
-              'Minimalistic designs, neutral colors, and high-quality textures',
-            image: scandinavianSimplicityImage,
-            collection_page_image: scandinavianSimplicityCollectionPageImage,
-            collection_page_heading:
-              'Scandinavian Simplicity: Effortless elegance, timeless comfort',
-            collection_page_content: `Minimalistic designs, neutral colors, and high-quality textures. Perfect for those who seek comfort with a clean and understated aesthetic.
-
-This collection brings the essence of Scandinavian elegance to your living room.`,
-            product_page_heading: 'Collection Inspired Interior',
-            product_page_image: scandinavianSimplicityProductPageImage,
-            product_page_wide_image: scandinavianSimplicityProductPageWideImage,
-            product_page_cta_image: scandinavianSimplicityProductPageCtaImage,
-            product_page_cta_heading:
-              "The 'Name of sofa' embodies Scandinavian minimalism with clean lines and a soft, neutral palette.",
-            product_page_cta_link:
-              'See more out of ‘Scandinavian Simplicity’ collection',
+  let productTypes
+  try {
+    const { result } = await createProductTypesWorkflow(container).run({
+      input: {
+        product_types: [
+          {
+            value: 'Bone Straight',
+            metadata: {
+              image: boneStraight1Image,
+            },
           },
-        },
-        {
-          title: 'Modern Luxe',
-          handle: 'modern-luxe',
-          metadata: {
-            description:
-              'Sophisticated and sleek, these sofas blend modern design with luxurious comfort',
-            image: modernLuxeImage,
-            collection_page_image: modernLuxeCollectionPageImage,
-            collection_page_heading:
-              'Modern Luxe: Where modern design meets luxurious living',
-            collection_page_content: `Sophisticated and sleek, these sofas blend modern design with luxurious comfort. Bold lines and premium materials create the ultimate statement pieces for any contemporary home.
-
-Elevate your space with timeless beauty.`,
-            product_page_heading: 'Collection Inspired Interior',
-            product_page_image: modernLuxeProductPageImage,
-            product_page_wide_image: modernLuxeProductPageWideImage,
-            product_page_cta_image: modernLuxeProductPageCtaImage,
-            product_page_cta_heading:
-              "The 'Name of sofa' is a masterpiece of minimalism and luxury.",
-            product_page_cta_link: 'See more out of ‘Modern Luxe’ collection',
+          {
+            value: 'Straight Hair',
+            metadata: {
+              image: straightHair1Image,
+            },
           },
-        },
-        {
-          title: 'Boho Chic',
-          handle: 'boho-chic',
-          metadata: {
-            description:
-              'Infused with playful textures and vibrant patterns with eclectic vibes',
-            image: bohoChicImage,
-            collection_page_image: bohoChicCollectionPageImage,
-            collection_page_heading:
-              'Boho Chic: Relaxed, eclectic style with a touch of free-spirited charm',
-            collection_page_content: `Infused with playful textures and vibrant patterns, this collection embodies relaxed, eclectic vibes. Soft fabrics and creative designs add warmth and personality to any room.
-
-It’s comfort with a bold, carefree spirit.`,
-            product_page_heading: 'Collection Inspired Interior',
-            product_page_image: bohoChicProductPageImage,
-            product_page_wide_image: bohoChicProductPageWideImage,
-            product_page_cta_image: bohoChicProductPageCtaImage,
-            product_page_cta_heading:
-              "The 'Name of sofa' captures the essence of boho style with its relaxed, oversized form and eclectic fabric choices.",
-            product_page_cta_link: 'See more out of ‘Boho Chic’ collection',
+          {
+            value: 'Curly Hair',
+            metadata: {
+              image: curlyHair1Image,
+            },
           },
-        },
-        {
-          title: 'Timeless Classics',
-          handle: 'timeless-classics',
-          metadata: {
-            description:
-              'Elegant shapes and rich textures, traditional craftsmanship with modern comfort',
-            image: timelessClassicsImage,
-            collection_page_image: timelessClassicsCollectionPageImage,
-            collection_page_heading:
-              'Timeless Classics: Enduring style, crafted for comfort and lasting beauty',
-            collection_page_content: `Designed for those who appreciate enduring style, this collection features elegant shapes and rich textures. These sofas combine traditional craftsmanship with modern comfort.
-
-Perfect for creating a warm, inviting atmosphere that never goes out of style.`,
-            product_page_heading: 'Collection Inspired Interior',
-            product_page_image: timelessClassicsProductPageImage,
-            product_page_wide_image: timelessClassicsProductPageWideImage,
-            product_page_cta_image: timelessClassicsProductPageCtaImage,
-            product_page_cta_heading:
-              "The 'Name of sofa' brings a touch of traditional charm with its elegant curves and classic silhouette",
-            product_page_cta_link:
-              'See more out of ‘Timeless Classics’ collection',
+          {
+            value: 'Wavy Hair',
+            metadata: {
+              image: wavyHair1Image,
+            },
           },
-        },
-      ],
-    },
-  });
+          {
+            value: 'Hair Care Accessories',
+            metadata: {
+              image: hairAccessories1Image,
+            },
+          },
+        ],
+      },
+    })
+    productTypes = result
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Product types already exist, skipping...')
+      // Get existing product types
+      const productModuleService = container.resolve(Modules.PRODUCT)
+      productTypes = await productModuleService.listProductTypes()
+    } else {
+      throw error
+    }
+  }
 
-  const materials: MaterialModelType[] =
-    await fashionModuleService.createMaterials([
-      {
-        name: 'Velvet',
+  const [
+    rawDonorImage,
+    rawDonorCollectionPageImage,
+    rawDonorProductPageImage,
+    rawDonorProductPageWideImage,
+    rawDonorProductPageCtaImage,
+    pureDonorImage,
+    pureDonorCollectionPageImage,
+    pureDonorProductPageImage,
+    pureDonorProductPageWideImage,
+    pureDonorProductPageCtaImage,
+    babyDonorImage,
+    babyDonorCollectionPageImage,
+    babyDonorProductPageImage,
+    babyDonorProductPageWideImage,
+    babyDonorProductPageCtaImage,
+    theAugmentImage,
+  ] = await uploadFilesWorkflow(container)
+    .run({
+      input: {
+        files: [
+          {
+            access: 'public',
+            filename: 'raw-donor.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/raw-donor/image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'raw-donor-collection-page-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/raw-donor/collection_page_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'raw-donor-product-page-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/raw-donor/product_page_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'raw-donor-product-page-wide-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/raw-donor/product_page_wide_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'raw-donor-product-page-cta-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/raw-donor/product_page_cta_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'pure-donor.png',
+            mimeType: 'image/png',
+            content: await getImageFileContent(
+              'collections/pure-donor/image.png'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'pure-donor-collection-page-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/pure-donor/collection_page_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'pure-donor-product-page-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/pure-donor/product_page_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'pure-donor-product-page-wide-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/pure-donor/product_page_wide_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'pure-donor-product-page-cta-image.png',
+            mimeType: 'image/png',
+            content: await getImageFileContent(
+              'collections/pure-donor/product_page_cta_image.png'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'baby-donor.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/baby-donor/image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'baby-donor-collection-page-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/baby-donor/collection_page_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'baby-donor-product-page-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/baby-donor/product_page_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'baby-donor-product-page-wide-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/baby-donor/product_page_wide_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'baby-donor-product-page-cta-image.jpg',
+            mimeType: 'image/jpeg',
+            content: await getImageFileContent(
+              'collections/baby-donor/product_page_cta_image.jpg'
+            ),
+          },
+          {
+            access: 'public',
+            filename: 'the-augment.png',
+            mimeType: 'image/png',
+            content: await getImageFileContent(
+              'collections/the-augment/image.png'
+            ),
+          },
+        ],
       },
-      {
-        name: 'Linen',
-      },
-      {
-        name: 'Boucle',
-      },
-      {
-        name: 'Leather',
-      },
-      {
-        name: 'Microfiber',
-      },
-    ]);
+    })
+    .then((res) => res.result)
 
-  await fashionModuleService.createColors([
-    // Velvet
+  let collections
+  try {
+    const { result } = await createCollectionsWorkflow(container).run({
+      input: {
+        collections: [
+          {
+            title: 'Raw Premium Donor',
+            handle: 'raw-donor',
+            metadata: {
+              description:
+                'Sleek and stylish, carefully sourced raw hair from one or two donors, ensuring a unique and personalized look.',
+              image: rawDonorImage,
+              collection_page_image: rawDonorCollectionPageImage,
+              collection_page_heading:
+                'Raw Donor: Effortless elegance, timeless comfort,beautiful look',
+              collection_page_content: `Sleek and stylish, carefully sourced raw hair from one or two donors, ensuring a unique and personalized look. Bouncy when full
+              and best for long lengths.low maintenance for less volume setup whilst more attention and maintenance required for voluminous pieces.
+
+              This collection is bleahcable and maintains it's quality afterwards provided good toner/bleaching products are used.`,
+              product_page_heading: 'Collection Inspired Interior',
+              product_page_image: rawDonorProductPageImage,
+              product_page_wide_image: rawDonorProductPageWideImage,
+              product_page_cta_image: rawDonorProductPageCtaImage,
+              product_page_cta_heading:
+                "The 'Name of sofa' embodies a unique blend of elegance and beauty and uniqueness.",
+              product_page_cta_link: 'See more out of Raw Donor collection',
+            },
+          },
+          {
+            title: 'Pure Premium Donor',
+            handle: 'pure-donor',
+            metadata: {
+              description:
+                'Pure premium donor : reasonably priced fine hair, carefully and meticulously sourced from 2 to 4 donors',
+              image: pureDonorImage,
+              collection_page_image: pureDonorCollectionPageImage,
+              collection_page_heading:
+                'Pure Donor: Voluminous and silky, for that breath-taking experience',
+              collection_page_content: `Our pure premium donor hair are voluminous and bouncy.
+              They are the silkiest of all collections, and are perfect for those who want to add volume and texture to their hair.
+
+              while requiring more care and attention for longer lengths, they are the best for shorter lengths like bobs.
+              They are bleachable and maintain their quality afterwards , provided good wuality products are used`,
+              product_page_heading: 'Collection inspired Picks',
+              product_page_image: pureDonorProductPageImage,
+              product_page_wide_image: pureDonorProductPageWideImage,
+              product_page_cta_image: pureDonorProductPageCtaImage,
+              product_page_cta_heading:
+                "The 'Name of sofa' shows rich texture, softness and volume.",
+              product_page_cta_link: 'See more out of Pure Donor collection',
+            },
+          },
+          {
+            title: 'Baby Donor',
+            handle: 'baby-donor',
+            metadata: {
+              description:
+                'Sophisticated and silky,thinnest hair strands that are meticulously sourced from the fine quality young adult hair',
+              image: babyDonorImage,
+              collection_page_image: babyDonorCollectionPageImage,
+              collection_page_heading:
+                'Baby Donor: thin and relaxed long strands, eclectic style with a touch of free-spirited charm',
+              collection_page_content: `Sophisticated and silky,thinnest hair strands that are meticulously sourced from the fine quality young adult hair. Low maintenance with little know-jhow required.
+
+              Our baby donor collection can be bleached to the lightest shade of blonde/white while maintaining the natural texture and volume.They are mainly perfect for longer lengths`,
+              product_page_heading: 'Collection Inspired Picks',
+              product_page_image: babyDonorProductPageImage,
+              product_page_wide_image: babyDonorProductPageWideImage,
+              product_page_cta_image: babyDonorProductPageCtaImage,
+              product_page_cta_heading:
+                "The 'Name of sofa' embodies chic style ,free-spirited charm and beauty.",
+              product_page_cta_link: 'See more out of Baby Donor collection',
+            },
+          },
+          {
+            title: 'The Augment',
+            handle: 'the-augment',
+            metadata: {
+              description:
+                'The best products to help keep your hair extensions looking their best.',
+              image: theAugmentImage,
+              collection_page_image: theAugmentImage,
+              collection_page_heading:
+                'The Augment: Enhancing beauty in continuum',
+              collection_page_content: `The best collection of hair care accessories and products, carefully picked to augment your hair care routine,
+              ensuring your hair extensions look their best, and maintaining their quality and longevity.
+
+              With our range of product selections, you can rest assured that your hair extensions will be in top condition, looking their best, and lasting longer.`,
+              product_page_heading: 'Collection Inspired Picks',
+              product_page_image: theAugmentImage,
+              product_page_wide_image: theAugmentImage,
+              product_page_cta_image: theAugmentImage,
+              product_page_cta_heading:
+                "The 'Name of sofa' is a stash of the best hair care accessories and products.",
+              product_page_cta_link: 'See more out of The Augment collection',
+            },
+          },
+        ],
+      },
+    })
+    collections = result
+  } catch (error) {
+    if (error.message.includes('already exists')) {
+      logger.info('Collections already exist, skipping...')
+      // Get existing collections
+      const productModuleService = container.resolve(Modules.PRODUCT)
+      collections = await productModuleService.listProductCollections()
+    } else {
+      throw error
+    }
+  }
+
+  // First create all product lengths
+  const productLengths: ProductLengthModelType[] =
+    await hairPropsModuleService.createProductLengths([
+      { name: '8"' },
+      { name: '10"' },
+      { name: '12"' },
+      { name: '14"' },
+      { name: '16"' },
+      { name: '18"' },
+      { name: '20"' },
+      { name: '22"' },
+      { name: '24"' },
+      { name: '26"' },
+      { name: '28"' },
+      { name: '30"' },
+    ])
+
+  // Then create all cap sizes with their relationships to product lengths
+  await hairPropsModuleService.createCapSizes([
     {
-      name: 'Black',
-      hex_code: '#4C4D4E',
-      material_id: materials.find((m) => m.name === 'Velvet').id,
+      name: 'XS',
+      productLengths: productLengths.map((pl) => pl.id),
     },
     {
-      name: 'Purple',
-      hex_code: '#904C94',
-      material_id: materials.find((m) => m.name === 'Velvet').id,
-    },
-    // Linen
-    {
-      name: 'Green',
-      hex_code: '#438849',
-      material_id: materials.find((m) => m.name === 'Linen').id,
+      name: 'S',
+      productLengths: productLengths.map((pl) => pl.id),
     },
     {
-      name: 'Light Gray',
-      hex_code: '#B1B1B1',
-      material_id: materials.find((m) => m.name === 'Linen').id,
+      name: 'M',
+      productLengths: productLengths.map((pl) => pl.id),
     },
     {
-      name: 'Yellow',
-      hex_code: '#F1BD37',
-      material_id: materials.find((m) => m.name === 'Linen').id,
+      name: 'L',
+      productLengths: productLengths.map((pl) => pl.id),
     },
     {
-      name: 'Red',
-      hex_code: '#CD1F23',
-      material_id: materials.find((m) => m.name === 'Linen').id,
+      name: 'XL',
+      productLengths: productLengths.map((pl) => pl.id),
     },
     {
-      name: 'Blue',
-      hex_code: '#475F8A',
-      material_id: materials.find((m) => m.name === 'Linen').id,
+      name: 'XXL',
+      productLengths: productLengths.map((pl) => pl.id),
     },
-    // Microfiber
-    {
-      name: 'Orange',
-      hex_code: '#EF7218',
-      material_id: materials.find((m) => m.name === 'Microfiber').id,
-    },
-    {
-      name: 'Dark Gray',
-      hex_code: '#4A4A4A',
-      material_id: materials.find((m) => m.name === 'Microfiber').id,
-    },
-    {
-      name: 'Black',
-      hex_code: '#282828',
-      material_id: materials.find((m) => m.name === 'Microfiber').id,
-    },
-    // Boucle
-    {
-      name: 'Beige',
-      hex_code: '#C8BCB3',
-      material_id: materials.find((m) => m.name === 'Boucle').id,
-    },
-    {
-      name: 'White',
-      hex_code: '#EAEAEA',
-      material_id: materials.find((m) => m.name === 'Boucle').id,
-    },
-    {
-      name: 'Light Gray',
-      hex_code: '#C3C0BE',
-      material_id: materials.find((m) => m.name === 'Boucle').id,
-    },
-    // Leather
-    {
-      name: 'Violet',
-      hex_code: '#B1ABBF',
-      material_id: materials.find((m) => m.name === 'Leather').id,
-    },
-    {
-      name: 'Beige',
-      hex_code: '#A79D9B',
-      material_id: materials.find((m) => m.name === 'Leather').id,
-    },
-  ]);
+  ])
 
-  const astridCurveImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'astrid-curve.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/astrid-curve/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'astrid-curve-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/astrid-curve/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
+  // const customHighlightImages = await uploadFilesWorkflow(container)
+  //   .run({
+  //     input: {
+  //       files: [
+  //         {
+  //           access: 'public',
+  //           filename: 'custom-highlight-1.jpg',
+  //           mimeType: 'image/jpg',
+  //           content: await getImageFileContent(
+  //             './media/products/Custom-highlight/HarvenBeauty12253.jpg'
+  //           ),
+  //         },
+  //         {
+  //           access: 'public',
+  //           filename: 'custom-highlight-2.jpg',
+  //           mimeType: 'image/jpg',
+  //           content: await getImageFileContent(
+  //             './media/products/Custom-highlight/HarvenBeauty12276.jpg'
+  //           ),
+  //         },
+  //         {
+  //           access: 'public',
+  //           filename: 'custom-highlight-3.jpg',
+  //           mimeType: 'image/jpg',
+  //           content: await getImageFileContent(
+  //             './media/products/Custom-highlight/HarvenBeauty12292.jpg'
+  //           ),
+  //         },
+  //         {
+  //           access: 'public',
+  //           filename: 'custom-highlight-4.jpg',
+  //           mimeType: 'image/jpg',
+  //           content: await getImageFileContent(
+  //             './media/products/Custom-highlight/HarvenBeauty12296.jpg'
+  //           ),
+  //         },
+  //         {
+  //           access: 'public',
+  //           filename: 'custom-highlight-5.jpg',
+  //           mimeType: 'image/jpg',
+  //           content: await getImageFileContent(
+  //             './media/products/Custom-highlight/HarvenBeauty12300.jpg'
+  //       ],
+  //     },
+  //   })
+  //   .then((res) => res.result)
 
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Astrid Curve',
-          handle: 'astrid-curve',
-          description:
-            'The Astrid Curve combines flowing curves and cozy, textured fabric for a truly bohemian vibe. Its relaxed design adds character and comfort, perfect for eclectic living spaces with a free-spirited charm.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Three seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'boho-chic').id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: astridCurveImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Microfiber', 'Velvet'],
-            },
-            {
-              title: 'Color',
-              values: ['Dark Gray', 'Purple'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Microfiber / Dark Gray',
-              sku: 'ASTRID-CURVE-MICROFIBER-DARK-GRAY',
-              options: {
-                Material: 'Microfiber',
-                Color: 'Dark Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Velvet / Purple',
-              sku: 'ASTRID-CURVE-VELVET-PURPLE',
-              options: {
-                Material: 'Velvet',
-                Color: 'Purple',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const belimeEstateImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'belime-estate.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/belime-estate/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'belime-estate-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/belime-estate/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Belime Estate',
-          handle: 'belime-estate',
-          description:
-            'The Belime Estate exudes classic sophistication with its tufted back and rich fabric. Its luxurious look and enduring comfort make it a perfect fit for traditional, elegant interiors.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Two seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'timeless-classics',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: belimeEstateImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Linen', 'Boucle'],
-            },
-            {
-              title: 'Color',
-              values: ['Red', 'Blue', 'Beige'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Linen / Red',
-              sku: 'BELIME-ESTATE-LINEN-RED',
-              options: {
-                Material: 'Linen',
-                Color: 'Red',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Linen / Blue',
-              sku: 'BELIME-ESTATE-LINEN-BLUE',
-              options: {
-                Material: 'Linen',
-                Color: 'Blue',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Beige',
-              sku: 'BELIME-ESTATE-BOUCLE-BEIGE',
-              options: {
-                Material: 'Boucle',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const cypressRetreatImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'cypress-retreat.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/cypress-retreat/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'cypress-retreat-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/cypress-retreat/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Cypress Retreat',
-          handle: 'cypress-retreat',
-          description:
-            'The Cypress Retreat is a nod to traditional design with its elegant lines and durable, high-quality upholstery. A timeless choice, it offers long-lasting comfort and a refined aesthetic for any home.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Three seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'timeless-classics',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: cypressRetreatImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Leather'],
-            },
-            {
-              title: 'Color',
-              values: ['Beige', 'Violet'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Leather / Beige',
-              sku: 'CYPRESS-RETREAT-LEATHER-BEIGE',
-              options: {
-                Material: 'Leather',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Leather / Violet',
-              sku: 'CYPRESS-RETREAT-LEATHER-VIOLET',
-              options: {
-                Material: 'Leather',
-                Color: 'Violet',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const everlyEstateImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'everly-estate.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/everly-estate/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'everly-estate-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/everly-estate/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Everly Estate',
-          handle: 'everly-estate',
-          description:
-            'The Everly Estate offers a blend of modern elegance and plush luxury, with its sleek lines and soft velvet upholstery. Perfect for upscale interiors, it exudes sophistication and comfort in equal measure.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Two seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'modern-luxe').id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: everlyEstateImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Microfiber', 'Velvet'],
-            },
-            {
-              title: 'Color',
-              values: ['Orange', 'Black'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Microfiber / Orange',
-              sku: 'EVERLY-ESTATE-MICROFIBER-ORANGE',
-              options: {
-                Material: 'Microfiber',
-                Color: 'Orange',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Velvet / Black',
-              sku: 'EVERLY-ESTATE-VELVET-BLACK',
-              options: {
-                Material: 'Velvet',
-                Color: 'Black',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const havenhillEstateImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'havenhill-estate.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/havenhill-estate/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'havenhill-estate-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/havenhill-estate/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Havenhill Estate',
-          handle: 'havenhill-estate',
-          description:
-            'The Havenhill Estate brings a touch of traditional charm with its elegant curves and classic silhouette. Upholstered in durable, luxurious fabric, it’s a timeless piece that combines comfort and style, fitting seamlessly into any sophisticated home.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'One seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'timeless-classics',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Arm Chairs').id,
-          status: ProductStatus.PUBLISHED,
-          images: havenhillEstateImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Linen', 'Boucle'],
-            },
-            {
-              title: 'Color',
-              values: ['Green', 'Light Gray', 'Yellow'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Linen / Green',
-              sku: 'HAVENHILL-ESTATE-LINEN-GREEN',
-              options: {
-                Material: 'Linen',
-                Color: 'Green',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Light Gray',
-              sku: 'HAVENHILL-ESTATE-BOUCLE-LIGHT-GRAY',
-              options: {
-                Material: 'Boucle',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1200,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1400,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const monacoFlairImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'monaco-flair.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/monaco-flair/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'monaco-flair-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/monaco-flair/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Monaco Flair',
-          handle: 'monaco-flair',
-          description:
-            'The Monaco Flair combines sleek metallic accents with rich fabric, delivering a bold, luxurious statement. Its minimalist design and deep seating make it a standout piece for modern living rooms.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Three seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'modern-luxe').id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: monacoFlairImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Linen', 'Boucle'],
-            },
-            {
-              title: 'Color',
-              values: ['Green', 'Light Gray', 'Beige'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Linen / Green',
-              sku: 'MONACO-FLAIR-LINEN-GREEN',
-              options: {
-                Material: 'Linen',
-                Color: 'Green',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Light Gray',
-              sku: 'MONACO-FLAIR-BOUCLE-LIGHT-GRAY',
-              options: {
-                Material: 'Boucle',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Beige',
-              sku: 'MONACO-FLAIR-BOUCLE-BEIGE',
-              options: {
-                Material: 'Boucle',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const nordicBreezeImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'nordic-breeze.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/nordic-breeze/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'nordic-breeze-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/nordic-breeze/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Nordic Breeze',
-          handle: 'nordic-breeze',
-          description:
-            'The Nordic Breeze is a refined expression of Scandinavian minimalism, with its crisp silhouette and airy aesthetic. Crafted for both comfort and simplicity, it’s perfect for creating a serene living space.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'One seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'scandinavian-simplicity',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Arm Chairs').id,
-          status: ProductStatus.PUBLISHED,
-          images: nordicBreezeImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Boucle', 'Linen'],
-            },
-            {
-              title: 'Color',
-              values: ['Beige', 'White', 'Light Gray'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Boucle / Beige',
-              sku: 'NORDIC-BREEZE-BOUCLE-BEIGE',
-              options: {
-                Material: 'Boucle',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1200,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1400,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / White',
-              sku: 'NORDIC-BREEZE-BOUCLE-WHITE',
-              options: {
-                Material: 'Boucle',
-                Color: 'White',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1200,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1400,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Linen / Light Gray',
-              sku: 'NORDIC-BREEZE-LINEN-LIGHT-GRAY',
-              options: {
-                Material: 'Linen',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1800,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2000,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const nordicHavenImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'nordic-haven.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/nordic-haven/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'nordic-haven-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/nordic-haven/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Nordic Haven',
-          handle: 'nordic-haven',
-          description:
-            'The Nordic Haven features clean lines and soft textures, embodying the essence of Scandinavian design. Its natural tones and minimalist frame bring effortless serenity and comfort to any home.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Three seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'scandinavian-simplicity',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: nordicHavenImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Linen', 'Boucle'],
-            },
-            {
-              title: 'Color',
-              values: ['Light Gray', 'White', 'Beige'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Linen / Light Gray',
-              sku: 'NORDIC-HAVEN-LINEN-LIGHT-GRAY',
-              options: {
-                Material: 'Linen',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / White',
-              sku: 'NORDIC-HAVEN-BOUCLE-WHITE',
-              options: {
-                Material: 'Boucle',
-                Color: 'White',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Beige',
-              sku: 'NORDIC-HAVEN-BOUCLE-BEIGE',
-              options: {
-                Material: 'Boucle',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const osloDriftImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'oslo-drift.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/oslo-drift/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'oslo-drift-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/oslo-drift/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Oslo Drift',
-          handle: 'oslo-drift',
-          description:
-            'The Oslo Drift is designed for ultimate relaxation, with soft, supportive cushions and a sleek, modern frame. Its understated elegance and neutral tones make it an ideal fit for contemporary, minimalist homes.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Two seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'scandinavian-simplicity',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: osloDriftImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Boucle', 'Linen'],
-            },
-            {
-              title: 'Color',
-              values: ['White', 'Beige', 'Light Gray'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Boucle / White',
-              sku: 'OSLO-DRIFT-BOUCLE-WHITE',
-              options: {
-                Material: 'Boucle',
-                Color: 'White',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Beige',
-              sku: 'OSLO-DRIFT-BOUCLE-BEIGE',
-              options: {
-                Material: 'Boucle',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Linen / Light Gray',
-              sku: 'OSLO-DRIFT-LINEN-LIGHT-GRAY',
-              options: {
-                Material: 'Linen',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const osloSerenityImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'oslo-serenity.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/oslo-serenity/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'oslo-serenity-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/oslo-serenity/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Oslo Serenity',
-          handle: 'oslo-serenity',
-          description:
-            'The Oslo Serenity embodies Scandinavian minimalism with clean lines and a soft, neutral palette. Its tailored silhouette and plush cushions deliver a balance of simplicity and comfort, making it perfect for those who value understated elegance.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Two seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'scandinavian-simplicity',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: osloSerenityImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Leather'],
-            },
-            {
-              title: 'Color',
-              values: ['Violet', 'Beige'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Leather / Violet',
-              sku: 'OSLO-SERENITY-LEATHER-VIOLET',
-              options: {
-                Material: 'Leather',
-                Color: 'Violet',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Leather / Beige',
-              sku: 'OSLO-SERENITY-LEATHER-BEIGE',
-              options: {
-                Material: 'Leather',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const palomaHavenImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'paloma-haven.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/paloma-haven/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'paloma-haven-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/paloma-haven/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Paloma Haven',
-          handle: 'paloma-haven',
-          description:
-            'Minimalistic designs, neutral colors, and high-quality textures. Perfect for those who seek comfort with a clean and understated aesthetic. This collection brings the essence of Scandinavian elegance to your living room.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'One seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'modern-luxe').id,
-          type_id: productTypes.find((pt) => pt.value === 'Arm Chairs').id,
-          status: ProductStatus.PUBLISHED,
-          images: palomaHavenImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Linen', 'Boucle'],
-            },
-            {
-              title: 'Color',
-              values: ['Light Gray', 'Green', 'Beige'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Linen / Light Gray',
-              sku: 'PALOMA-HAVEN-LINEN-LIGHT-GRAY',
-              options: {
-                Material: 'Linen',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 900,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1100,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Linen / Green',
-              sku: 'PALOMA-HAVEN-LINEN-GREEN',
-              options: {
-                Material: 'Linen',
-                Color: 'Green',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 900,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1100,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Beige',
-              sku: 'PALOMA-HAVEN-BOUCLE-BEIGE',
-              options: {
-                Material: 'Boucle',
-                Color: 'Beige',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1200,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1400,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const savannahGroveImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'savannah-grove.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/savannah-grove/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'savannah-grove-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/savannah-grove/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Savannah Grove',
-          handle: 'savannah-grove',
-          description:
-            'The Savannah Grove captures the essence of boho style with its relaxed, oversized form and eclectic fabric choices. Designed for both comfort and personality, it’s the ideal piece for those who seek a cozy, free-spirited vibe in their living spaces.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'One seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'boho-chic').id,
-          type_id: productTypes.find((pt) => pt.value === 'Arm Chairs').id,
-          status: ProductStatus.PUBLISHED,
-          images: savannahGroveImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Boucle', 'Linen'],
-            },
-            {
-              title: 'Color',
-              values: ['Light Gray', 'Yellow'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Boucle / Light Gray',
-              sku: 'SAVANNAH-GROVE-BOUCLE-LIGHT-GRAY',
-              options: {
-                Material: 'Boucle',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1200,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1400,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Linen / Yellow',
-              sku: 'SAVANNAH-GROVE-LINEN-YELLOW',
-              options: {
-                Material: 'Linen',
-                Color: 'Yellow',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 900,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1100,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Linen / Light Gray',
-              sku: 'SAVANNAH-GROVE-LINEN-LIGHT-GRAY',
-              options: {
-                Material: 'Linen',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 900,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1100,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const serenaMeadowImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'serena-meadow.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/serena-meadow/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'serena-meadow-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/serena-meadow/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Serena Meadow',
-          handle: 'serena-meadow',
-          description:
-            'The Serena Meadow combines a classic silhouette with modern comfort, offering a relaxed yet polished look. Its soft upholstery and subtle curves bring a timeless elegance to any living room.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Two seater').id,
-          ],
-          collection_id: collections.find(
-            (c) => c.handle === 'timeless-classics',
-          ).id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: serenaMeadowImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Microfiber', 'Velvet'],
-            },
-            {
-              title: 'Color',
-              values: ['Black', 'Dark Gray'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Microfiber / Black',
-              sku: 'SERENA-MEADOW-MICROFIBER-BLACK',
-              options: {
-                Material: 'Microfiber',
-                Color: 'Black',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Microfiber / Dark Gray',
-              sku: 'SERENA-MEADOW-MICROFIBER-DARK-GRAY',
-              options: {
-                Material: 'Microfiber',
-                Color: 'Dark Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Velvet / Black',
-              sku: 'SERENA-MEADOW-VELVET-BLACK',
-              options: {
-                Material: 'Velvet',
-                Color: 'Black',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const suttonRoyaleImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'sutton-royale.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/sutton-royale/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'sutton-royale-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/sutton-royale/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Sutton Royale',
-          handle: 'sutton-royale',
-          description:
-            'The Sutton Royale blends eclectic design with classic bohemian comfort, featuring soft, tufted fabric and a wide, welcoming frame. Its unique style adds a touch of vintage flair to any space.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Two seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'boho-chic').id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: suttonRoyaleImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Velvet', 'Microfiber'],
-            },
-            {
-              title: 'Color',
-              values: ['Purple', 'Dark Gray'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Velvet / Purple',
-              sku: 'SUTTON-ROYALE-VELVET-PURPLE',
-              options: {
-                Material: 'Velvet',
-                Color: 'Purple',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Microfiber / Dark Gray',
-              sku: 'SUTTON-ROYALE-MICROFIBER-DARK-GRAY',
-              options: {
-                Material: 'Microfiber',
-                Color: 'Dark Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const velarLoftImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'velar-loft.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/velar-loft/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'velar-loft-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/velar-loft/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Velar Loft',
-          handle: 'velar-loft',
-          description:
-            'The Velar Loft offers a refined blend of modern design and opulent comfort. Upholstered in rich fabric with sleek metallic accents, this sofa delivers both luxury and a contemporary edge, making it a striking centerpiece for sophisticated interiors.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'One seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'modern-luxe').id,
-          type_id: productTypes.find((pt) => pt.value === 'Arm Chairs').id,
-          status: ProductStatus.PUBLISHED,
-          images: velarLoftImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Velvet', 'Microfiber'],
-            },
-            {
-              title: 'Color',
-              values: ['Black', 'Orange'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Velvet / Black',
-              sku: 'VELAR-LOFT-VELVET-BLACK',
-              options: {
-                Material: 'Velvet',
-                Color: 'Black',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1300,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1500,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Microfiber / Orange',
-              sku: 'VELAR-LOFT-MICROFIBER-ORANGE',
-              options: {
-                Material: 'Microfiber',
-                Color: 'Orange',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1100,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1300,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  const veloraLuxeImages = await uploadFilesWorkflow(container)
-    .run({
-      input: {
-        files: [
-          {
-            access: 'public',
-            filename: 'velora-luxe.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/velora-luxe/image.png',
-            ),
-          },
-          {
-            access: 'public',
-            filename: 'velora-luxe-2.png',
-            mimeType: 'image/png',
-            content: await getImageUrlContent(
-              'https://assets.agilo.com/fashion-starter/products/velora-luxe/image1.png',
-            ),
-          },
-        ],
-      },
-    })
-    .then((res) => res.result);
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: 'Velora Luxe',
-          handle: 'velora-luxe',
-          description:
-            'The Velora Luxe brings a touch of luxury to bohemian design with its bold patterns and plush comfort. Its oversized shape and inviting cushions make it an ideal centerpiece for laid-back, stylish interiors.',
-          category_ids: [
-            categoryResult.find((cat) => cat.name === 'Three seater').id,
-          ],
-          collection_id: collections.find((c) => c.handle === 'boho-chic').id,
-          type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
-          status: ProductStatus.PUBLISHED,
-          images: veloraLuxeImages,
-          options: [
-            {
-              title: 'Material',
-              values: ['Linen', 'Boucle'],
-            },
-            {
-              title: 'Color',
-              values: ['Yellow', 'Light Gray'],
-            },
-          ],
-          variants: [
-            {
-              title: 'Linen / Yellow',
-              sku: 'VELORA-LUXE-LINEN-YELLOW',
-              options: {
-                Material: 'Linen',
-                Color: 'Yellow',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1500,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 1700,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-            {
-              title: 'Boucle / Light Gray',
-              sku: 'VELORA-LUXE-BOUCLE-LIGHT-GRAY',
-              options: {
-                Material: 'Boucle',
-                Color: 'Light Gray',
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 2000,
-                  currency_code: 'eur',
-                },
-                {
-                  amount: 2200,
-                  currency_code: 'usd',
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  logger.info('Finished seeding product data.');
+  // await createProductsWorkflow(container).run({
+  //   input: {
+  //     products: [
+  //       {
+  //         title: 'Custom Highlight',
+  //         handle: 'custom-highlight',
+  //         description:
+  //           'The Custom Highlight combines flowing curves and cozy, textured fabric for a truly bohemian vibe. Its relaxed design adds character and comfort, perfect for eclectic living spaces with a free-spirited charm.',
+  //         category_ids: [
+  //           categoryResult.find((cat) => cat.name === '').id,
+  //         ],
+  //         collection_id: collections.find((c) => c.handle === 'boho-chic').id,
+  //         type_id: productTypes.find((pt) => pt.value === 'Sofas').id,
+  //         status: ProductStatus.PUBLISHED,
+  //         images: customHighlightImages,
+  //         options: [
+  //           {
+  //             title: 'Material',
+  //             values: ['Microfiber', 'Velvet'],
+  //           },
+  //           {
+  //             title: 'Color',
+  //             values: ['Dark Gray', 'Purple'],
+  //           },
+  //         ],
+  //         variants: [
+  //           {
+  //             title: 'Microfiber / Dark Gray',
+  //             sku: 'ASTRID-CURVE-MICROFIBER-DARK-GRAY',
+  //             options: {
+  //               Material: 'Microfiber',
+  //               Color: 'Dark Gray',
+  //             },
+  //             manage_inventory: false,
+  //             prices: [
+  //               {
+  //                 amount: 1500,
+  //                 currency_code: 'eur',
+  //               },
+  //               {
+  //                 amount: 1700,
+  //                 currency_code: 'usd',
+  //               },
+  //             ],
+  //           },
+  //           {
+  //             title: 'Velvet / Purple',
+  //             sku: 'ASTRID-CURVE-VELVET-PURPLE',
+  //             options: {
+  //               Material: 'Velvet',
+  //               Color: 'Purple',
+  //             },
+  //             manage_inventory: false,
+  //             prices: [
+  //               {
+  //                 amount: 2000,
+  //                 currency_code: 'eur',
+  //               },
+  //               {
+  //                 amount: 2200,
+  //                 currency_code: 'usd',
+  //               },
+  //             ],
+  //           },
+  //         ],
+  //         sales_channels: [
+  //           {
+  //             id: defaultSalesChannel[0].id,
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // })
 }

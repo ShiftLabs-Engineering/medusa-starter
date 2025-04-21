@@ -76,10 +76,37 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
   const [options, setOptions] = useState<Record<string, string | undefined>>(
     getInitialOptions(product) ?? {}
   )
+  const [capSizes, setCapSizes] = useState<Record<string, string>>({})
+  const [capSize, setCapSize] = useState<string>("")
   const [quantity, setQuantity] = useState(1)
   const countryCode = useCountryCode()
 
   const { mutateAsync, isPending } = useAddLineItem()
+
+  const capSizeOptions: any[] = useMemo(() => {
+    return [
+      {
+        id: "setCapSize",
+        title: "Cap Size",
+        values: [
+          { value: "S", id: "S" },
+          { value: "M", id: "M" },
+          { value: "L", id: "L" },
+          { value: "XL", id: "XL" },
+        ],
+      },
+    ]
+  }, [])
+
+  useEffect(() => {
+    const optionObj: Record<string, string> = {}
+
+    for (const option of capSizeOptions || []) {
+      Object.assign(optionObj, { [option.id]: undefined })
+    }
+
+    setCapSizes(optionObj)
+  }, [capSizeOptions])
 
   // If there is only 1 variant, preselect the options
   useEffect(() => {
@@ -107,7 +134,13 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
       [optionId]: value,
     }))
   }
-
+  const updateCapOptionsMetadata = (optionId: string, value: string) => {
+    setCapSizes((prev) => ({
+      ...prev,
+      [optionId]: value,
+    }))
+    setCapSize(value)
+  }
   // check if the selected variant is in stock
   const itemsInStock = selectedVariant
     ? getVariantItemsInStock(selectedVariant)
@@ -121,6 +154,7 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
       variantId: selectedVariant.id,
       quantity,
       countryCode,
+      capSize,
     })
   }
 
@@ -142,6 +176,8 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
 
   const materialOption = productOptions.find((o) => o.title === "Material")
   const colorOption = productOptions.find((o) => o.title === "Color")
+  const capSizeOption = capSizeOptions.find((o) => o.title === "Cap Size")
+
   const otherOptions =
     materialOption && colorOption
       ? productOptions.filter(
@@ -269,6 +305,51 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
                         {(option.values ?? [])
                           .filter((value) => Boolean(value.value))
                           .map((value) => (
+                            <UiSelectListBoxItem
+                              key={value.id}
+                              id={value.value}
+                            >
+                              {value.value}
+                            </UiSelectListBoxItem>
+                          ))}
+                      </UiSelectListBox>
+                    </ReactAria.Popover>
+                  </ReactAria.Select>
+                </div>
+              )
+            })}
+          {!!product.metadata?.setCapSize &&
+            capSizeOption &&
+            capSizeOptions.map((option) => {
+              return (
+                <div key={option.id}>
+                  <p className="mb-4">
+                    {option.title}
+                    {capSizes[option.id] && (
+                      <span className="text-grayscale-500 ml-6">
+                        {capSizes[option.id]}
+                      </span>
+                    )}
+                  </p>
+                  <ReactAria.Select
+                    selectedKey={capSizes[option.id] ?? null}
+                    onSelectionChange={(value) => {
+                      updateCapOptionsMetadata(option.id, `${value}`)
+                    }}
+                    placeholder={`Choose ${option.title.toLowerCase()}`}
+                    className="w-full md:w-60"
+                    isDisabled={!!disabled || isPending}
+                    aria-label={option.title}
+                  >
+                    <UiSelectButton className="!h-12 px-4 gap-2 max-md:text-base">
+                      <UiSelectValue />
+                      <UiSelectIcon className="h-6 w-6" />
+                    </UiSelectButton>
+                    <ReactAria.Popover className="w-[--trigger-width]">
+                      <UiSelectListBox>
+                        {(option.values ?? [])
+                          .filter((value: any) => Boolean(value.value))
+                          .map((value: any) => (
                             <UiSelectListBoxItem
                               key={value.id}
                               id={value.value}

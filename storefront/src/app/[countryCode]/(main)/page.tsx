@@ -71,10 +71,10 @@ export default async function Home({
     <>
       <div className="max-md:pt-18">
         <Image
-          src="/images/content/living-room-gray-armchair-two-seater-sofa.png"
+          src="/images/content/hb2.jpg"
           width={2880}
           height={1500}
-          alt="Living room with gray armchair and two-seater sofa"
+          alt="Hairven Beauty One"
           className="md:h-screen md:object-cover"
         />
       </div>
@@ -82,13 +82,14 @@ export default async function Home({
         <Layout className="mb-26 md:mb-36">
           <LayoutColumn start={1} end={{ base: 13, md: 8 }}>
             <h3 className="text-md max-md:mb-6 md:text-2xl">
-              Elevate Your Living Space with Unmatched Comfort & Style
+              Elevate Your Look & Style with unparallelled quality from Hairven
+              Beauty!
             </h3>
           </LayoutColumn>
           <LayoutColumn start={{ base: 1, md: 9 }} end={13}>
             <div className="flex items-center h-full">
               <div className="md:text-md">
-                <p>Discover Your Perfect Sofa Today</p>
+                <p>Discover Your best hair products today</p>
                 <LocalizedLink href="/store" variant="underline">
                   Explore Now
                 </LocalizedLink>
@@ -101,7 +102,7 @@ export default async function Home({
         <Layout>
           <LayoutColumn className="col-span-full">
             <h3 className="text-md md:text-2xl mb-8 md:mb-16">
-              About Sofa Society
+              About Hairven Beauty
             </h3>
             <Image
               src="/images/content/gray-sofa-against-concrete-wall.png"
@@ -113,8 +114,8 @@ export default async function Home({
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 13, md: 7 }}>
             <h2 className="text-md md:text-2xl">
-              At Sofa Society, we believe that a sofa is the heart of every
-              home.
+              At Hairven Beauty, Excellence is in everything we do. When its
+              beauty, We go all out for you.
             </h2>
           </LayoutColumn>
           <LayoutColumn
@@ -125,14 +126,16 @@ export default async function Home({
             <div className="md:text-md">
               <p className="mb-5 md:mb-9">
                 We are dedicated to delivering high-quality, thoughtfully
-                designed sofas that merge comfort and style effortlessly.
+                crafted and designed hair products that merge comfort, elegance
+                and style effortlessly.
               </p>
               <p className="mb-5 md:mb-3">
-                Our mission is to transform your living space into a sanctuary
-                of relaxation and beauty, with products built to last.
+                We aim to be a core part of that inexplicable beauty
+                transformation you long for with our products that are expertly
+                sourced ad designed to last.
               </p>
               <LocalizedLink href="/about" variant="underline">
-                Read more about Sofa Society
+                Read more about Hairven Beauty
               </LocalizedLink>
             </div>
           </LayoutColumn>

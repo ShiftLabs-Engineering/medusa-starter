@@ -111,10 +111,12 @@ export async function addToCart({
   variantId,
   quantity,
   countryCode,
+  capSize
 }: {
   variantId: unknown
   quantity: unknown
   countryCode: unknown
+  capSize?: string
 }) {
   if (typeof variantId !== "string") {
     throw new Error("Missing variant ID when adding to cart")
@@ -136,14 +138,15 @@ export async function addToCart({
   if (!cart) {
     throw new Error("Error retrieving or creating cart")
   }
-
+  let productPayload: any = {
+    variant_id: variantId,
+    quantity,
+  }
+  if (capSize) productPayload.metadata = { capSize }
   await sdk.store.cart
     .createLineItem(
       cart.id,
-      {
-        variant_id: variantId,
-        quantity,
-      },
+      productPayload,
       {},
       await getAuthHeaders()
     )
@@ -156,9 +159,11 @@ export async function addToCart({
 export async function updateLineItem({
   lineId,
   quantity,
+  capSize
 }: {
   lineId: unknown
   quantity: unknown
+  capSize?: string
 }) {
   if (typeof lineId !== "string") {
     throw new Error("Missing lineItem ID when updating line item")
@@ -176,9 +181,10 @@ export async function updateLineItem({
   if (!cartId) {
     throw new Error("Missing cart ID when updating line item")
   }
-
+  const updatedPayload: any = { quantity }
+  if (capSize) updatedPayload.metadata = { capSize }
   await sdk.store.cart
-    .updateLineItem(cartId, lineId, { quantity }, {}, await getAuthHeaders())
+    .updateLineItem(cartId, lineId, updatedPayload, {}, await getAuthHeaders())
     .then(() => {
       revalidateTag("cart")
     })
