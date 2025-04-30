@@ -44,9 +44,9 @@ export const Footer: React.FC = () => {
                   <li>
                     <LocalizedLink href="/">Delivery</LocalizedLink>
                   </li>
-                  <li>
+                  {/* <li>
                     <LocalizedLink href="/">Returns</LocalizedLink>
-                  </li>
+                  </li> */}
                 </ul>
                 <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
@@ -67,11 +67,11 @@ export const Footer: React.FC = () => {
                       Pinterest
                     </a>
                   </li>
-                  <li>
+                  {/* <li>
                     <a href="https://facebook.com" target="_blank">
                       Facebook
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
                 <ul className="flex flex-col gap-6 md:gap-3.5">
                   <li>
