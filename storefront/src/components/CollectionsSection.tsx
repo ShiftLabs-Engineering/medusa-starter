@@ -19,7 +19,7 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
 
   return (
     <Carousel
-      heading={<h3 className="text-md md:text-2xl">Collections</h3>}
+      heading={<h3 className="text-sm md:text-xl">Collections</h3>}
       button={
         <>
           <LocalizedButtonLink
@@ -51,13 +51,15 @@ export const CollectionsSection: React.FC<{ className?: string }> = async ({
                     src={collection.metadata.image.url}
                     alt={collection.title}
                     fill
+                    className="object-contain"
+                    sizes="(max-width: 800px) 60vw, 800px"
                   />
                 </div>
               )}
             <h3 className="md:text-lg mb-2 md:mb-4">{collection.title}</h3>
             {typeof collection.metadata?.description === "string" &&
               collection.metadata?.description.length > 0 && (
-                <p className="text-xs text-grayscale-500 md:text-md">
+                <p className="text-xs text-grayscale-500 md:text-sm">
                   {collection.metadata.description}
                 </p>
               )}

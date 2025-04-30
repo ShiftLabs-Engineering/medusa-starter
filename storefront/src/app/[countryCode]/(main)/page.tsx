@@ -7,9 +7,9 @@ import { LocalizedLink } from "@/components/LocalizedLink"
 import { CollectionsSection } from "@/components/CollectionsSection"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
+  title: "Hairven Beauty",
   description:
-    "A performant frontend ecommerce starter template with Next.js 14 and Medusa.",
+    "The Hairven Beauty Online Store.One stop place for luxury hair, for boss ladies.",
 }
 
 const ProductTypesSection: React.FC = async () => {
@@ -26,7 +26,7 @@ const ProductTypesSection: React.FC = async () => {
   return (
     <Layout className="mb-26 md:mb-36 max-md:gap-x-2">
       <LayoutColumn>
-        <h3 className="text-md md:text-2xl mb-8 md:mb-15">Our products</h3>
+        <h3 className="text-sm md:text-xl mb-4 md:mb-12">Our products</h3>
       </LayoutColumn>
       {productTypes.productTypes.map((productType, index) => (
         <LayoutColumn
@@ -41,13 +41,15 @@ const ProductTypesSection: React.FC = async () => {
               typeof productType.metadata.image.url === "string" && (
                 <Image
                   src={productType.metadata.image.url}
-                  width={1200}
-                  height={900}
+                  width={800}
+                  height={600}
                   alt={productType.value}
-                  className="mb-2 md:mb-8"
+                  className="mb-2 md:mb-2"
                 />
               )}
-            <p className="text-xs md:text-md">{productType.value}</p>
+            <p className="text-xs md:text-md mb-2 md:mb-6">
+              {productType.value}
+            </p>
           </LocalizedLink>
         </LayoutColumn>
       ))}
@@ -81,7 +83,7 @@ export default async function Home({
       <div className="pt-8 pb-26 md:pt-26 md:pb-36">
         <Layout className="mb-26 md:mb-36">
           <LayoutColumn start={1} end={{ base: 13, md: 8 }}>
-            <h3 className="text-md max-md:mb-6 md:text-2xl">
+            <h3 className="text-sm max-md:mb-6 md:text-xl">
               Elevate Your Look & Style with unparallelled quality from Hairven
               Beauty!
             </h3>
@@ -113,7 +115,7 @@ export default async function Home({
             />
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 13, md: 7 }}>
-            <h2 className="text-md md:text-2xl">
+            <h2 className="text-sm md:text-xl">
               At Hairven Beauty, Excellence is in everything we do. When its
               beauty, We go all out for you.
             </h2>
