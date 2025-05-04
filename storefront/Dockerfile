@@ -1,5 +1,5 @@
 # Use the Node.js 20.13.1 base image
-FROM node:23.6.0
+FROM node:latest
 
 # Set the working directory inside the container
 WORKDIR /src
