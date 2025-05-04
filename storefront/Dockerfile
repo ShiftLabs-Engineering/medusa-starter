@@ -12,7 +12,7 @@ COPY package*.json ./
 
 
 # Convert from yarn to pnpm and install dependencies
-RUN pnpm import
+#RUN pnpm import
 RUN pnpm install
 
 RUN npx update-browserslist-db@latest 
