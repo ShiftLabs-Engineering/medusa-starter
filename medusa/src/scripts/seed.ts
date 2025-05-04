@@ -26,8 +26,7 @@ import {
   Modules,
   ProductStatus,
 } from '@medusajs/framework/utils'
-import type HairPropsModuleService from 'src/modules/hair-props/service'
-import type { ProductLengthModelType } from 'src/modules/hair-props/models/product-length'
+
 import * as fs from 'fs/promises'
 import * as path from 'path'
 import { getImageFileContent, getImageUrlContent } from './seed-helpers'
@@ -43,9 +42,9 @@ export default async function seedDemoData({ container }: ExecArgs) {
   const storeModuleService: IStoreModuleService = container.resolve(
     Modules.STORE
   )
-  const hairPropsModuleService: HairPropsModuleService = container.resolve(
-    'hairPropsModuleService'
-  )
+  // const hairPropsModuleService: HairPropsModuleService = container.resolve(
+  //   'hairPropsModuleService'
+  // )
 
   const countries = ['za', 'bw', 'zm', 'mz', 'na', 'ke', 'ug', 'rw']
 
@@ -893,49 +892,49 @@ export default async function seedDemoData({ container }: ExecArgs) {
   }
 
   // First create all product lengths
-  const productLengths: ProductLengthModelType[] =
-    await hairPropsModuleService.createProductLengths([
-      { name: '8"' },
-      { name: '10"' },
-      { name: '12"' },
-      { name: '14"' },
-      { name: '16"' },
-      { name: '18"' },
-      { name: '20"' },
-      { name: '22"' },
-      { name: '24"' },
-      { name: '26"' },
-      { name: '28"' },
-      { name: '30"' },
-    ])
+  // const productLengths: ProductLengthModelType[] =
+  //   await hairPropsModuleService.createProductLengths([
+  //     { name: '8"' },
+  //     { name: '10"' },
+  //     { name: '12"' },
+  //     { name: '14"' },
+  //     { name: '16"' },
+  //     { name: '18"' },
+  //     { name: '20"' },
+  //     { name: '22"' },
+  //     { name: '24"' },
+  //     { name: '26"' },
+  //     { name: '28"' },
+  //     { name: '30"' },
+  //   ])
 
-  // Then create all cap sizes with their relationships to product lengths
-  await hairPropsModuleService.createCapSizes([
-    {
-      name: 'XS',
-      productLengths: productLengths.map((pl) => pl.id),
-    },
-    {
-      name: 'S',
-      productLengths: productLengths.map((pl) => pl.id),
-    },
-    {
-      name: 'M',
-      productLengths: productLengths.map((pl) => pl.id),
-    },
-    {
-      name: 'L',
-      productLengths: productLengths.map((pl) => pl.id),
-    },
-    {
-      name: 'XL',
-      productLengths: productLengths.map((pl) => pl.id),
-    },
-    {
-      name: 'XXL',
-      productLengths: productLengths.map((pl) => pl.id),
-    },
-  ])
+  // // Then create all cap sizes with their relationships to product lengths
+  // await hairPropsModuleService.createCapSizes([
+  //   {
+  //     name: 'XS',
+  //     productLengths: productLengths.map((pl) => pl.id),
+  //   },
+  //   {
+  //     name: 'S',
+  //     productLengths: productLengths.map((pl) => pl.id),
+  //   },
+  //   {
+  //     name: 'M',
+  //     productLengths: productLengths.map((pl) => pl.id),
+  //   },
+  //   {
+  //     name: 'L',
+  //     productLengths: productLengths.map((pl) => pl.id),
+  //   },
+  //   {
+  //     name: 'XL',
+  //     productLengths: productLengths.map((pl) => pl.id),
+  //   },
+  //   {
+  //     name: 'XXL',
+  //     productLengths: productLengths.map((pl) => pl.id),
+  //   },
+  // ])
 
   // const customHighlightImages = await uploadFilesWorkflow(container)
   //   .run({
