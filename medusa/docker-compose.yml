@@ -16,7 +16,7 @@ services:
       - 6379:6379
 
   minio:
-    image: minio/minio:RELEASE.2024-10-13T13-34-11Z
+    image: minio/minio:latest
     ports:
       - 9090:9000
       - 9001:9001
