@@ -5,7 +5,6 @@ import { IconProps } from "types/icon"
 const HairvenLogo: React.FC<IconProps> = ({
   size = "20",
   color = "currentColor",
-  ...attributes
 }) => {
   return (
     <svg
@@ -14,6 +13,7 @@ const HairvenLogo: React.FC<IconProps> = ({
       viewBox="0 0 382 398"
       width={size}
       height={size}
+      fill={color}
     >
       <path
         fill="#400000"

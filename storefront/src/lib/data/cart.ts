@@ -138,7 +138,7 @@ export async function addToCart({
   if (!cart) {
     throw new Error("Error retrieving or creating cart")
   }
-  let productPayload: any = {
+  const productPayload: any = {
     variant_id: variantId,
     quantity,
   }
