@@ -4,9 +4,16 @@ FROM node:latest
 # Set the working directory inside the container
 WORKDIR /src
 
+# Install pnpm
+RUN npm install -g pnpm@latest
+
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN pnpm run install
+
+
+# Convert from yarn to pnpm and install dependencies
+RUN pnpm import
+RUN pnpm install
 
 RUN npx update-browserslist-db@latest 
 
@@ -14,7 +21,7 @@ RUN npx update-browserslist-db@latest
 COPY . .
 
 # Build the application
-RUN pnpm run build
+RUN pnpm build
 
 # Expose the port your app runs on
 EXPOSE 3000
