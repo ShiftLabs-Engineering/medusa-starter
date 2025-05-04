@@ -6,13 +6,15 @@ WORKDIR /src
 
 # Copy package files and install dependencies
 COPY package*.json ./
-RUN pnpm install
+RUN yarn install
+
+RUN npx update-browserslist-db@latest 
 
 # Copy the entire application code
 COPY . .
 
 # Build the application
-RUN pnpm build
+RUN yarn build
 
 # Expose the port your app runs on
 EXPOSE 3000
