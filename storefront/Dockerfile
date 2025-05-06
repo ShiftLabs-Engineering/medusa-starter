@@ -4,15 +4,41 @@ FROM node:latest
 # Set the working directory inside the container
 WORKDIR /src
 
+# Define build arguments with default values
+ARG NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9000
+ARG NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_d7cfc7d1b6f8b131ad834921eab4252debd2242f4f6e83c79d23f5dfaeebfdea
+ARG NEXT_PUBLIC_BASE_URL=http://localhost:8000
+ARG NEXT_PUBLIC_DEFAULT_REGION=za
+ARG NEXT_PUBLIC_STRIPE_KEY=sk_test_ab833e3b0c0022e2ffd47011652a7e0031d44130e9bfa6c2
+ARG NEXT_PUBLIC_PAYPAL_CLIENT_ID
+ARG NEXT_PUBLIC_FEATURE_SEARCH_ENABLED=false
+ARG NEXT_PUBLIC_SEARCH_APP_ID
+ARG NEXT_PUBLIC_SEARCH_ENDPOINT=http://127.0.0.1:7700
+ARG NEXT_PUBLIC_SEARCH_API_KEY=M4sfoLpnBBySDNkGThDm3NGD8nUOGxQo5ApwrY+kMEc=
+ARG NEXT_PUBLIC_INDEX_NAME=products
+ARG REVALIDATE_SECRET=fce3cf41f3832ea5
+
+# Set environment variables from build arguments
+ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=${NEXT_PUBLIC_MEDUSA_BACKEND_URL}
+ENV NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=${NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY}
+ENV NEXT_PUBLIC_BASE_URL=${NEXT_PUBLIC_BASE_URL}
+ENV NEXT_PUBLIC_DEFAULT_REGION=${NEXT_PUBLIC_DEFAULT_REGION}
+ENV NEXT_PUBLIC_STRIPE_KEY=${NEXT_PUBLIC_STRIPE_KEY}
+ENV NEXT_PUBLIC_PAYPAL_CLIENT_ID=${NEXT_PUBLIC_PAYPAL_CLIENT_ID}
+ENV NEXT_PUBLIC_FEATURE_SEARCH_ENABLED=${NEXT_PUBLIC_FEATURE_SEARCH_ENABLED}
+ENV NEXT_PUBLIC_SEARCH_APP_ID=${NEXT_PUBLIC_SEARCH_APP_ID}
+ENV NEXT_PUBLIC_SEARCH_ENDPOINT=${NEXT_PUBLIC_SEARCH_ENDPOINT}
+ENV NEXT_PUBLIC_SEARCH_API_KEY=${NEXT_PUBLIC_SEARCH_API_KEY}
+ENV NEXT_PUBLIC_INDEX_NAME=${NEXT_PUBLIC_INDEX_NAME}
+ENV REVALIDATE_SECRET=${REVALIDATE_SECRET}
+
 # Install pnpm
 RUN npm install -g pnpm@latest
 
-# Copy package files and install dependencies
-COPY package*.json ./
+# Copy package files
+COPY package.json ./
 
-
-# Convert from yarn to pnpm and install dependencies
-#RUN pnpm import
+# Install dependencies with pnpm
 RUN pnpm install
 
 RUN npx update-browserslist-db@latest 
@@ -20,11 +46,11 @@ RUN npx update-browserslist-db@latest
 # Copy the entire application code
 COPY . .
 
-# Build the application
+# Build the application with static export
 RUN pnpm build
 
 # Expose the port your app runs on
-EXPOSE 3000
+EXPOSE 8000
 
 # Command to start the application
 CMD ["pnpm", "start"]     
