@@ -16,7 +16,7 @@ ARG NEXT_PUBLIC_SEARCH_APP_ID
 ARG NEXT_PUBLIC_SEARCH_ENDPOINT=http://127.0.0.1:7700
 ARG NEXT_PUBLIC_SEARCH_API_KEY=M4sfoLpnBBySDNkGThDm3NGD8nUOGxQo5ApwrY+kMEc=
 ARG NEXT_PUBLIC_INDEX_NAME=products
-ARG REVALIDATE_SECRET=fce3cf41f3832ea5
+ARG REVALIDATE_SECRET
 
 # Set environment variables from build arguments
 ENV NEXT_PUBLIC_MEDUSA_BACKEND_URL=${NEXT_PUBLIC_MEDUSA_BACKEND_URL}
@@ -39,15 +39,15 @@ RUN npm install -g pnpm@latest
 COPY package.json ./
 
 # Install dependencies with pnpm
-RUN pnpm install
+#RUN pnpm install
 
-RUN npx update-browserslist-db@latest 
+#RUN npx update-browserslist-db@latest 
 
 # Copy the entire application code
 COPY . .
 
 # Build the application with static export
-RUN pnpm build
+#RUN pnpm build
 
 # Expose the port your app runs on
 EXPOSE 8000

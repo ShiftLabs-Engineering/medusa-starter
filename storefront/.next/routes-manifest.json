@@ -1,0 +1,222 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "dynamicRoutes": [
+    {
+      "page": "/[countryCode]",
+      "regex": "^/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/about",
+      "regex": "^/([^/]+?)/about(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/about(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/account",
+      "regex": "^/([^/]+?)/account(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/account(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/account/my-orders",
+      "regex": "^/([^/]+?)/account/my\\-orders(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/account/my\\-orders(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/account/my-orders/[orderId]",
+      "regex": "^/([^/]+?)/account/my\\-orders/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode",
+        "nxtPorderId": "nxtPorderId"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/account/my\\-orders/(?<nxtPorderId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/auth/forgot-password",
+      "regex": "^/([^/]+?)/auth/forgot\\-password(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/auth/forgot\\-password(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/auth/forgot-password/reset",
+      "regex": "^/([^/]+?)/auth/forgot\\-password/reset(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/auth/forgot\\-password/reset(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/auth/login",
+      "regex": "^/([^/]+?)/auth/login(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/auth/login(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/auth/register",
+      "regex": "^/([^/]+?)/auth/register(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/auth/register(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/auth/reset-password",
+      "regex": "^/([^/]+?)/auth/reset\\-password(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/auth/reset\\-password(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/cart",
+      "regex": "^/([^/]+?)/cart(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/cart(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/checkout",
+      "regex": "^/([^/]+?)/checkout(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/checkout(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/collections/[handle]",
+      "regex": "^/([^/]+?)/collections/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode",
+        "nxtPhandle": "nxtPhandle"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/collections/(?<nxtPhandle>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/cookie-policy",
+      "regex": "^/([^/]+?)/cookie\\-policy(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/cookie\\-policy(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/inspiration",
+      "regex": "^/([^/]+?)/inspiration(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/inspiration(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/order/confirmed/[id]",
+      "regex": "^/([^/]+?)/order/confirmed/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode",
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/order/confirmed/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/privacy-policy",
+      "regex": "^/([^/]+?)/privacy\\-policy(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/privacy\\-policy(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/products/[handle]",
+      "regex": "^/([^/]+?)/products/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode",
+        "nxtPhandle": "nxtPhandle"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/products/(?<nxtPhandle>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/search",
+      "regex": "^/([^/]+?)/search(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/search(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/store",
+      "regex": "^/([^/]+?)/store(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/store(?:/)?$"
+    },
+    {
+      "page": "/[countryCode]/terms-of-use",
+      "regex": "^/([^/]+?)/terms\\-of\\-use(?:/)?$",
+      "routeKeys": {
+        "nxtPcountryCode": "nxtPcountryCode"
+      },
+      "namedRegex": "^/(?<nxtPcountryCode>[^/]+?)/terms\\-of\\-use(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/robots.txt",
+      "regex": "^/robots\\.txt(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/robots\\.txt(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "RSC",
+    "varyHeader": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+    "prefetchHeader": "Next-Router-Prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "Next-Router-Segment-Prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  },
+  "rewrites": []
+}

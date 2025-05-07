@@ -1,0 +1,7 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "4294967294",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/[countryCode]/layout,_N_T_/[countryCode]/(main)/layout,_N_T_/[countryCode]/(main)/terms-of-use/layout,_N_T_/[countryCode]/(main)/terms-of-use/page,_N_T_/za/terms-of-use,regions"
+  }
+}
