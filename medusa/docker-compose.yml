@@ -1,15 +1,4 @@
 services:
-  postgres:
-    image: postgres:16
-    ports:
-      - 5432:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: medusa
-    volumes:
-      - medusa-postgres-data:/var/lib/postgresql/data
-
   redis:
     image: redis
     ports:
@@ -18,7 +7,6 @@ services:
   minio:
     image: minio/minio:latest
     ports:
-      - 9090:9000
       - 9001:9001
     volumes:
       - medusa-minio-data:/data
@@ -33,7 +21,9 @@ services:
       retries: 3
 
   createbuckets:
-    image: minio/mc:RELEASE.2024-10-08T09-37-26Z
+    image: minio/mc:latest
+    ports:
+      - 9090:9000
     depends_on:
       minio:
         condition: service_healthy
