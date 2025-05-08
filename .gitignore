@@ -2,3 +2,4 @@
 meilisearch
 data.ms/*
 data.ms
+storefront/.next/cache/*
