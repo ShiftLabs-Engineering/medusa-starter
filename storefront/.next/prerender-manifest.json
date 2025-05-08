@@ -30,198 +30,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/bw/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/bw/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/ke/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/ke/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/mz/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/mz/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/na/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/na/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/rw/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/rw/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/ug/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/ug/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/za/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/za/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/zm/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/privacy-policy",
-      "dataRoute": "/zm/privacy-policy.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/bw/inspiration": {
       "experimentalBypassFor": [
         {
@@ -414,7 +222,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/bw/terms-of-use": {
+    "/bw/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -427,8 +235,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/bw/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/bw/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -438,7 +246,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/ke/terms-of-use": {
+    "/ke/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -451,8 +259,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/ke/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/ke/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -462,7 +270,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/mz/terms-of-use": {
+    "/mz/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -475,8 +283,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/mz/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/mz/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -486,7 +294,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/na/terms-of-use": {
+    "/na/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -499,8 +307,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/na/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/na/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -510,7 +318,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/rw/terms-of-use": {
+    "/rw/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -523,8 +331,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/rw/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/rw/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -534,7 +342,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/ug/terms-of-use": {
+    "/ug/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -547,8 +355,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/ug/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/ug/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -558,7 +366,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/za/terms-of-use": {
+    "/za/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -571,8 +379,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/za/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/za/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -582,7 +390,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/zm/terms-of-use": {
+    "/zm/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -595,8 +403,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/[countryCode]/terms-of-use",
-      "dataRoute": "/zm/terms-of-use.rsc",
+      "srcRoute": "/[countryCode]/privacy-policy",
+      "dataRoute": "/zm/privacy-policy.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -789,6 +597,198 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/[countryCode]/about",
       "dataRoute": "/zm/about.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/bw/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/bw/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/ke/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/ke/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/mz/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/mz/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/na/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/na/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/rw/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/rw/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/ug/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/ug/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/za/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/za/terms-of-use.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/zm/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/[countryCode]/terms-of-use",
+      "dataRoute": "/zm/terms-of-use.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -992,31 +992,6 @@
     }
   },
   "dynamicRoutes": {
-    "/[countryCode]/privacy-policy": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "routeRegex": "^/([^/]+?)/privacy\\-policy(?:/)?$",
-      "dataRoute": "/[countryCode]/privacy-policy.rsc",
-      "fallback": null,
-      "dataRouteRegex": "^/([^/]+?)/privacy\\-policy\\.rsc$",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/[countryCode]/inspiration": {
       "experimentalBypassFor": [
         {
@@ -1042,7 +1017,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/[countryCode]/products/[handle]": {
+    "/[countryCode]/privacy-policy": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -1054,35 +1029,10 @@
           "value": "multipart/form-data;.*"
         }
       ],
-      "routeRegex": "^/([^/]+?)/products/([^/]+?)(?:/)?$",
-      "dataRoute": "/[countryCode]/products/[handle].rsc",
+      "routeRegex": "^/([^/]+?)/privacy\\-policy(?:/)?$",
+      "dataRoute": "/[countryCode]/privacy-policy.rsc",
       "fallback": null,
-      "dataRouteRegex": "^/([^/]+?)/products/([^/]+?)\\.rsc$",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/[countryCode]/terms-of-use": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "routeRegex": "^/([^/]+?)/terms\\-of\\-use(?:/)?$",
-      "dataRoute": "/[countryCode]/terms-of-use.rsc",
-      "fallback": null,
-      "dataRouteRegex": "^/([^/]+?)/terms\\-of\\-use\\.rsc$",
+      "dataRouteRegex": "^/([^/]+?)/privacy\\-policy\\.rsc$",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -1117,6 +1067,31 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/[countryCode]/terms-of-use": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "routeRegex": "^/([^/]+?)/terms\\-of\\-use(?:/)?$",
+      "dataRoute": "/[countryCode]/terms-of-use.rsc",
+      "fallback": null,
+      "dataRouteRegex": "^/([^/]+?)/terms\\-of\\-use\\.rsc$",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/[countryCode]/cookie-policy": {
       "experimentalBypassFor": [
         {
@@ -1141,12 +1116,37 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/[countryCode]/products/[handle]": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "routeRegex": "^/([^/]+?)/products/([^/]+?)(?:/)?$",
+      "dataRoute": "/[countryCode]/products/[handle].rsc",
+      "fallback": null,
+      "dataRouteRegex": "^/([^/]+?)/products/([^/]+?)\\.rsc$",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "2e49eeed883b14b9fd7e8bc943cffe84",
-    "previewModeSigningKey": "84163285c29278ca1c12154ea56bed75d5d5c002dec7d5e2a986d97158632cc5",
-    "previewModeEncryptionKey": "d053e8730733500eb3d1d6b9388cf1b9dbf10b95c6db56e09ebccc24286d9deb"
+    "previewModeId": "cbf65b1249a56506d5c4fc1085be6d25",
+    "previewModeSigningKey": "4525fa4774f5a87223ab0493a96379fd8ca587d41835db56cc3330222b7b9f3a",
+    "previewModeEncryptionKey": "6dfb02c516f80b9ad92d673f48b82a01d1f1bf068475af98b4edaec2fa4c60d1"
   }
 }

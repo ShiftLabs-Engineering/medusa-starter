@@ -1,5 +1,5 @@
 {
-  "name": "fashion-starter",
+  "name": "hairven-beauty",
   "version": "2.0.0",
   "private": true,
   "author": "Ante Primorac <ante@agilo.com>",
@@ -13,7 +13,8 @@
     "start": "next start -p 8000",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build",
-    "test-e2e": "playwright test e2e"
+    "test-e2e": "playwright test e2e",
+    "coolify:build": ""
   },
   "resolutions": {
     "webpack": "^5"
