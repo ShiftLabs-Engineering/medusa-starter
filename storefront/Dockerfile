@@ -39,7 +39,7 @@ RUN npm install -g pnpm@latest
 COPY package.json ./
 
 # Install dependencies with pnpm
-#RUN pnpm install
+RUN pnpm install
 
 #RUN npx update-browserslist-db@latest 
 
