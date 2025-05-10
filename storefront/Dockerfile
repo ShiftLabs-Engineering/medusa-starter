@@ -47,7 +47,7 @@ RUN pnpm install
 COPY . .
 
 # Build the application with static export
-# RUN pnpm build
+ RUN pnpm build
 
 # Expose the port your app runs on
 EXPOSE 8000
