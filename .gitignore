@@ -2,6 +2,9 @@
 meilisearch
 data.ms/*
 data.ms
+storefront/.next
+storefront.next/*
 # Ignore large Next.js cache files
-storefront/.next/cache/webpack/server-production/*.pack
-storefront/.next/cache/webpack/client-production/*.pack
+#storefront/.next/cache/webpack/server-production/*.pack
+#storefront/.next/cache/webpack/client-production/*.pack
+storefront/.next
