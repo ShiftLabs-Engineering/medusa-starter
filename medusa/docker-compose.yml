@@ -7,7 +7,8 @@ services:
   minio:
     image: minio/minio:latest
     ports:
-      - 9001:9001
+      - 9090:9000 # Map host port 9090 to container port 9000 for API
+      - 9001:9001 # Console port
     volumes:
       - medusa-minio-data:/data
     environment:
@@ -22,8 +23,6 @@ services:
 
   createbuckets:
     image: minio/mc:latest
-    ports:
-      - 9090:9000
     depends_on:
       minio:
         condition: service_healthy
@@ -37,17 +36,17 @@ services:
       "
 
   # Remove or comment out the Meilisearch service below
-  # meilisearch:
-  #   image: getmeili/meilisearch:v1.12
-  #   ports:
-  #     - 7700:7700
-  #   volumes:
-  #     - meili-data:/meili_data
-  #   environment:
-  #     MEILI_MASTER_KEY: ${MEILISEARCH_MASTER_KEY}
+  meilisearch:
+    image: getmeili/meilisearch:v1.12
+    ports:
+      - 7700:7700
+    volumes:
+      - meili-data:/meili_data
+    environment:
+      MEILI_MASTER_KEY: ${MEILISEARCH_MASTER_KEY}
 
 volumes:
   medusa-postgres-data:
   medusa-minio-data:
   # Remove or comment out the Meilisearch volume below
-  # meili-data:
+  meili-data:

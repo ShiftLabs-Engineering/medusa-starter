@@ -3,16 +3,17 @@ import {
   createWorkflow,
   StepResponse,
   WorkflowResponse,
-} from '@medusajs/framework/workflows-sdk';
-import { Modules } from '@medusajs/framework/utils';
-import { ISearchService, ProductDTO } from '@medusajs/framework/types';
+} from '@medusajs/framework/workflows-sdk'
+import { Modules } from '@medusajs/framework/utils'
+import { ISearchService, ProductDTO } from '@medusajs/framework/types'
+import { logger } from '@medusajs/framework/logger'
 
 const retrieveProductsStep = createStep(
   {
     name: 'retrieveProductsStep',
   },
   async (input: undefined, context) => {
-    const productModuleService = context.container.resolve(Modules.PRODUCT);
+    const productModuleService = context.container.resolve(Modules.PRODUCT)
 
     const products = await productModuleService.listProducts(undefined, {
       relations: [
@@ -23,11 +24,11 @@ const retrieveProductsStep = createStep(
         'type',
         'images',
       ],
-    });
+    })
 
-    return new StepResponse(products);
+    return new StepResponse(products)
   },
-);
+)
 
 const indexProductsStep = createStep(
   {
@@ -36,15 +37,19 @@ const indexProductsStep = createStep(
   async (input: ProductDTO[], context) => {
     const meilisearchService = context.container.resolve(
       'meilisearchService',
-    ) as ISearchService;
+    ) as ISearchService
+    if (!meilisearchService) {
+      logger.info('MeiliSearch is not configured')
+      return new StepResponse(null)
+    }
     const result = await meilisearchService.addDocuments(
       'products',
       input,
       'products',
-    );
-    return new StepResponse(result);
+    )
+    return new StepResponse(result)
   },
-);
+)
 
 export const indexProductsWorkflow = createWorkflow(
   {
@@ -54,9 +59,9 @@ export const indexProductsWorkflow = createWorkflow(
     store: true,
   },
   () => {
-    const products = retrieveProductsStep();
-    const result = indexProductsStep(products);
+    const products = retrieveProductsStep()
+    const result = indexProductsStep(products)
 
-    return new WorkflowResponse(result);
+    return new WorkflowResponse(result)
   },
-);
+)

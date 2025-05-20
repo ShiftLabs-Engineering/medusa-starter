@@ -797,7 +797,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
               collection_page_content: `Sleek and stylish, carefully sourced raw hair from one or two donors, ensuring a unique and personalized look. Bouncy when full
               and best for long lengths.low maintenance for less volume setup whilst more attention and maintenance required for voluminous pieces.
 
-              This collection is bleahcable and maintains it's quality afterwards provided good toner/bleaching products are used.`,
+              This collection is bleachable and maintains it's quality afterwards provided good toner/bleaching products are used.`,
               product_page_heading: 'Collection Inspired Interior',
               product_page_image: rawDonorProductPageImage,
               product_page_wide_image: rawDonorProductPageWideImage,

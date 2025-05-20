@@ -8,3 +8,4 @@ storefront.next/*
 #storefront/.next/cache/webpack/server-production/*.pack
 #storefront/.next/cache/webpack/client-production/*.pack
 storefront/.next
+.idea

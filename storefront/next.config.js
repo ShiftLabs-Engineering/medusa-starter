@@ -21,7 +21,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "fashion-starter-demo.s3.eu-central-1.amazonaws.com",
+        hostname: "hairven-beauty.s3.eu-north-1.amazonaws.com",
       },
     ],
   },
