@@ -9,3 +9,4 @@ storefront.next/*
 #storefront/.next/cache/webpack/client-production/*.pack
 storefront/.next
 .idea
+minio-credentials.json
