@@ -111,7 +111,9 @@ export default async function Home({
               width={2496}
               height={1100}
               alt="HairvenBeauty Shop"
-              className="mb-8 md:mb-16 max-md:aspect-[3/2] max-md:object-cover grayscale [filter:sepia(20%)_hue-rotate(60deg)_saturate(30%)]"
+              className="mb-8 md:mb-16 max-md:aspect-[3/2] max-md:object-cover
+              grayscale [filter:sepia(20%)_hue-rotate(60deg)_saturate(30%)]
+              "
             />
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 13, md: 7 }}>

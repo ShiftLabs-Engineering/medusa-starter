@@ -9,7 +9,7 @@ const HairvenLogoComponent = () => {
         className="txt-compact-xlarge-plus hover:text-ui-fg-base text-center -ml-10"
         data-testid="nav-store-link"
       >
-        <span className="text-rose-700">
+        <span className="text-rose-700 font-dancing-script text-md">
           Hairven Beauty <br /> Store
         </span>
       </div>
