@@ -107,11 +107,11 @@ export default async function Home({
               About Hairven Beauty
             </h3>
             <Image
-              src="/images/content/gray-sofa-against-concrete-wall.png"
+              src="/images/content/shop-3.png"
               width={2496}
-              height={1400}
-              alt="Gray sofa against concrete wall"
-              className="mb-8 md:mb-16 max-md:aspect-[3/2] max-md:object-cover"
+              height={1100}
+              alt="HairvenBeauty Shop"
+              className="mb-8 md:mb-16 max-md:aspect-[3/2] max-md:object-cover grayscale [filter:sepia(20%)_hue-rotate(60deg)_saturate(30%)]"
             />
           </LayoutColumn>
           <LayoutColumn start={1} end={{ base: 13, md: 7 }}>
