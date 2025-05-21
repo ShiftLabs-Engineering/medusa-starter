@@ -103,7 +103,7 @@ export default async function Home({
         <CollectionsSection className="mb-22 md:mb-36" />
         <Layout>
           <LayoutColumn className="col-span-full">
-            <h3 className="text-md md:text-2xl mb-8 md:mb-16">
+            <h3 className="text-sm md:text-xl mb-8 md:mb-16">
               About Hairven Beauty
             </h3>
             <Image
