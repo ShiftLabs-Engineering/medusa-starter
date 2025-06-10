@@ -1,5 +1,5 @@
 import React from "react"
-import { CreditCard } from "@medusajs/icons"
+import { CreditCard, BuildingTax } from "@medusajs/icons"
 
 import Ideal from "@modules/common/icons/ideal"
 import Bancontact from "@modules/common/icons/bancontact"
@@ -30,6 +30,10 @@ export const paymentInfoMap: Record<
     title: "Manual Payment",
     icon: <CreditCard />,
   },
+  pp_eft_eft: {
+    title: "Electronic Funds Transfer (EFT)",
+    icon: <BuildingTax />,
+  },
   // Add more payment providers here
 }
 
@@ -42,4 +46,7 @@ export const isPaypal = (providerId?: string) => {
 }
 export const isManual = (providerId?: string) => {
   return providerId?.startsWith("pp_system_default")
+}
+export const isEft = (providerId?: string) => {
+  return providerId?.startsWith("pp_eft_")
 }

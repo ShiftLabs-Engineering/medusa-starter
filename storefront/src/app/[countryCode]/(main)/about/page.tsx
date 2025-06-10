@@ -6,7 +6,7 @@ import { Layout, LayoutColumn } from "@/components/Layout"
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Learn more about Sofa Society",
+  description: "Learn more about Hairven Beauty",
 }
 
 export async function generateStaticParams() {
@@ -52,8 +52,8 @@ export default function AboutPage() {
         <Layout>
           <LayoutColumn start={1} end={{ base: 13, lg: 7 }}>
             <h3 className="text-md max-lg:mb-6 md:text-2xl">
-              At Sofa Society, we believe that a sofa is the heart of every
-              home.
+              At Hairven Beauty, we believe that a Elegance is the heart of
+              every home.
             </h3>
           </LayoutColumn>
           <LayoutColumn start={{ base: 1, lg: 8 }} end={13}>

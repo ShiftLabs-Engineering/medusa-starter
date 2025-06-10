@@ -8,7 +8,7 @@ import { HttpTypes } from "@medusajs/types"
 import { useRouter } from "next/navigation"
 
 import Spinner from "@modules/common/icons/spinner"
-import { isManual, isPaypal, isStripe } from "@lib/constants"
+import { isManual, isPaypal, isStripe, isEft } from "@lib/constants"
 import { Button } from "@/components/Button"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { usePlaceOrder } from "hooks/cart"
@@ -47,6 +47,8 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
       return <ManualTestPaymentButton notReady={notReady} />
     case isPaypal(paymentSession?.provider_id):
       return <PayPalPaymentButton notReady={notReady} cart={cart} />
+    case isEft(paymentSession?.provider_id):
+      return <EftPaymentButton notReady={notReady} cart={cart} />
     default:
       return (
         <Button
@@ -282,6 +284,55 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
         className="w-full"
       >
         Place order
+      </Button>
+      <ErrorMessage error={errorMessage} />
+    </>
+  )
+}
+
+const EftPaymentButton = ({
+  cart,
+  notReady,
+}: {
+  cart: HttpTypes.StoreCart
+  notReady: boolean
+}) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const placeOrder = usePlaceOrder()
+  const router = useRouter()
+
+  const onPaymentCompleted = () => {
+    placeOrder.mutate(null, {
+      onSuccess: (data) => {
+        if (data?.type === "order") {
+          const countryCode =
+            data.order.shipping_address?.country_code?.toLowerCase()
+          router.push(`/${countryCode}/order/confirmed/${data.order.id}`)
+        } else if (data?.error) {
+          setErrorMessage(data.error.message)
+        }
+      },
+      onError: (error) => {
+        setErrorMessage(error.message)
+      },
+    })
+  }
+
+  const handlePayment = () => {
+    // For EFT, we complete the order immediately and mark payment as pending
+    // The email with payment instructions will be sent by the payment provider
+    onPaymentCompleted()
+  }
+
+  return (
+    <>
+      <Button
+        isDisabled={notReady}
+        isLoading={placeOrder.isPending}
+        onPress={handlePayment}
+        className="w-full"
+      >
+        Complete Order (EFT Instructions will be emailed)
       </Button>
       <ErrorMessage error={errorMessage} />
     </>

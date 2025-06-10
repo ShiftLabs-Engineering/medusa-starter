@@ -16,7 +16,8 @@ export const getProductsById = async function ({
       query: {
         id: ids,
         region_id: regionId,
-        fields: "*variants.calculated_price,+variants.inventory_quantity",
+        fields:
+          "*variants.calculated_price,+variants.inventory_quantity,*metadata",
       },
       next: { tags: ["products"] },
       cache: "force-cache",
@@ -33,7 +34,8 @@ export const getProductByHandle = async function (
       query: {
         handle,
         region_id: regionId,
-        fields: "*variants.calculated_price,+variants.inventory_quantity",
+        fields:
+          "*variants.calculated_price,+variants.inventory_quantity,*metadata",
       },
       next: { tags: ["products"] },
     })

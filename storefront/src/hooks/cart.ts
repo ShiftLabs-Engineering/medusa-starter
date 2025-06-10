@@ -43,7 +43,6 @@ export const useCartQuantity = () => {
       const res = await getCartQuantity()
       return res
     },
-
   })
 }
 
@@ -52,6 +51,7 @@ export const useCartShippingMethods = (cartId: string) => {
     queryKey: [cartId],
     queryFn: async () => {
       const res = await listCartShippingMethods(cartId)
+      console.log("Cart shipping methods:", JSON.stringify(res))
       return res
     },
   })
@@ -125,7 +125,12 @@ export const useAddLineItem = (
   options?: UseMutationOptions<
     void,
     Error,
-    { variantId: string; capSize: string | undefined; quantity: number; countryCode: string | undefined },
+    {
+      variantId: string
+      capSize: string | undefined
+      quantity: number
+      countryCode: string | undefined
+    },
     unknown
   >
 ) => {
@@ -134,7 +139,7 @@ export const useAddLineItem = (
   return useMutation({
     mutationKey: ["cart-add-line-item"],
     mutationFn: async (payload: {
-      variantId: string,
+      variantId: string
       capSize: string | undefined
       quantity: number
       countryCode: string | undefined
@@ -355,18 +360,18 @@ export const useGetPaymentMethod = (id: string | undefined) => {
 export const usePlaceOrder = (
   options?: UseMutationOptions<
     | {
-      type: "cart"
-      cart: HttpTypes.StoreCart
-      error: {
-        message: string
-        name: string
-        type: string
+        type: "cart"
+        cart: HttpTypes.StoreCart
+        error: {
+          message: string
+          name: string
+          type: string
+        }
       }
-    }
     | {
-      type: "order"
-      order: HttpTypes.StoreOrder
-    }
+        type: "order"
+        order: HttpTypes.StoreOrder
+      }
     | null,
     Error,
     null,

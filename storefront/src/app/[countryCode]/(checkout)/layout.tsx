@@ -2,13 +2,14 @@ import * as React from "react"
 import { Layout, LayoutColumn } from "@/components/Layout"
 import { LocalizedLink } from "@/components/LocalizedLink"
 import dynamic from "next/dynamic"
+import HairvenLogoComponent from "@/components/Logo"
 
 const CheckoutSummaryWrapper = dynamic(
   () => import("@modules/checkout/components/checkout-summary-wrapper"),
   { loading: () => <></> }
 )
 
-const  MobileCheckoutSummaryWrapper= dynamic(
+const MobileCheckoutSummaryWrapper = dynamic(
   () => import("@modules/checkout/components/mobile-checkout-summary-wrapper"),
   { loading: () => <></> }
 )
@@ -22,8 +23,11 @@ export default function CheckoutLayout({
       <Layout className="lg:hidden">
         <LayoutColumn>
           <div className="flex justify-between items-center h-18">
-            <LocalizedLink href="/" className="text-md font-medium">
-              SofaSocietyCo.
+            <LocalizedLink
+              href="/"
+              className=" text-pink-700 text-md font-medium"
+            >
+              <HairvenLogoComponent />
             </LocalizedLink>
             <div>
               <p className="font-semibold">Checkout</p>
@@ -43,9 +47,9 @@ export default function CheckoutLayout({
           <div className="flex-1 pt-8 lg:max-w-125 xl:max-w-150 pb-9 lg:pb-40">
             <LocalizedLink
               href="/"
-              className="text-md font-medium mb-16 inline-block max-lg:hidden"
+              className=" text-pink-700 text-md font-medium mb-16 inline-block max-lg:hidden"
             >
-              SofaSocietyCo.
+              <HairvenLogoComponent />
             </LocalizedLink>
             {children}
           </div>

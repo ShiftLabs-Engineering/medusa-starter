@@ -8,11 +8,12 @@ import { StripeCardElementOptions } from "@stripe/stripe-js"
 import { twJoin } from "tailwind-merge"
 import { capitalize } from "lodash"
 
-import { isStripe as isStripeFunc, paymentInfoMap } from "@lib/constants"
+import { isStripe as isStripeFunc, isEft, paymentInfoMap } from "@lib/constants"
 import PaymentContainer from "@modules/checkout/components/payment-container"
 import { StripeContext } from "@modules/checkout/components/payment-wrapper"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import PaymentCardButton from "@modules/checkout/components/payment-card-button"
+import EftInfo from "@modules/checkout/components/eft-info"
 
 import { Button } from "@/components/Button"
 import { UiRadioGroup } from "@/components/ui/Radio"
@@ -195,6 +196,7 @@ const Payment = ({ cart }: { cart: StoreCart }) => {
                   ))}
               </div>
             )}
+            {isEft(selectedPaymentMethod) && <EftInfo />}
           </>
         )}
 

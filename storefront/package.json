@@ -2,13 +2,12 @@
   "name": "hairven-beauty",
   "version": "2.0.0",
   "private": true,
-  "author": "Ante Primorac <ante@agilo.com>",
-  "description": "Next.js Fashion E-Commerce Starter to be used with Medusa 2.0",
+  "description": "Hairven Beauty",
   "keywords": [
     "medusa-storefront"
   ],
   "scripts": {
-    "dev": "next dev -p 3000 --turbo",
+    "dev": "next dev -p 8000 --turbo",
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
@@ -33,7 +32,6 @@
     "@vercel/speed-insights": "^1.2.0",
     "algoliasearch": "^5.20.4",
     "axios": "^1.8.2",
-    "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.5.2",
     "lodash": "^4.17.21",
     "meilisearch": "^0.49.0",
@@ -62,7 +60,7 @@
     "@playwright/test": "^1.51.0",
     "@tailwindcss/postcss": "^4",
     "@types/lodash": "^4.17.16",
-    "@types/node": "latest",
+    "@types/node": "^20",
     "@types/pg": "^8.11.11",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -76,5 +74,5 @@
     "typescript": "^5",
     "webpack": "^5"
   },
-  "packageManager": "pnpm@10.9.0+sha512.0486e394640d3c1fb3c9d43d49cf92879ff74f8516959c235308f5a8f62e2e19528a65cdc2a3058f587cde71eba3d5b56327c8c33a97e4c4051ca48a10ca2d5f"
+  "packageManager": "pnpm@10.12.1"
 }

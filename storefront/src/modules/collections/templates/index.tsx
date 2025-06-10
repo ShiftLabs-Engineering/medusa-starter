@@ -45,7 +45,7 @@ export default async function CollectionTemplate({
         <Image
           src={
             collectionDetails.data?.collection_page_image?.url ||
-            "/images/content/living-room-gray-two-seater-puffy-sofa.png"
+            "/images/content/collection_page_image.jpg"
           }
           fill
           alt={collection.title + " image"}

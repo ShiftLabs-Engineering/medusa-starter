@@ -46,7 +46,7 @@ const optionsAsKeymap = (
   }, {})
 }
 
-const priorityOptions = ["Material", "Color", "Size"]
+const priorityOptions = ["Size"]
 
 const getInitialOptions = (product: ProductActionsProps["product"]) => {
   if (product.variants?.length === 1) {
@@ -318,8 +318,8 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
                 </div>
               )
             })}
+
           {!!product.metadata?.setCapSize &&
-            capSizeOption &&
             capSizeOptions.map((option) => {
               return (
                 <div key={option.id}>
@@ -379,7 +379,9 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
         />
         <Button
           onPress={handleAddToCart}
-          isDisabled={!itemsInStock || !selectedVariant || !!disabled}
+          isDisabled={
+            !itemsInStock || !selectedVariant || !setCapSizes || !!disabled
+          }
           isLoading={isPending}
           className="sm:flex-1"
         >

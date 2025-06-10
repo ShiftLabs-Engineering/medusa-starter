@@ -36,7 +36,7 @@ export default function TermsOfUsePage() {
         end={{ base: 13, lg: 11, xl: 10 }}
       >
         <h1 className="text-lg md:text-2xl mb-16 md:mb-25">
-          Terms of Use for Sofa Society
+          Terms of Use for Hairven Beauty
         </h1>
       </LayoutColumn>
       <LayoutColumn
@@ -45,10 +45,10 @@ export default function TermsOfUsePage() {
         className="article"
       >
         <p>
-          Welcome to Sofa Society. These Terms of Use govern your access to and
-          use of our website, products, and services. By accessing or using our
-          platform, you agree to be bound by these terms and conditions. If you
-          do not agree with any part of these terms, please do not use our
+          Welcome to Hairven Beauty. These Terms of Use govern your access to
+          and use of our website, products, and services. By accessing or using
+          our platform, you agree to be bound by these terms and conditions. If
+          you do not agree with any part of these terms, please do not use our
           website.
         </p>
         <h2>1. Terms of Use:</h2>
@@ -114,7 +114,7 @@ export default function TermsOfUsePage() {
         </p>
         <h2>5. Limitation of Liability:</h2>
         <p>
-          To the maximum extent permitted by law, Sofa Society and its
+          To the maximum extent permitted by law, Hairven Beauty and its
           affiliates, officers, directors, employees, and agents shall not be
           liable for any direct, indirect, incidental, consequential, or special
           damages arising out of or in connection with your use of our website,
@@ -122,8 +122,8 @@ export default function TermsOfUsePage() {
         </p>
         <h2>6. Indemnification:</h2>
         <p>
-          You agree to indemnify, defend, and hold harmless Sofa Society and its
-          affiliates, officers, directors, employees, and agents from and
+          You agree to indemnify, defend, and hold harmless Hairven Beauty and
+          its affiliates, officers, directors, employees, and agents from and
           against any claims, liabilities, damages, losses, and expenses,
           including reasonable attorney&apos;s fees, arising out of or in
           connection with your use of our website or violation of these Terms of
@@ -131,8 +131,8 @@ export default function TermsOfUsePage() {
         </p>
         <h2>7. Modifications to the Terms:</h2>
         <p>
-          You agree to indemnify, defend, and hold harmless Sofa Society and its
-          affiliates, officers, directors, employees, and agents from and
+          You agree to indemnify, defend, and hold harmless Hairven Beauty and
+          its affiliates, officers, directors, employees, and agents from and
           against any claims, liabilities, damages, losses, and expenses,
           including reasonable attorney&apos;s fees, arising out of or in
           connection with your use of our website or violation of these Terms of
