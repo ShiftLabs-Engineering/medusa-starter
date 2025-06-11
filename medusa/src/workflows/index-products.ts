@@ -13,7 +13,7 @@ const retrieveProductsStep = createStep(
     name: 'retrieveProductsStep',
   },
   async (input: undefined, context) => {
-    const productModuleService = context.container.resolve(Modules.PRODUCT)
+    const productModuleService = context.container.resolve(Modules.PRODUCT);
 
     const products = await productModuleService.listProducts(undefined, {
       relations: [
@@ -24,11 +24,11 @@ const retrieveProductsStep = createStep(
         'type',
         'images',
       ],
-    })
+    });
 
-    return new StepResponse(products)
+    return new StepResponse(products);
   },
-)
+);
 
 const indexProductsStep = createStep(
   {

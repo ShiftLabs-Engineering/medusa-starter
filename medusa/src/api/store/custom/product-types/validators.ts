@@ -2,17 +2,17 @@ import {
   createSelectParams,
   createFindParams,
   createOperatorMap,
-} from '@medusajs/medusa/api/utils/validators'
-import { z } from 'zod'
+} from '@medusajs/medusa/api/utils/validators';
+import { z } from 'zod';
 
 export type AdminGetProductTypeParamsType = z.infer<
   typeof AdminGetProductTypeParams
->
-export const AdminGetProductTypeParams = createSelectParams()
+>;
+export const AdminGetProductTypeParams = createSelectParams();
 
 export type AdminGetProductTypesParamsType = z.infer<
   typeof AdminGetProductTypesParams
->
+>;
 export const AdminGetProductTypesParams = createFindParams({
   limit: 10,
   offset: 0,
@@ -29,4 +29,4 @@ export const AdminGetProductTypesParams = createFindParams({
     $and: z.lazy(() => AdminGetProductTypesParams.array()).optional(),
     $or: z.lazy(() => AdminGetProductTypesParams.array()).optional(),
   }),
-)
+);
