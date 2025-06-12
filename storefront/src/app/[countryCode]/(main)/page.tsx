@@ -28,31 +28,33 @@ const ProductTypesSection: React.FC = async () => {
       <LayoutColumn>
         <h3 className="text-sm md:text-xl mb-4 md:mb-12">Our products</h3>
       </LayoutColumn>
-      {productTypes.productTypes.map((productType, index) => (
-        <LayoutColumn
-          key={productType.id}
-          start={index % 2 === 0 ? 1 : 7}
-          end={index % 2 === 0 ? 7 : 13}
-        >
-          <LocalizedLink href={`/store?type=${productType.value}`}>
-            {typeof productType.metadata?.image === "object" &&
-              productType.metadata.image &&
-              "url" in productType.metadata.image &&
-              typeof productType.metadata.image.url === "string" && (
-                <Image
-                  src={productType.metadata.image.url}
-                  width={800}
-                  height={600}
-                  alt={productType.value}
-                  className="mb-2 md:mb-2"
-                />
-              )}
-            <p className="text-xs md:text-md mb-2 md:mb-6">
-              {productType.value}
-            </p>
-          </LocalizedLink>
-        </LayoutColumn>
-      ))}
+      {productTypes.productTypes
+        .sort((a, b) => a.value.localeCompare(b.value))
+        .map((productType, index) => (
+          <LayoutColumn
+            key={productType.id}
+            start={index % 2 === 0 ? 1 : 7}
+            end={index % 2 === 0 ? 7 : 13}
+          >
+            <LocalizedLink href={`/store?type=${productType.value}`}>
+              {typeof productType.metadata?.image === "object" &&
+                productType.metadata.image &&
+                "url" in productType.metadata.image &&
+                typeof productType.metadata.image.url === "string" && (
+                  <Image
+                    src={productType.metadata.image.url}
+                    width={800}
+                    height={600}
+                    alt={productType.value}
+                    className="mb-2 md:mb-2"
+                  />
+                )}
+              <p className="text-xs md:text-md mb-2 md:mb-6">
+                {productType.value}
+              </p>
+            </LocalizedLink>
+          </LayoutColumn>
+        ))}
     </Layout>
   )
 }

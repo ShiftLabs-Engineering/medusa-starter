@@ -1,16 +1,16 @@
 // External packages
-import { Text, Heading, Button } from '@react-email/components';
+import { Text, Heading, Button } from '@react-email/components'
 
 // Types
-import { CustomerDTO, OrderDTO } from '@medusajs/framework/types';
+import { CustomerDTO, OrderDTO } from '@medusajs/framework/types'
 
 // Components
-import EmailLayout, { EmailLayoutProps } from './components/EmailLayout';
+import EmailLayout, { EmailLayoutProps } from './components/EmailLayout'
 
 type Props = {
-  customer: Pick<CustomerDTO, 'id' | 'email' | 'first_name' | 'last_name'>;
-  order: Pick<OrderDTO, 'id' | 'display_id'>;
-};
+  customer: Pick<CustomerDTO, 'id' | 'email' | 'first_name' | 'last_name'>
+  order: Pick<OrderDTO, 'id' | 'display_id'>
+}
 
 export default function OrderUpdateEmail({
   customer,
@@ -23,9 +23,10 @@ export default function OrderUpdateEmail({
         Shipping update
       </Heading>
       <Text className="text-md !mb-8">
-        Great news! Your order #{order.display_id} is now on its way to you.
+        Great news! Your Hairven Beauty order #{order.display_id} is now on its
+        way to you.
         <br />
-        Here are the shipping details.
+        Your beauty transformation is almost here!
       </Text>
       <Text className="text-md !mb-10">
         You can track your package by clicking below:
@@ -34,15 +35,16 @@ export default function OrderUpdateEmail({
         href={`${
           process.env.STOREFRONT_URL || 'http://localhost:8000'
         }/account/my-orders/${order.id}`}
-        className="inline-flex items-center focus-visible:outline-none rounded-xs justify-center transition-colors bg-black hover:bg-grayscale-500 text-white h-10 px-6 mb-10">
+        className="inline-flex items-center focus-visible:outline-none rounded-xs justify-center transition-colors bg-black hover:bg-grayscale-500 text-white h-10 px-6 mb-10"
+      >
         Order details
       </Button>
       <Text className="text-md m-0">
-        Thank you for choosing Sofa Society. We&apos;re excited for your new
-        sofa to find its home with you!
+        Thank you for choosing Hairven Beauty. We&apos;re excited for your new
+        beauty products to help you achieve your transformation goals!
       </Text>
     </EmailLayout>
-  );
+  )
 }
 
 OrderUpdateEmail.PreviewProps = {
@@ -56,4 +58,4 @@ OrderUpdateEmail.PreviewProps = {
     id: 'order_01JCNYH6VADAK90W7CBSPV5BT6',
     display_id: 1,
   },
-} satisfies Props;
+} satisfies Props

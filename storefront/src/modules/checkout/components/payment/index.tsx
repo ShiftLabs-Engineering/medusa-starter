@@ -114,7 +114,6 @@ const Payment = ({ cart }: { cart: StoreCart }) => {
           onError: () => setError("Failed to remove card"),
         }
       )
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Failed to remove card")
     }

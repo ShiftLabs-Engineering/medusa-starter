@@ -50,6 +50,9 @@ importers:
       axios:
         specifier: ^1.8.2
         version: 1.9.0
+      embla-carousel:
+        specifier: ^8.6.0
+        version: 8.6.0
       embla-carousel-react:
         specifier: ^8.5.2
         version: 8.6.0(react@19.1.0)

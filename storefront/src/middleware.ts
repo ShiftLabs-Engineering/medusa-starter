@@ -76,7 +76,6 @@ async function getCountryCode(
     }
 
     return countryCode
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     if (process.env.NODE_ENV === "development") {
       console.error(

@@ -67,8 +67,9 @@ const EftPaymentInstructionsEmail = ({
             <Text style={text}>Dear {customerName},</Text>
 
             <Text style={text}>
-              Thank you for your order! To complete your payment, please follow
-              the instructions below:
+              Thank you for choosing Hairven Beauty for your beauty
+              transformation! To complete your payment, please follow the
+              instructions below:
             </Text>
 
             <Section style={paymentDetailsSection}>
@@ -151,15 +152,18 @@ const EftPaymentInstructionsEmail = ({
               <strong>Important:</strong> Please ensure you include the payment
               reference
               <strong> {reference} </strong> when making your payment. This
-              helps us identify and process your payment quickly.
+              helps us identify and process your beauty order quickly.
             </Text>
 
             <Text style={text}>
-              If you have any questions about your payment or order, please
-              don't hesitate to contact us.
+              If you have any questions about your payment or beauty order,
+              please don't hesitate to contact us.
             </Text>
 
-            <Text style={text}>Thank you for your business!</Text>
+            <Text style={text}>
+              Thank you for choosing Hairven Beauty for your beauty
+              transformation!
+            </Text>
           </Container>
         </Body>
       </Html>

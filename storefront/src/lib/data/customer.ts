@@ -275,7 +275,6 @@ const forgotPasswordSchema = z.object({
   new_password: z.string().min(6),
   confirm_new_password: z.string().min(6),
 })
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const baseSchema = z.discriminatedUnion("type", [
   resetPasswordFormSchema,
   forgotPasswordSchema,
@@ -286,7 +285,7 @@ export async function resetPassword(
   formData: z.infer<typeof baseSchema>
 ): Promise<
   z.infer<typeof resetPasswordStateSchema> &
-    ({ state: "initial" | "success" } | { state: "error"; error: string })
+  ({ state: "initial" | "success" } | { state: "error"; error: string })
 > {
   const validatedState = resetPasswordStateSchema.parse(currentState)
   if (formData.type === "reset") {
@@ -295,7 +294,6 @@ export async function resetPassword(
         email: validatedState.email,
         password: formData.current_password,
       })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       return {
         ...validatedState,
@@ -329,7 +327,6 @@ export async function resetPassword(
     })
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const forgotPasswordFormSchema = z.object({
   email: z.string().email(),
 })

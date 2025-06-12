@@ -6,11 +6,11 @@ import EftPaymentInstructionsEmail from "./eft-payment-instructions"
 
 // TODO: we should be able to use notification data in subjects too
 export const subjects = {
-  "auth-password-reset": "Reset your password",
-  "order-placed": "Your order has been placed",
-  "customer-welcome": "Welcome to Sofa Society!",
-  "auth-forgot-password": "Reset your password",
-  "eft-payment-instructions": "EFT Payment Instructions",
+  "auth-password-reset": "Reset your Hairven Beauty password",
+  "order-placed": "Your Hairven Beauty order has been placed",
+  "customer-welcome": "Welcome to Hairven Beauty!",
+  "auth-forgot-password": "Reset your Hairven Beauty password",
+  "eft-payment-instructions": "Hairven Beauty - EFT Payment Instructions",
 }
 
 export default {

@@ -1,8 +1,8 @@
 // External packages
-import { Text, Heading, Button } from "@react-email/components";
+import { Text, Heading, Button } from '@react-email/components'
 
 // Components
-import EmailLayout, { EmailLayoutProps } from "./components/EmailLayout";
+import EmailLayout, { EmailLayoutProps } from './components/EmailLayout'
 
 export default function AuthEmailConfirm({
   ...emailLayoutProps
@@ -13,7 +13,7 @@ export default function AuthEmailConfirm({
         Verify your email
       </Heading>
       <Text className="text-md !mb-10">
-        Hey Jovana, thanks for registering for an account on Sofa Society!
+        Thanks for registering for an account on Hairven Beauty!
       </Text>
       <Text className="text-md !mb-10">
         Before we get started, we just need to confirm that this is you.
@@ -24,5 +24,5 @@ export default function AuthEmailConfirm({
         Verify email
       </Button>
     </EmailLayout>
-  );
+  )
 }

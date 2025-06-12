@@ -8,9 +8,9 @@ import {
   Section,
   Link,
   Hr,
-} from '@react-email/components';
-import { HttpTypes } from '@medusajs/framework/types';
-import EmailLayout, { EmailLayoutProps } from './components/EmailLayout';
+} from '@react-email/components'
+import { HttpTypes } from '@medusajs/framework/types'
+import EmailLayout, { EmailLayoutProps } from './components/EmailLayout'
 
 type Props = {
   order: Pick<
@@ -33,9 +33,9 @@ type Props = {
       | 'total'
       | 'quantity'
       | 'variant_option_values'
-    >[];
-  };
-};
+    >[]
+  }
+}
 
 export default function OrderPlacedEmail({
   order,
@@ -45,13 +45,13 @@ export default function OrderPlacedEmail({
     style: 'currency',
     currencyDisplay: 'narrowSymbol',
     currency: order.currency_code,
-  });
+  })
 
-  const arr = [];
-  arr.push(...order.items);
-  arr.push(...order.items);
-  arr.push(...order.items);
-  arr.push(...order.items);
+  const arr = []
+  arr.push(...order.items)
+  arr.push(...order.items)
+  arr.push(...order.items)
+  arr.push(...order.items)
 
   return (
     <EmailLayout {...emailLayoutProps}>
@@ -59,14 +59,18 @@ export default function OrderPlacedEmail({
         Order confirmation
       </Heading>
       <Text className="text-md !mb-6">
-        We are pleased to confirm that your order has been successfully placed
-        and will be processed shortly. Your order number is #100002.
+        We are delighted to confirm that your beauty order has been successfully
+        placed and will be processed with care. Your transformation journey
+        begins now!
       </Text>
       <Text className="text-md !mb-6">
-        You&apos;ll receive another update once your order is shipped. For any
-        questions, feel free to contact us at info@sofasociety.com.
+        You&apos;ll receive another update once your beauty products are
+        shipped. For any questions about your order or beauty advice, feel free
+        to contact us at info@hairvenbeauty.com.
       </Text>
-      <Text className="text-md !mb-20">Thank you for shopping with us!</Text>
+      <Text className="text-md !mb-20">
+        Thank you for choosing Hairven Beauty for your beauty transformation!
+      </Text>
       <Section className="mb-6">
         <Row>
           <Column className="border border-solid p-4 border-grayscale-200 rounded-xs">
@@ -193,7 +197,7 @@ export default function OrderPlacedEmail({
                 </Column>
               </Row>
             </>
-          );
+          )
         })}
       </Section>
       <Section className="border border-solid border-grayscale-200 rounded-xs p-4">
@@ -252,7 +256,7 @@ export default function OrderPlacedEmail({
         </Row>
       </Section>
     </EmailLayout>
-  );
+  )
 }
 
 OrderPlacedEmail.PreviewProps = {
@@ -323,4 +327,4 @@ OrderPlacedEmail.PreviewProps = {
     total: 1500,
     tax_total: 100,
   },
-} satisfies Props;
+} satisfies Props

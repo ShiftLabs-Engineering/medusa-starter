@@ -225,17 +225,28 @@ export async function setShippingMethod({
     throw new Error("Missing shipping method ID when setting shipping method")
   }
 
-  return sdk.store.cart
-    .addShippingMethod(
-      cartId,
-      { option_id: shippingMethodId },
-      {},
-      await getAuthHeaders()
-    )
-    .then(() => {
-      revalidateTag("cart")
-    })
-    .catch(medusaError)
+  try {
+    // Get authentication headers
+    const headers = await getAuthHeaders()
+
+    const result = await sdk.store.cart
+      .addShippingMethod(
+        cartId,
+        { option_id: shippingMethodId },
+        {},
+        headers
+      )
+
+    // Revalidate cart data
+    revalidateTag("cart")
+    return result
+
+  } catch (err: any) {
+    console.error('Error setting shipping method:', err)
+    // Handle Medusa API errors
+    const message = err?.response?.data?.message || 'Error setting shipping method'
+    throw new Error(message)
+  }
 }
 
 export async function setPaymentMethod(

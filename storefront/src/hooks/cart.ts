@@ -48,12 +48,18 @@ export const useCartQuantity = () => {
 
 export const useCartShippingMethods = (cartId: string) => {
   return useQuery({
-    queryKey: [cartId],
+    queryKey: ['shipping-methods', cartId],
     queryFn: async () => {
+      if (!cartId) {
+        return []
+      }
       const res = await listCartShippingMethods(cartId)
-      console.log("Cart shipping methods:", JSON.stringify(res))
       return res
     },
+    enabled: !!cartId,
+    staleTime: 1000 * 60, // Consider data fresh for 1 minute
+    gcTime: 1000 * 60 * 5, // Keep in garbage collection for 5 minutes
+    refetchOnWindowFocus: false // Don't refetch when window gains focus
   })
 }
 
@@ -173,12 +179,10 @@ export const useSetShippingMethod = (
   return useMutation({
     mutationKey: ["shipping-update", cartId],
     mutationFn: async ({ shippingMethodId }) => {
-      const response = await setShippingMethod({
+      await setShippingMethod({
         cartId,
         shippingMethodId,
       })
-
-      return response
     },
     onSuccess: async function (...args) {
       await queryClient.invalidateQueries({
@@ -360,18 +364,18 @@ export const useGetPaymentMethod = (id: string | undefined) => {
 export const usePlaceOrder = (
   options?: UseMutationOptions<
     | {
-        type: "cart"
-        cart: HttpTypes.StoreCart
-        error: {
-          message: string
-          name: string
-          type: string
-        }
+      type: "cart"
+      cart: HttpTypes.StoreCart
+      error: {
+        message: string
+        name: string
+        type: string
       }
+    }
     | {
-        type: "order"
-        order: HttpTypes.StoreOrder
-      }
+      type: "order"
+      order: HttpTypes.StoreOrder
+    }
     | null,
     Error,
     null,

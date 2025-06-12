@@ -1,3 +1,4 @@
+
 import "server-only"
 import { cookies } from "next/headers"
 
@@ -44,4 +45,39 @@ export const setCartId = async (cartId: string) => {
 
 export const removeCartId = async () => {
   return (await cookies()).set("_medusa_cart_id", "", { maxAge: -1 })
+}
+
+export const getCacheTag = async (tag: string): Promise<string> => {
+  try {
+
+    const cacheId = (await cookies()).get("_medusa_cache_id")?.value
+
+    if (!cacheId) {
+      return ""
+    }
+
+    return `${tag}-${cacheId}`
+  } catch (error) {
+    return (error as Error)?.message || ""
+  }
+}
+
+export const getCacheOptions = async (
+  tag: string
+): Promise<{ tags: string[] } | Record<string, never>> => {
+  if (typeof window !== "undefined") {
+    return {}
+  }
+
+  const cacheTag = await getCacheTag(tag)
+
+  if (!cacheTag) {
+    return {}
+  }
+
+  return { tags: [`${cacheTag}`] }
+}
+
+export const deleteCookie = async (name: string) => {
+  return (await cookies()).delete(name)
 }

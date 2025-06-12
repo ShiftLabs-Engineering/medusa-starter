@@ -176,7 +176,6 @@ function ProductActions({ product, materials, disabled }: ProductActionsProps) {
 
   const materialOption = productOptions.find((o) => o.title === "Material")
   const colorOption = productOptions.find((o) => o.title === "Color")
-  const capSizeOption = capSizeOptions.find((o) => o.title === "Cap Size")
 
   const otherOptions =
     materialOption && colorOption

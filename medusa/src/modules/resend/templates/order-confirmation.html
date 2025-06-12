@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmation - Hairven Beauty</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #be185d; /* Pink-700 from your tailwind config */
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .order-details {
+      background-color: #f8f8f9; /* Grayscale-30 from your tailwind config */
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e7e7e7; /* Grayscale-100 from your tailwind config */
+    }
+    .order-total {
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: right;
+    }
+    .button {
+      display: inline-block;
+      background-color: #be185d; /* Pink-700 from your tailwind config */
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 500;
+      margin-top: 20px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #808080; /* Grayscale-500 from your tailwind config */
+      font-size: 14px;
+    }
+    .social-links {
+      margin-top: 20px;
+    }
+    .social-links a {
+      margin: 0 10px;
+      color: #808080; /* Grayscale-500 from your tailwind config */
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="https://hairven-beauty.s3.eu-north-1.amazonaws.com/logo.png" alt="Hairven Beauty Logo" class="logo">
+      <h1>Thank You for Your Order!</h1>
+    </div>
+    
+    <p>Hello {{customer_name}},</p>
+    
+    <p>We're excited to confirm your order from Hairven Beauty. Your beauty products are on their way to transform your look!</p>
+    
+    <div class="order-details">
+      <h2>Order #{{order_number}}</h2>
+      <p>Placed on: {{order_date}}</p>
+      
+      {{#each items}}
+      <div class="order-item">
+        <div>
+          <p><strong>{{this.title}}</strong> x {{this.quantity}}</p>
+          <p>{{this.variant}}</p>
+        </div>
+        <p>{{this.price}}</p>
+      </div>
+      {{/each}}
+      
+      <div class="order-item">
+        <p>Subtotal</p>
+        <p>{{subtotal}}</p>
+      </div>
+      
+      <div class="order-item">
+        <p>Shipping</p>
+        <p>{{shipping_price}}</p>
+      </div>
+      
+      <div class="order-total">
+        <p>Total: {{total}}</p>
+      </div>
+    </div>
+    
+    <p>Your items will be shipped to:</p>
+    <p>
+      {{shipping_address.first_name}} {{shipping_address.last_name}}<br>
+      {{shipping_address.address_1}}<br>
+      {{#if shipping_address.address_2}}{{shipping_address.address_2}}<br>{{/if}}
+      {{shipping_address.city}}, {{shipping_address.province}} {{shipping_address.postal_code}}<br>
+      {{shipping_address.country}}
+    </p>
+    
+    <p>We'll send you another email when your order ships. If you have any questions about your order, please don't hesitate to contact our customer service team.</p>
+    
+    <div style="text-align: center;">
+      <a href="{{order_url}}" class="button">View Order Details</a>
+    </div>
+    
+    <div class="footer">
+      <p>Thank you for choosing Hairven Beauty for your beauty needs!</p>
+      <p>© 2023 Hairven Beauty. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/hairvenbeauty/">Instagram</a>
+        <a href="https://hairvenbeauty.com">Website</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
