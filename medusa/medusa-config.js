@@ -1,11 +1,11 @@
-const { loadEnv, defineConfig } = require("@medusajs/framework/utils");
+const { loadEnv, defineConfig } = require('@medusajs/framework/utils')
 
-loadEnv(process.env.NODE_ENV, process.cwd());
+loadEnv(process.env.NODE_ENV, process.cwd())
 
 module.exports = defineConfig({
   admin: {
     backendUrl:
-      process.env.BACKEND_URL ?? "https://sofa-society-starter.medusajs.app",
+      process.env.BACKEND_URL ?? 'https://sofa-society-starter.medusajs.app',
     storefrontUrl: process.env.STOREFRONT_URL,
   },
   projectConfig: {
@@ -15,32 +15,75 @@ module.exports = defineConfig({
       storeCors: process.env.STORE_CORS,
       adminCors: process.env.ADMIN_CORS,
       authCors: process.env.AUTH_CORS,
-      jwtSecret: process.env.JWT_SECRET || "supersecret",
-      cookieSecret: process.env.COOKIE_SECRET || "supersecret",
+      jwtSecret: process.env.JWT_SECRET || 'supersecret',
+      cookieSecret: process.env.COOKIE_SECRET || 'supersecret',
     },
   },
   modules: [
     {
-      resolve: "@medusajs/medusa/payment",
+      resolve: '@medusajs/medusa/fulfillment',
       options: {
         providers: [
           {
-            id: "stripe",
-            resolve: "@medusajs/medusa/payment-stripe",
+            resolve: `@medusajs/medusa/fulfillment-manual`,
+            id: 'manual',
+            options: {
+              // provider options...
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: '@medusajs/medusa/inventory',
+    },
+    {
+      resolve: '@medusajs/medusa/stock-location',
+    },
+    {
+      resolve: '@medusajs/medusa/tax',
+      options: {
+        providers: [
+          {
+            resolve: './src/modules/hairven-tax',
+            id: 'sars-vat',
+            options: {
+              // Feature toggles - set to false to disable, true to enable
+              enableProductSpecificTax: false, // Enable/disable product-specific tax logic
+              enableBeautyDiscounts: false, // Enable/disable beauty product discounts/markups
+              enableVATExemptions: false, // Enable/disable VAT exemptions for essential items
+              enableShippingTaxModifications: false, // Enable/disable shipping tax modifications
+
+              // Configuration values (only used if respective features are enabled)
+              hairCareDiscountRate: 0.1, // 10% discount for hair care products
+              cosmeticsMarkupRate: 0.1, // 10% markup for cosmetics
+              freeShippingThreshold: 100000, // $1000 in cents - free shipping tax threshold
+            },
+          },
+        ],
+      },
+    },
+    {
+      resolve: '@medusajs/medusa/payment',
+      options: {
+        providers: [
+          {
+            id: 'stripe',
+            resolve: '@medusajs/medusa/payment-stripe',
             options: {
               apiKey: process.env.STRIPE_API_KEY,
               webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
             },
           },
           {
-            id: "eft",
-            resolve: "./src/modules/eft",
+            id: 'eft',
+            resolve: './src/modules/eft',
             options: {
               bankDetails: {
-                accountName: "Hairven Enterprise (Pty) Ltd",
-                accountNumber: "1234567890",
-                bankName: "FNB",
-                branchCode: "123456",
+                accountName: 'Hairven Enterprise (Pty) Ltd',
+                accountNumber: '1234567890',
+                bankName: 'FNB',
+                branchCode: '123456',
               },
             },
           },
@@ -48,15 +91,15 @@ module.exports = defineConfig({
       },
     },
     {
-      resolve: "./src/modules/fashion",
+      resolve: './src/modules/fashion',
     },
     {
-      resolve: "@medusajs/medusa/file",
+      resolve: '@medusajs/medusa/file',
       options: {
         providers: [
           {
-            resolve: "@medusajs/medusa/file-s3",
-            id: "s3",
+            resolve: '@medusajs/medusa/file-s3',
+            id: 's3',
             options: {
               file_url: process.env.S3_FILE_URL,
               access_key_id: process.env.S3_ACCESS_KEY_ID,
@@ -66,7 +109,7 @@ module.exports = defineConfig({
               endpoint: process.env.S3_ENDPOINT,
               additional_client_config: {
                 forcePathStyle:
-                  process.env.S3_FORCE_PATH_STYLE === "true" ? true : undefined,
+                  process.env.S3_FORCE_PATH_STYLE === 'true' ? true : undefined,
               },
             },
           },
@@ -74,26 +117,26 @@ module.exports = defineConfig({
       },
     },
     {
-      resolve: "@medusajs/medusa/notification",
+      resolve: '@medusajs/medusa/notification',
       options: {
         providers: [
           {
-            resolve: "./src/modules/resend",
-            id: "resend",
+            resolve: './src/modules/resend',
+            id: 'resend',
             options: {
-              channels: ["email"],
+              channels: ['email'],
               api_key: process.env.RESEND_API_KEY,
               from: process.env.RESEND_FROM,
-              siteTitle: "HairvenBeauty.",
-              companyName: "Hairven beauty",
+              siteTitle: 'HairvenBeauty.',
+              companyName: 'Hairven beauty',
               footerLinks: [
                 {
-                  url: "https://hairvenbeauty.com",
-                  label: "Hairven Beauty",
+                  url: 'https://hairvenbeauty.com',
+                  label: 'Hairven Beauty',
                 },
                 {
-                  url: "https://www.instagram.com/hairvenbeauty/",
-                  label: "Instagram",
+                  url: 'https://www.instagram.com/hairvenbeauty/',
+                  label: 'Instagram',
                 },
               ],
             },
@@ -103,12 +146,12 @@ module.exports = defineConfig({
     },
 
     {
-      resolve: "./src/modules/meilisearch",
+      resolve: './src/modules/meilisearch',
       options: {
         config: {
           host:
             process.env.MEILISEARCH_HOST ??
-            "https://fashion-starter-search.agilo.agency",
+            'https://fashion-starter-search.agilo.agency',
           apiKey: process.env.MEILISEARCH_API_KEY,
         },
         settings: {
@@ -169,14 +212,14 @@ module.exports = defineConfig({
                 variants: product.variants.map((variant) => variant.title),
                 sku: product.variants
                   .filter(
-                    (variant) => typeof variant.sku === 'string' && variant.sku,
+                    (variant) => typeof variant.sku === 'string' && variant.sku
                   )
                   .map((variant) => variant.sku),
-              };
+              }
             },
           },
         },
       },
     },
   ],
-});
+})

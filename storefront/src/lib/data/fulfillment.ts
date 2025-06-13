@@ -1,10 +1,18 @@
 import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
+import { getDefaultSalesChannel } from "@lib/data/sales-channels"
 
 export const listCartShippingMethods = async function (cartId: string) {
   try {
     if (!cartId) {
       console.error('No cart ID provided to listCartShippingMethods')
+      return []
+    }
+
+    // Get the default sales channel
+    const salesChannel = await getDefaultSalesChannel()
+    if (!salesChannel) {
+      console.error('No sales channel found for shipping options')
       return []
     }
 
@@ -14,12 +22,14 @@ export const listCartShippingMethods = async function (cartId: string) {
         {
           query: {
             cart_id: cartId,
+            sales_channel_id: salesChannel.id,
             fields: "+service_zone.fulfllment_set.type,*service_zone.fulfillment_set.location.address",
           },
           method: "GET",
           cache: 'no-store' // Force dynamic fetch since shipping options can change
         }
       )
+    console.log('shipping-options', response)
 
     if (!response.shipping_options) {
       console.warn('No shipping options found for cart:', cartId)
@@ -44,7 +54,17 @@ export const calculatePriceForShippingOption = async (
       return null
     }
 
-    const body: Record<string, unknown> = { cart_id: cartId }
+    // Get the default sales channel
+    const salesChannel = await getDefaultSalesChannel()
+    if (!salesChannel) {
+      console.error('No sales channel found for price calculation')
+      return null
+    }
+
+    const body: Record<string, unknown> = {
+      cart_id: cartId,
+      sales_channel_id: salesChannel.id
+    }
     if (data) {
       body.data = data
     }

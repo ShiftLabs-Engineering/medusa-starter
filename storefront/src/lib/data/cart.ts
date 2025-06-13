@@ -16,6 +16,7 @@ import {
   removeCartId,
 } from "@lib/data/cookies"
 import { getRegion } from "@lib/data/regions"
+import { getDefaultSalesChannel } from "@lib/data/sales-channels"
 import { addressesFormSchema } from "hooks/cart"
 
 export async function retrieveCart() {
@@ -68,8 +69,16 @@ export async function getOrSetCart(input: unknown) {
   }
 
   if (!cart) {
+    // Get the default sales channel for cart creation
+    const salesChannel = await getDefaultSalesChannel()
+
+    const cartData: any = { region_id: region.id }
+    if (salesChannel) {
+      cartData.sales_channel_id = salesChannel.id
+    }
+
     const cartResp = await sdk.store.cart.create(
-      { region_id: region.id },
+      cartData,
       {},
       await getAuthHeaders()
     )
